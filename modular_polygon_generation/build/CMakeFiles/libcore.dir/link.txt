@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblibcore.a CMakeFiles/libcore.dir/libcore/src/skeleton_finder.cpp.o
+/usr/bin/ranlib liblibcore.a
