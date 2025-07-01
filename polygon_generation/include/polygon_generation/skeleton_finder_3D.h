@@ -187,7 +187,7 @@ class SkeletonFinder {
   bool initNode(NodePtr curNodePtr);
   void checkFacetClearance(NodePtr curNodePtr);
   bool checkPosConnected(NodePtr node_ptr, Eigen::Vector3d pos);
-  void genBlackAndWhiteVertices(NodePtr nodePtr);
+  void hite(NodePtr nodePtr);
   void genSamplesOnUnitSphere();
   pair<Eigen::Vector3d, int> raycast(Eigen::Vector3d ray_source, Eigen::Vector3d direction,
                                      double cut_off_length);
