@@ -10,25 +10,16 @@
 
 namespace libcore
 {
-    /**
-     * @brief Checks if a coordinate is within a bounding box.
-     * 
-     * This function checks if the given coordinate is within the specified bounding box defined by its minimum and maximum corners.
-     * 
-     * @param coord The coordinate to check.
-     * @param bbx_min The minimum corner of the bounding box.
-     * @param bbx_max The maximum corner of the bounding box.
-     * @return true if the coordinate is within the bounding box, false otherwise.
-     */
     bool checkWithinBbx(const Eigen::Vector3d& coord,
                         const Eigen::Vector3d& bbx_min,
                         const Eigen::Vector3d& bbx_max);
 
-    
-    bool checkFloor(NodePtr node, 
-                    const double max_ray_length,
-                    const double max_height_diff,
-                    const RaycastingContext& ray_context);
+    bool checkFloor(
+        const NodePtr node, 
+        const double max_ray_length,
+        const double max_height_diff,
+        const Config& config, SharedVars& vars
+    );
     
     double radiusSearchOnRawMap(const Eigen::Vector3d& search_Pt,
                                 const pcl::search::KdTree<pcl::PointXYZ>& kdtreeForRawMap);
@@ -55,21 +46,40 @@ namespace libcore
     double getVerticesRadius(const std::vector<Eigen::Vector3d>& vertices);
 
     bool checkSegClear(
-        const Eigen::Vector3d& start,
-        const Eigen::Vector3d& end,
-        const RaycastingContext& ray_context
+        const Eigen::Vector3d& pos1,
+        const Eigen::Vector3d& pos2,
+        const Config& config,
+        SharedVars& vars
     );
 
     bool collisionCheck(
         const Eigen::Vector3d& search_pt,
         double threshold,
-        const RaycastingContext& ray_context
+        const Config& config,
+        SharedVars& vars
     );
 
     bool isSamePos(
         const Eigen::Vector3d& coord1,
         const Eigen::Vector3d& coord2,
         double threshold = 1e-4
+    );
+
+    VertexPtr getVertexFromDire(
+        NodePtr node,
+        const Eigen::Vector3d &dire
+    );
+
+    int onCeilOrFloor(
+        const Eigen::Vector3d p,
+        const double z_min,
+        const double z_max,
+        const double search_margin
+    );
+
+    bool checkPtInPolyhedron(
+        const NodePtr node, 
+        const Eigen::Vector3d pt
     );
 
 } // namespace libcore

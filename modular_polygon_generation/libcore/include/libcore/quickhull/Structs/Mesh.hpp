@@ -9,6 +9,7 @@
 #include <cassert>
 #include <limits>
 #include <memory>
+#include <cstdint>
 #include "VertexDataSource.hpp"
 #include <unordered_map>
 
