@@ -8,14 +8,13 @@
 
 namespace libcore
 {
-    void genSamplesOnUnitSphere(const SamplingContext& c)
-    {
+    void genSamplesOnUnitSphere(const Config& config, SharedVars& vars) {
         // Fibonicci sphere
         double phi = M_PI * (3 - sqrt(5));
         double x, y, z, radius, theta;
 
-        for (int i = 0; i < c.sampling_density; i++) {
-            y = 1 - 2 * ((float)i / (float)(c.sampling_density - 1));
+        for (int i = 0; i < config.sampling_density; i++) {
+            y = 1 - 2 * ((float)i / (float)(config.sampling_density - 1));
             radius = sqrt(1 - y * y);
             theta = phi * i;
             x = cos(theta) * radius;
@@ -23,22 +22,25 @@ namespace libcore
 
             Eigen::Vector3d sample;
             sample << x, y, z;
-            c.sample_directions.push_back(sample);
+            vars.sample_directions.push_back(sample);
         }
     }
 
     void genBlackAndWhiteVertices(
         NodePtr nodePtr,
-        const SamplingContext& c
-    ) {
-        for (auto it = c.sample_directions.begin(); it != c.sample_directions.end(); it++) {
+        const Config& config,
+        SharedVars& vars) {
+        for (auto it = vars.sample_directions.begin(); it != vars.sample_directions.end(); it++) {
             int index = nodePtr->sampling_directions.size();
             nodePtr->sampling_directions.push_back(quickhull::Vector3<double>((*it)(0), (*it)(1), (*it)(2)));
 
-            std::pair<Eigen::Vector3d, int> raycast_result = raycast(nodePtr->coord, *it, c.ray_context.max_ray_length, c.ray_context);
+            std::pair<Eigen::Vector3d, int> raycast_result = raycast(
+                nodePtr->coord, *it, 
+                config.max_ray_length, 
+                config, vars);
             Eigen::Vector3d newVertex = raycast_result.first;
             if (raycast_result.second == -2) {
-                newVertex += (*it) * c.ray_context.max_ray_length;
+                newVertex += (*it) * config.max_ray_length;
                 VertexPtr new_white_vertex = std::make_shared<Vertex>(newVertex, (*it), VertexType::WHITE);
                 new_white_vertex->sampling_direction_index = index;
                 nodePtr->white_vertices.push_back(new_white_vertex);

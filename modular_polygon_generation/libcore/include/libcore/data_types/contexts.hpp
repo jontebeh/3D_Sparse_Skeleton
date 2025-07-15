@@ -6,196 +6,81 @@
 #include <pcl/search/kdtree.h>
 
 #include <libcore/data_types/node.hpp>
+#include <libcore/visualizer.hpp>
 
 namespace libcore
 {
-    /**
-     * @brief Context for the map, including simulation mode and bounding box dimensions.
-     * 
-     * This struct holds the context information for the map, including whether it is in simulation mode,
-     * the resolution of the map, and the bounding box dimensions (x_min, x_max, y_min, y_max, z_min, z_max).
-     */
-    struct MapContext
+    struct Config
     {
-        bool is_simulation; // Flag indicating if the context is for simulation.
-        double resolution; // The resolution of the map.
-        double x_min, x_max; // The minimum and maximum x-coordinates of the bounding box.
-        double y_min, y_max; // The minimum and maximum y-coordinates of the bounding box.
-        double z_min, z_max; // The minimum and maximum z-coordinates of the bounding box.
-        int map_representation; // The representation of the map (e.g., point cloud, voxel grid, etc.).
+        /*****************Map*****************/
+        bool is_simulation = false; // Flag indicating if the context is for simulation.
+        double resolution = 0.2; // The resolution of the map.
+        double x_min = -24.0; // The minimum x-coordinate of the bounding box.
+        double x_max = 85.0; // The minimum and maximum x-coordinates of the bounding box.
+        double y_min = -18.0; // The minimum y-coordinate
+        double y_max = 45.0; // The minimum and maximum y-coordinates of the bounding box.
+        double z_min = 0.0; // The minimum z-coordinate
+        double z_max = 13.0; // The maximum z-coordinate
+        int map_representation = 0; // The representation of the map (e.g., point cloud, voxel grid, etc.).
 
-        /**
-         * @brief Default constructor for MapContext.
-         * 
-         * Initializes the map context with default values.
-         */
-        MapContext()
-            : is_simulation(false),
-              resolution(0.0),
-              x_min(0.0), x_max(0.0),
-              y_min(0.0), y_max(0.0),
-              z_min(0.0), z_max(0.0),
-              map_representation(0) {} // Default representation, e.g., point cloud
+        /*****************Raycasting*****************/
+        double search_margin = 0.3; // Margin for searching in the map.
+        double max_ray_length = 5.0; // Maximum length of the ray for raycasting.
+        double max_expansion_ray_length = 4.0; // Maximum length for ray expansion.
 
-        /**
-         * @brief Constructor for MapContext.
-         * 
-         * Initializes the map context with the given parameters.
-         * 
-         * @param is_simulation Flag indicating if the context is for simulation.
-         * @param resolution The resolution of the map.
-         * @param x_min Minimum x-coordinate of the bounding box.
-         * @param x_max Maximum x-coordinate of the bounding box.
-         * @param y_min Minimum y-coordinate of the bounding box.
-         * @param y_max Maximum y-coordinate of the bounding box.
-         * @param z_min Minimum z-coordinate of the bounding box.
-         * @param z_max Maximum z-coordinate of the bounding box.
-         * @param map_representation Representation of the map.
-         */
-        MapContext(bool is_simulation, double resolution,
-                   double x_min, double x_max,
-                   double y_min, double y_max,
-                   double z_min, double z_max,
-                   int map_representation)
-            : is_simulation(is_simulation),
-              resolution(resolution),
-              x_min(x_min), x_max(x_max),
-              y_min(y_min), y_max(y_max),
-              z_min(z_min), z_max(z_max),
-              map_representation(map_representation) {}
+        double frontier_creation_threshold = 0.3; // Threshold for creating frontiers.
+        double frontier_jump_threshold = 2.0; // Threshold for jumping to a new frontier.
+        double frontier_split_threshold = 0.5; // Threshold for splitting frontiers.
+
+        int sampling_density = 100; // Density of the sampling used in the expansion.
+
+        double max_height_diff = 2.5; // Maximum height difference allowed for floor checking.
+        double min_node_radius = 1.0; // Minimum radius for nodes in the skeleton.
+
+        int min_flowback_creation_threshold = 5; // Minimum threshold for creating flowback frontiers.
+        double min_flowback_creation_radius_threshold = 0.5; // Minimum radius threshold for flowback creation.
+        bool bad_loop_setting = true; // Flag to enable or disable bad loop settings.
+
+        int max_facets_grouped = 10;
+
+        double start_x = 45.0; // Starting x-coordinate for the skeleton expansion.
+        double start_y = -16.0; // Starting y-coordinate for the skeleton expansion.
+        double start_z = 7.0; // Starting z-coordinate for the skeleton expansion
+
+        std::string map = "map.pcd"; // The name of the map file to be used.
+
+        std::string vis_map = "vis_map.pcd"; // The name of the visualization map file.
+
+        // default constructor
+        Config() = default;
     };
 
-    /**
-     * @brief Context for raycasting operations.
-     */
-    struct RaycastingContext
+    struct SharedVars
     {
-        double search_margin;        // Margin for searching in the map.
-        const pcl::search::KdTree<pcl::PointXYZ> &kdtreeForRawMap; // Kd-tree pointer for raw map search.
-        const std::vector<std::shared_ptr<pcl::search::KdTree<pcl::PointXYZ>>> kdtreesForPolys; // Kd-trees for polygons.
-        double max_ray_length; // Maximum length of the ray for raycasting.
-        std::vector<NodePtr>& NodeList; // List of nodes for raycasting operations.
-        const MapContext& map_context; // Context for the map.
+        pcl::search::KdTree<pcl::PointXYZ> kdtreeForRawMap; // Kd-tree for raw map search.
+        std::vector<std::shared_ptr<pcl::search::KdTree<pcl::PointXYZ>>> kdtreesForPolys; // Kd-trees for polygons.
 
-        /**
-         * @brief Default constructor for RaycastingContext.
-         * 
-         * Initializes the raycasting context with default values.
-         */
-        RaycastingContext()
-            : map_representation(0), // Default representation, e.g., point cloud
-              search_margin(0.0),
-              kdtreeForRawMap(*(new pcl::search::KdTree<pcl::PointXYZ>())) // Default empty Kd-tree
-        {}
+        pcl::PointCloud<pcl::PointXYZ> nodes_pcl; // Point cloud for nodes in the skeleton.
 
-        /**
-         * @brief Constructor for RaycastingContext.
-         * 
-         * Initializes the raycasting context with the given parameters.
-         * 
-         * @param map_representation Representation of the map.
-         * @param search_margin Margin for searching in the map.
-         * @param kdtreeForRawMap Kd-tree pointer for raw map search.
-         */
-        RaycastingContext(
-            int map_representation, 
-            double search_margin,
-            const pcl::search::KdTree<pcl::PointXYZ> &kdtreeForRawMap)
-            : map_representation(map_representation),
-              search_margin(search_margin),
-              kdtreeForRawMap(kdtreeForRawMap) {}
-    };
+        std::vector<NodePtr> NodeList; // List of nodes for raycasting operations.
+        std::vector<NodePtr> center_NodeList; // List of center nodes for the skeleton.
+        std::vector<Eigen::Vector3d> sample_directions; // Directions for sampling in the raycasting process.
 
-    struct SamplingContext {
-        std::vector<Eigen::Vector3d>& sample_directions; // Directions for sampling.
-        int sampling_density; // Density of the sampling.
-        const RaycastingContext& ray_context; // Context for raycasting operations.
-
-
-        /**
-         * @brief Default constructor for SamplingContext.
-         * 
-         * Initializes the sampling context with an empty vector for sample directions.
-         */
-        SamplingContext() : 
-            sample_directions(*(new std::vector<Eigen::Vector3d>())), // Default empty vector
-            sampling_density(0), // Default sampling density
-            ray_context(*(new RaycastingContext())) // Default empty RaycastingContext
-        {}
-    };
-
-    /**
-     * @brief Context for the skeleton expansion algorithm.
-     * 
-     * This struct holds the context information for the skeleton expansion algorithm.
-     */
-    struct ExpansionContext {
         Eigen::Vector3d startPt; // The starting point for the skeleton expansion.
-        int sampling_density; // The density of the sampling used in the expansion.
         Eigen::Vector3d bbx_min; // Minimum corner of the bounding box.
         Eigen::Vector3d bbx_max; // Maximum corner of the bounding box.
-        double max_height_diff; // Maximum allowed height difference for floor checking.
-        double min_node_radius; // Minimum radius for nodes in the skeleton.
-        std::deque<FrontierPtr>& loop_candidate_frontiers; // List of candidate frontiers for loops.
-        int min_flowback_creation_threshold; // Minimum threshold for creating flowback frontiers.
-        double min_flowback_creation_radius_threshold; // Minimum radius threshold for flowback creation.
-        bool bad_loop_setting; // Flag to enable or disable bad loop settings.
-        std::vector<NodePtr>& center_NodeList;
-        pcl::PointCloud<pcl::PointXYZ>& nodes_pcl;
 
-        const RaycastingContext& ray_context; // Context for raycasting operations.
+        std::deque<FrontierPtr> loop_candidate_frontiers; // List of candidate frontiers for loops.
+        std::deque<FrontierPtr> pending_frontiers; // List of pending frontiers to be processed.
 
-        const SamplingContext& sampling_context; // Context for sampling operations.
+        std::vector<std::vector<Eigen::Vector3d>> bw_facets_directions; // Directions of black and white facets.
+        
+        Visualizer vis; // Visualizer for displaying the skeleton and other elements.
 
-        /**
-         * @brief Default constructor for ExpansionContext.
-         * 
-         * Initializes the expansion context with default values.
-         */
-        ExpansionContext()
-            : startPt(Eigen::Vector3d::Zero()),
-              sampling_density(0),
-              bbx_min(Eigen::Vector3d::Zero()),
-              bbx_max(Eigen::Vector3d::Zero()),
-              max_ray_length(0.0),
-              max_height_diff(0.0),
-              ray_context(*(new RaycastingContext())), // Default empty RaycastingContext
-              sampling_context(*(new SamplingContext())) // Default empty SamplingContext
-
-        {}
-
-        /**
-         * @brief Constructor for ExpansionContext.
-         * 
-         * Initializes the expansion context with the given parameters.
-         * 
-         * @param startPt Starting point for the skeleton expansion.
-         * @param sampling_density Density of the sampling used in the expansion.
-         * @param bbx_min Minimum corner of the bounding box.
-         * @param bbx_max Maximum corner of the bounding box.
-         * @param max_ray_length Maximum length of the ray for raycasting.
-         * @param max_height_diff Maximum allowed height difference for floor checking.
-         * @param ray_context Context for raycasting operations.
-         */
-        ExpansionContext(
-            const Eigen::Vector3d& startPt, 
-            int sampling_density,
-            const Eigen::Vector3d& bbx_min, 
-            const Eigen::Vector3d& bbx_max,
-            double max_ray_length, 
-            double max_height_diff,
-            const RaycastingContext& ray_context,
-            const SamplingContext& sampling_context)
-            :   startPt(startPt),
-                sampling_density(sampling_density),
-                bbx_min(bbx_min),
-                bbx_max(bbx_max),
-                max_ray_length(max_ray_length),
-                max_height_diff(max_height_diff),
-                ray_context(ray_context),
-                sampling_context(sampling_context)
+        // constructer with config
+        SharedVars(const Config& config)
+            : bbx_min(config.x_min, config.y_min, config.z_min),
+              bbx_max(config.x_max, config.y_max, config.z_max)
         {}
     };
-
-
 } // namespace libcore

@@ -8,34 +8,16 @@
 
 namespace libcore
 {
-    /**
-     * @brief Starts the skeleton expansion algorithm from a given starting point.
-     * 
-     * @param c The context containing parameters for the expansion.
-     */
-    void skeletonExpansion(const ExpansionContext& c);
+    void skeletonExpansion(const Config& config, SharedVars& vars);
 
-    /**
-     * @brief Initializes a node with the given coordinates.
-     * 
-     * This function initializes a node and checks if it is within the bounding box and on the floor.
-     * 
-     * @param curNodePtr Pointer to the node to be initialized.
-     * @param c The context containing parameters for the expansion.
-     */
-    void setStartPt(Eigen::Vector3d& startPt, 
-                    const ExpansionContext& c);
+    void setStartPt(Eigen::Vector3d& startPt, const Config config, SharedVars& vars);
 
-    /**
-     * @brief Initializes a node.
-     * 
-     * This function checks if the node is within the bounding box and on the floor, and generates black and white vertices if it is not a gate.
-     * 
-     * @param curNodePtr Pointer to the node to be initialized.
-     * @param c The context containing parameters for the expansion.
-     * @return true if the node is successfully initialized, false otherwise.
-     */
-    bool initNode(NodePtr curNodePtr, 
-                  const ExpansionContext& c);
+    bool initNode(NodePtr curNodePtr, const Config& config, SharedVars& vars);
+
+    bool processFrontier(FrontierPtr curFtrPtr, const Config& config, SharedVars& vars);
+
+    void recordNode(NodePtr new_node, SharedVars& vars);
+
+    void findFlowBack(NodePtr node, const Config& config, SharedVars& vars);
 
 } // namespace libcore

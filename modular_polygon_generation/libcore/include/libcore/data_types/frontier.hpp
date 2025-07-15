@@ -39,6 +39,8 @@ namespace libcore {
         // Projected facet for visualization or processing
         FacetPtr proj_facet;
 
+        double cos_theta;
+
         // Position of the next node in the frontier
         Eigen::Vector3d next_node_pos;
 

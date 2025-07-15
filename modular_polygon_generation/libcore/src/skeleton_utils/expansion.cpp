@@ -6,26 +6,32 @@
 
 namespace libcore
 {
-    void skeletonExpansion(const ExpansionContext& c) {
-        Eigen::Vector3d startPt = c.startPt;
+    void skeletonExpansion(const Config& config, SharedVars& vars) {
+        Eigen::Vector3d startPt = vars.startPt;
+        std::cout << "Skeleton expansion started at: " 
+                  << startPt.transpose() << std::endl;
 
-        std::vector<Eigen::Vector3d> sample_directions;
-        genSamplesOnUnitSphere(c.sampling_context);
+        std::cout << "Generating samples on unit sphere." << std::endl;
+        genSamplesOnUnitSphere(config, vars);
+        std::cout << "Generated " 
+                  << vars.sample_directions.size() << " sample directions." << std::endl;
 
-        std::vector<std::vector<Eigen::Vector3d>> bw_facets_directions;
-        identifyBwFacets(sample_directions, bw_facets_directions);
+        std::cout << "Identifying first black and white facets." << std::endl;
+        identifyBwFacets(vars.sample_directions, vars.bw_facets_directions);
+        std::cout << "Identified " 
+                  << vars.bw_facets_directions.size() << " black and white facets." << std::endl;
 
-        setStartPt(startPt, c);
+        setStartPt(startPt, config, vars);
 
         FrontierPtr cur_frontier;
-        while (!pending_frontiers.empty()) {
-            ros::Time begin = ros::Time::now();
 
-            cur_frontier = pendingFrontiersPopFront();
+        while (!vars.pending_frontiers.empty()) {
+
+            cur_frontier = pendingFrontiersPopFront(vars.pending_frontiers);
             if (cur_frontier->deleted) continue;
             if (cur_frontier == NULL ) continue;
 
-            verifyFrontier(cur_frontier);
+            verifyFrontier(cur_frontier, config, vars);
 
             if (!cur_frontier->valid) {
                 Eigen::Vector3d prev_proj_center = cur_frontier->proj_center;
@@ -33,25 +39,25 @@ namespace libcore
 
                 cur_frontier->proj_center = cur_frontier->proj_facet->center;
 
-                verifyFrontier(cur_frontier);
+                verifyFrontier(cur_frontier, config, vars);
 
                 if (!cur_frontier->valid) {
                     cur_frontier->proj_center          = prev_proj_center;
                     cur_frontier->outwards_unit_normal = cur_frontier->proj_facet->outwards_unit_normal;
-                    verifyFrontier(cur_frontier);
+                    verifyFrontier(cur_frontier, config, vars);
 
                     if (!cur_frontier->valid) {
                         cur_frontier->proj_center = cur_frontier->proj_facet->center;
-                        verifyFrontier(cur_frontier);
+                        verifyFrontier(cur_frontier, config, vars);
 
                         if (!cur_frontier->valid) {
                             cur_frontier->outwards_unit_normal = prev_normal;
                             for (FacetPtr candidate_facet : cur_frontier->proj_facet->nbhd_facets) {
                                 cur_frontier->proj_center = candidate_facet->center;
-                                verifyFrontier(cur_frontier);
+                                verifyFrontier(cur_frontier, config, vars);
                                 if (!cur_frontier->valid) {
                                     cur_frontier->outwards_unit_normal = candidate_facet->outwards_unit_normal;
-                                    verifyFrontier(cur_frontier);
+                                    verifyFrontier(cur_frontier, config, vars);
                                     if (cur_frontier->valid) break;
                                 } else break;
                             }
@@ -59,48 +65,35 @@ namespace libcore
                     }
                 }
             }
-            ros::Time finish = ros::Time::now();
-            verifyFrontier_timing += (finish - begin).toSec();
-            begin = ros::Time::now();
+            
             if (cur_frontier->valid) {
-                if (!processFrontier(cur_frontier)) {
-                    // ROS_INFO("processFrontier fails.");
-                } else {
-                    if (!_visualize_final_result_only) visualization();
-                    if (_debug_mode) {
-                        ROS_WARN("Expanded a valid frontier.");
-                        visualization();
-                        getchar();
-                    }
-                }
-            } else {
-                if (_debug_mode) {
-                    ROS_WARN("Frontier not valid!");
+                if (!processFrontier(cur_frontier, config, vars)) {
                 }
             }
-            finish = ros::Time::now();
-            processFrontier_timing += (finish - begin).toSec();
         }
     }
 
-    void setStartPt(Eigen::Vector3d& startPt, const ExpansionContext& c) {
+    void setStartPt(Eigen::Vector3d& startPt, const Config config, SharedVars& vars) {
         NodePtr start_node = std::make_shared<Node>(startPt, nullptr);
-        initNode(start_node, c);
+        initNode(start_node, config, vars);
     }
 
-    bool initNode(NodePtr curNodePtr, const ExpansionContext& c) {
-        if (!checkWithinBbx(curNodePtr->coord,
-                            c.bbx_min,
-                            c.bbx_max)) return false;
+    bool initNode(NodePtr curNodePtr, const Config& config, SharedVars& vars) {
+        if (!checkWithinBbx(curNodePtr->coord,vars.bbx_min,vars.bbx_max)) {
+            return false;
+        }
         
-        double max_ray_length = c.ray_context.max_ray_length;
-        double max_height_diff = c.max_height_diff;
-        if (!checkFloor(curNodePtr, max_ray_length, max_height_diff, c.ray_context)) return false;
+        if (!checkFloor(curNodePtr, config.max_ray_length, config.max_height_diff, config, vars)) {
+            return false;
+        }
+
+        auto t_2 = std::chrono::high_resolution_clock::now();
 
         if (!curNodePtr->isGate) {
             genBlackAndWhiteVertices(
                 curNodePtr,
-                c.sampling_context
+                config,
+                vars
             );
 
             if (curNodePtr->black_vertices.size() < 4) return false;
@@ -108,9 +101,10 @@ namespace libcore
             centralizeNodePos(curNodePtr);
 
             double radius = getNodeRadius(curNodePtr);
-            if (radius < c.min_node_radius && 
+            if (radius < config.min_node_radius && 
                 curNodePtr->white_vertices.empty()) return false;
 
+            auto t_1 = std::chrono::high_resolution_clock::now();
             // Absorb node inside node
             if (curNodePtr->seed_frontier != NULL) {
                 bool diff_ind = false;
@@ -123,23 +117,38 @@ namespace libcore
                 }
                 if (!diff_ind) return false;
             }
-            findFlowBack(curNodePtr, c);
+            findFlowBack(curNodePtr, config, vars);
+            auto t_2 = std::chrono::high_resolution_clock::now();
+            std::cout << "Timer 2: "
+                  << std::chrono::duration_cast<std::chrono::milliseconds>(t_2 - t_1).count()
+                  << " ms." << std::endl;
 
-            identifyFacets(curNodePtr);
+            identifyFacets(curNodePtr, vars.bw_facets_directions);
 
-            identifyFrontiers(curNodePtr);
+            identifyFrontiers(curNodePtr, config, vars);
+            auto t_3 = std::chrono::high_resolution_clock::now();
+            std::cout << "Timer 3: "
+                    << std::chrono::duration_cast<std::chrono::milliseconds>(t_3 - t_2).count()
+                    << " ms." << std::endl;
 
-            addFacetsToPcl(curNodePtr);
+            addFacetsToPcl(curNodePtr,config.resolution, vars.kdtreesForPolys);
+
+            auto t_4 = std::chrono::high_resolution_clock::now();
+            std::cout << "Timer 4: "
+                    << std::chrono::duration_cast<std::chrono::milliseconds>(t_4 - t_3).count()
+                    << " ms." << std::endl;
         }
 
-        recordNode(curNodePtr, c);
+
+        recordNode(curNodePtr, vars);
+
         return true;
     }
 
-    void findFlowBack(NodePtr node, const ExpansionContext& c) {
+    void findFlowBack(NodePtr node, const Config& config, SharedVars& vars) {
         if (node->seed_frontier == NULL) return;
 
-        int size = c.loop_candidate_frontiers.size();
+        int size = vars.loop_candidate_frontiers.size();
         std::vector<std::vector<Eigen::Vector3d>> flow_back_frontier_log(size);
         std::vector<FrontierPtr> frontiers(size);
         std::vector<int> pending_frontier_index;
@@ -153,15 +162,15 @@ namespace libcore
             if (checkPtOnFrontier(
                 node->seed_frontier, 
                 v->coord,
-                c.ray_context.search_margin
+                config.search_margin
             )) continue;
 
             FrontierPtr loop_ftr = findFlowBackFrontier(
                 v->coord, 
                 v->collision_node_index,
-                c.center_NodeList,
-                c.ray_context.max_ray_length,
-                c.ray_context.search_margin
+                vars.center_NodeList,
+                config.max_ray_length,
+                config.search_margin
             );
             if (loop_ftr == NULL) {
                 collision_node_index_log.push_back(v->collision_node_index);
@@ -175,8 +184,8 @@ namespace libcore
         // Sort decreasingly: flowback frontiers with more hits first
         for (int i = 0; i < size; i++) {
             if (flow_back_frontier_log.at(i).empty()) continue;
-            if (((int)flow_back_frontier_log.at(i).size() < c.min_flowback_creation_threshold) && 
-                (getVerticesRadius(flow_back_frontier_log.at(i)) < c.min_flowback_creation_radius_threshold)
+            if (((int)flow_back_frontier_log.at(i).size() < config.min_flowback_creation_threshold) && 
+                (getVerticesRadius(flow_back_frontier_log.at(i)) < config.min_flowback_creation_radius_threshold)
             ) continue;
 
             if (pending_frontier_index.empty()) pending_frontier_index.push_back(i);
@@ -217,12 +226,12 @@ namespace libcore
             Eigen::Vector3d end_pt_on_frontier;
             if (flowback_frontier->gate_node == NULL) end_pt_on_frontier = flowback_frontier->proj_center;
             else end_pt_on_frontier = flowback_frontier->gate_node->coord;
-            if (!checkSegClear(node->coord, end_pt_on_frontier) ||
-                !checkSegClear(flowback_frontier->master_node->coord, end_pt_on_frontier)
+            if (!checkSegClear(node->coord, end_pt_on_frontier, config, vars) ||
+                !checkSegClear(flowback_frontier->master_node->coord, end_pt_on_frontier, config, vars)
             ) continue;
 
             // Bad loop: loop only contains 4 nodes
-            if (c.bad_loop_setting) {
+            if (config.bad_loop_setting) {
                 bool bad_loop = false;
                 for (Eigen::Vector3d pos : connected_node_pos) {
                     if (flowback_frontier->gate_node == NULL ||
@@ -245,7 +254,7 @@ namespace libcore
             // Create flowback: new gate node if necessary
             if (flowback_frontier->gate_node == NULL) {
                 NodePtr new_gate = std::make_shared<Node>(flowback_frontier->proj_center, flowback_frontier, true);
-                if (initNode(new_gate, c)) {
+                if (initNode(new_gate, config, vars)) {
                     flowback_frontier->gate_node = new_gate;
                     flowback_frontier->master_node->connected_nodes.push_back(new_gate);
                     new_gate->connected_nodes.push_back(flowback_frontier->master_node);
@@ -254,7 +263,7 @@ namespace libcore
                 } else continue;
             } else if (flowback_frontier->gate_node->rollbacked) {
                 flowback_frontier->gate_node->rollbacked = false;
-                recordNode(flowback_frontier->gate_node);
+                recordNode(flowback_frontier->gate_node, vars);
                 flowback_frontier->master_node->connected_nodes.push_back(
                     flowback_frontier->gate_node);
                 flowback_frontier->gate_node->connected_nodes.push_back(
@@ -273,17 +282,69 @@ namespace libcore
         }
     }
 
-    void recordNode(NodePtr new_node, const ExpansionContext& c) {
-        c.ray_context.NodeList.push_back(new_node);
-        c.nodes_pcl.points.push_back(pcl::PointXYZ(
+    void recordNode(NodePtr new_node, SharedVars& vars) {
+        std::cout << "Recording node at: " 
+                  << new_node->coord.transpose() << std::endl;
+        new_node->id = vars.NodeList.size();
+        vars.NodeList.push_back(new_node);
+        vars.nodes_pcl.points.push_back(pcl::PointXYZ(
             new_node->coord(0), new_node->coord(1), new_node->coord(2))
         );
 
         if (!new_node->isGate) {
-            int index = c.center_NodeList.size();
+            int index = vars.center_NodeList.size();
             new_node->index = index;
-            c.center_NodeList.push_back(new_node);
+            vars.center_NodeList.push_back(new_node);
         }
+
+        // Visualize the node
+        if (vars.vis.isInitialized()) {
+            vars.vis.EnqueueNode(new_node);
+        }
+    }
+
+    bool processFrontier(FrontierPtr curFtrPtr, const Config& config, SharedVars& vars) {
+
+        // Gate node: midpoint of frontier
+        NodePtr gate;
+        if (curFtrPtr->gate_node == NULL) {
+            gate = std::make_shared<Node>(curFtrPtr->proj_center, curFtrPtr, true);
+            curFtrPtr->gate_node = gate;
+        } else {
+            gate = curFtrPtr->gate_node;
+        }
+
+        bool floor = checkFloor(gate, config.max_ray_length, 
+                                config.max_height_diff, config, vars);
+        bool bbx = checkWithinBbx(gate->coord, vars.bbx_min, vars.bbx_max);
+        if (!floor || !bbx) {
+            gate->rollbacked = true;
+            return false;
+        }
+
+        // Center node
+        NodePtr new_node = std::make_shared<Node>(curFtrPtr->next_node_pos, curFtrPtr);
+        bool init_success = initNode(new_node, config, vars);
+
+        if (init_success) {
+            initNode(gate, config, vars);
+            // double-sided pointers
+            curFtrPtr->master_node->connected_nodes.push_back(gate);
+            gate->connected_nodes.push_back(curFtrPtr->master_node);
+            gate->connected_nodes.push_back(new_node);
+            new_node->connected_nodes.push_back(gate);
+        } else {
+            new_node->rollbacked = true;
+            if (gate->connected_nodes.empty()) {
+            gate->rollbacked = true;
+            curFtrPtr->valid = false;
+            for (auto f : curFtrPtr->facets) {
+                f->valid = false;
+            }
+            }
+        }
+
+        return init_success;
     }
 
 } // namespace libcore

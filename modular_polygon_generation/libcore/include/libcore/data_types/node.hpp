@@ -25,6 +25,7 @@ namespace libcore {
     struct Node {
         // Index of the node in the mesh
         int index;
+        int id;
 
         // Coordinates of the node in 3D space
         Eigen::Vector3d coord;

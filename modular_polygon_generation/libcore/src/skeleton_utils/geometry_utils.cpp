@@ -11,14 +11,16 @@ namespace libcore
                 coord(0) <= bbx_max(0) && coord(1) <= bbx_max(1) && coord(2) <= bbx_max(2));
     }
 
-    bool checkFloor(const NodePtr node, 
-                    const double max_ray_length,
-                    const double max_height_diff,
-                    const RaycastingContext& ray_context) {
+    bool checkFloor(
+        const NodePtr node, 
+        const double max_ray_length,
+        const double max_height_diff,
+        const Config& config, SharedVars& vars
+    ) {
         Eigen::Vector3d downwards(0, 0, -1);
         std::pair<Eigen::Vector3d, int> raycast_result =
-            raycastOnRawMap(node->coord, downwards, max_ray_length, ray_context);
-    
+            raycastOnRawMap(node->coord, downwards, max_ray_length, config, vars);
+        
         if (raycast_result.second == -2) return false;
         double floor_height = raycast_result.first(2);
 
@@ -31,13 +33,13 @@ namespace libcore
         if (!node->isGate) {
             Eigen::Vector3d mid = (node->coord + node->seed_frontier->proj_center) / 2;
             std::pair<Eigen::Vector3d, int> raycast_result_mid =
-                raycastOnRawMap(mid, downwards, max_ray_length, ray_context);
+                raycastOnRawMap(mid, downwards, max_ray_length, config, vars);
             if (raycast_result_mid.second == -2) return false;
 
             Eigen::Vector3d mid2 = (node->seed_frontier->proj_center +
                                     node->seed_frontier->master_node->coord) / 2;
             std::pair<Eigen::Vector3d, int> raycast_result_mid2 =
-                raycastOnRawMap(mid2, downwards, max_ray_length, ray_context);
+                raycastOnRawMap(mid2, downwards, max_ray_length, config, vars);
             if (raycast_result_mid2.second == -2) return false;
         }
 
@@ -60,7 +62,7 @@ namespace libcore
         std::vector<float> distance(1);
 
         kdtreeForRawMap.nearestKSearch(searchPoint, 1, indices, distance);
-        double radius = sqrt(indices[0]);
+        double radius = sqrt(distance[0]);
         return radius;
     }
 
@@ -164,10 +166,11 @@ namespace libcore
     bool checkSegClear(
         const Eigen::Vector3d& pos1,
         const Eigen::Vector3d& pos2,
-        const RaycastingContext& ray_context
+        const Config& config,
+        SharedVars& vars
     ) {
         double length = (pos2 - pos1).norm();
-        double step_length = ray_context.map_context.resolution;
+        double step_length = config.resolution;
 
         Eigen::Vector3d step = step_length * (pos2 - pos1) / length;
         int num_steps = ceil(length / step_length);
@@ -175,10 +178,10 @@ namespace libcore
         Eigen::Vector3d begin_pos = pos1;
         for (int i = 0; i < num_steps; i++) {
             Eigen::Vector3d check_pos = begin_pos + i * step;
-            if (collisionCheck(check_pos, ray_context.search_margin, ray_context))
+            if (collisionCheck(check_pos, config.search_margin, config, vars))
                 return false;
         }
-        if (collisionCheck(pos2, ray_context.search_margin, ray_context)) {
+        if (collisionCheck(pos2, config.search_margin, config, vars)) {
             return false;
         }
         return true;
@@ -187,11 +190,12 @@ namespace libcore
     bool collisionCheck(
         const Eigen::Vector3d& search_pt,
         double threshold,
-        const RaycastingContext& ray_context
+        const Config& config,
+        SharedVars& vars
     ) {
         // Point cloud map
-        if (ray_context.map_context.map_representation == 0) {
-            double dis = radiusSearchOnRawMap(search_pt, ray_context.kdtreeForRawMap);
+        if (config.map_representation == 0) {
+            double dis = radiusSearchOnRawMap(search_pt, vars.kdtreeForRawMap);
             if (dis < threshold)
                 return true;
             else
@@ -207,5 +211,80 @@ namespace libcore
         double threshold
     ) {
         return (getDis(coord1, coord2) < threshold);
+    }
+
+    VertexPtr getVertexFromDire(
+        NodePtr node,
+        const Eigen::Vector3d &dire
+    ) 
+    {
+        for (VertexPtr v : node->black_vertices) {
+            if (isSamePos(v->unit_direction, dire))
+            return v;
+        }
+        for (VertexPtr v : node->white_vertices) {
+            if (isSamePos(v->unit_direction, dire))
+            return v;
+        }
+        return NULL;
+    }
+
+    int onCeilOrFloor(
+        const Eigen::Vector3d p,
+        const double z_min,
+        const double z_max,
+        const double search_margin
+    ) {
+        // On ceil
+        if (fabs(p(2) - z_max) < search_margin)
+            return 1;
+        // On floor
+        if (fabs(p(2) - z_min) < search_margin)
+            return -1;
+        // Not on ceil or floor
+        return 0;
+    }
+
+    bool checkPtInPolyhedron(
+        const NodePtr node, 
+        const Eigen::Vector3d pt
+    ) {
+        int intersection_count = 0;
+        double x = pt(0);
+        double y = pt(1);
+        double z = pt(2);
+
+        int num_ftr = node->facets.size();
+        for (int i = 0; i < num_ftr; i++) {
+            FacetPtr inter_ftr_ptr = node->facets.at(i);
+
+            Eigen::Vector3d coord1 = inter_ftr_ptr->vertices.at(0)->coord;
+            Eigen::Vector3d coord2 = inter_ftr_ptr->vertices.at(1)->coord;
+            Eigen::Vector3d coord3 = inter_ftr_ptr->vertices.at(2)->coord;
+
+            double a = inter_ftr_ptr->plane_equation(0);
+            double b = inter_ftr_ptr->plane_equation(1);
+            double c = inter_ftr_ptr->plane_equation(2);
+            double d = inter_ftr_ptr->plane_equation(3);
+
+            double inter_z = -(a * x + b * y + d) / c;
+            Eigen::Vector3d pt_to_judge;
+            pt_to_judge << x, y, inter_z;
+
+            if (inter_z >= z) {
+                Eigen::Vector3d cross1 = (coord2 - coord1).cross(pt_to_judge - coord1);
+                Eigen::Vector3d cross2 = (coord3 - coord2).cross(pt_to_judge - coord2);
+                Eigen::Vector3d cross3 = (coord1 - coord3).cross(pt_to_judge - coord3);
+                if (cross1(0) * cross2(0) > 0 && cross2(0) * cross3(0) > 0 &&
+                    cross3(0) * cross1(0) > 0) {
+                    intersection_count++;
+                }
+            }
+        }
+
+        if (intersection_count % 2 == 0)
+            return false;
+        else
+            return true;
     }
 }

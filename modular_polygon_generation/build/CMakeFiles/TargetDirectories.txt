@@ -1,4 +1,0 @@
-/home/user/behringj0/Documents/3D_Sparse_Skeleton/modular_polygon_generation/build/CMakeFiles/libcore.dir
-/home/user/behringj0/Documents/3D_Sparse_Skeleton/modular_polygon_generation/build/CMakeFiles/test.dir
-/home/user/behringj0/Documents/3D_Sparse_Skeleton/modular_polygon_generation/build/CMakeFiles/edit_cache.dir
-/home/user/behringj0/Documents/3D_Sparse_Skeleton/modular_polygon_generation/build/CMakeFiles/rebuild_cache.dir
