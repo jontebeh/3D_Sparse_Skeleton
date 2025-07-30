@@ -36,6 +36,7 @@ namespace libcore
 
         double max_height_diff = 2.5; // Maximum height difference allowed for floor checking.
         double min_node_radius = 1.0; // Minimum radius for nodes in the skeleton.
+        double fix_height = 1.0; // Fixed height for nodes in the skeleton, if 0 it is not used.
 
         int min_flowback_creation_threshold = 5; // Minimum threshold for creating flowback frontiers.
         double min_flowback_creation_radius_threshold = 0.5; // Minimum radius threshold for flowback creation.
@@ -81,6 +82,8 @@ namespace libcore
         SharedVars(const Config& config)
             : bbx_min(config.x_min, config.y_min, config.z_min),
               bbx_max(config.x_max, config.y_max, config.z_max)
-        {}
+        {
+            // You can initialize other members here if needed
+        }
     };
 } // namespace libcore

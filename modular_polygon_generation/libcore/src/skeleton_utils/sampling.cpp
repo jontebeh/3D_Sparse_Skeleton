@@ -29,7 +29,8 @@ namespace libcore
     void genBlackAndWhiteVertices(
         NodePtr nodePtr,
         const Config& config,
-        SharedVars& vars) {
+        SharedVars& vars) 
+    {
         for (auto it = vars.sample_directions.begin(); it != vars.sample_directions.end(); it++) {
             int index = nodePtr->sampling_directions.size();
             nodePtr->sampling_directions.push_back(quickhull::Vector3<double>((*it)(0), (*it)(1), (*it)(2)));
@@ -37,14 +38,15 @@ namespace libcore
             std::pair<Eigen::Vector3d, int> raycast_result = raycast(
                 nodePtr->coord, *it, 
                 config.max_ray_length, 
-                config, vars);
+                config, vars); // find the intersection point with the map
+
             Eigen::Vector3d newVertex = raycast_result.first;
-            if (raycast_result.second == -2) {
+            if (raycast_result.second == -2) { // if no point was found add a white vertex
                 newVertex += (*it) * config.max_ray_length;
                 VertexPtr new_white_vertex = std::make_shared<Vertex>(newVertex, (*it), VertexType::WHITE);
                 new_white_vertex->sampling_direction_index = index;
                 nodePtr->white_vertices.push_back(new_white_vertex);
-            } else {
+            } else { // if a point was found add a black vertex
                 VertexPtr new_black_vertex = std::make_shared<Vertex>(newVertex, (*it), VertexType::BLACK);
                 new_black_vertex->collision_node_index = raycast_result.second;
                 new_black_vertex->sampling_direction_index = index;

@@ -17,9 +17,9 @@ namespace libcore
         const double max_height_diff,
         const Config& config, SharedVars& vars
     ) {
-        Eigen::Vector3d downwards(0, 0, -1);
+        Eigen::Vector3d downwards(0, 0, -1); // Direction vector pointing downwards
         std::pair<Eigen::Vector3d, int> raycast_result =
-            raycastOnRawMap(node->coord, downwards, max_ray_length, config, vars);
+            raycastOnRawMap(node->coord, downwards, max_ray_length, config, vars); 
         
         if (raycast_result.second == -2) return false;
         double floor_height = raycast_result.first(2);
@@ -53,16 +53,16 @@ namespace libcore
 
     double radiusSearchOnRawMap(const Eigen::Vector3d& search_Pt, 
                                 const pcl::search::KdTree<pcl::PointXYZ>& kdtreeForRawMap) {
-        pcl::PointXYZ searchPoint;
+        pcl::PointXYZ searchPoint; // Create a point new point of type pcl::PointXYZ
         searchPoint.x = search_Pt(0);
         searchPoint.y = search_Pt(1);
         searchPoint.z = search_Pt(2);
 
-        std::vector<int> indices(1);
-        std::vector<float> distance(1);
+        std::vector<int> indices(1); // we only need the index of the nearest point
+        std::vector<float> distance(1); // we only need the distance to the nearest point
 
-        kdtreeForRawMap.nearestKSearch(searchPoint, 1, indices, distance);
-        double radius = sqrt(distance[0]);
+        kdtreeForRawMap.nearestKSearch(searchPoint, 1, indices, distance); // Perform the nearest neighbor search
+        double radius = sqrt(distance[0]); // Convert squared distance to radius
         return radius;
     }
 
@@ -75,10 +75,10 @@ namespace libcore
         const std::vector<std::shared_ptr<pcl::search::KdTree<pcl::PointXYZ>>>& kdtreesForPolys
     ) 
     {
-        double min_dis = radiusSearchOnRawMap(search_Pt, kdtreeForRawMap);
+        double min_dis = radiusSearchOnRawMap(search_Pt, kdtreeForRawMap); // Distance to the nearest point in the raw map
         int min_dis_node_index = -1;
 
-        if (min_dis < search_margin) {
+        if (min_dis < search_margin) { // If the nearest point is within the search margin
             return std::make_pair(min_dis, min_dis_node_index);
         }
 
@@ -88,7 +88,7 @@ namespace libcore
         searchPoint.z = search_Pt(2);
 
         for (NodePtr node : NodeList) {
-            if (node->rollbacked || node->isGate) continue;
+            if (node->rollbacked || node->isGate) continue; // Skip rollbacked and gate nodes
 
             if (getDis(node->original_coord, search_Pt) > max_ray_length + min_dis) continue;
 
@@ -286,5 +286,21 @@ namespace libcore
             return false;
         else
             return true;
+    }
+
+    Eigen::Vector3d computeNormalNewell(const std::vector<VertexPtr>& vertices) {
+        Eigen::Vector3d normal = Eigen::Vector3d::Zero();
+        int num_vertices = vertices.size();
+
+        for (int i = 0; i < num_vertices; i++) {
+            const Eigen::Vector3d& v1 = vertices[i]->coord;
+            const Eigen::Vector3d& v2 = vertices[(i + 1) % num_vertices]->coord;
+            normal(0) += (v1(1) - v2(1)) * (v1(2) + v2(2));
+            normal(1) += (v1(2) - v2(2)) * (v1(0) + v2(0));
+            normal(2) += (v1(0) - v2(0)) * (v1(1) + v2(1));
+        }
+        
+        normal.normalize();
+        return normal;
     }
 }

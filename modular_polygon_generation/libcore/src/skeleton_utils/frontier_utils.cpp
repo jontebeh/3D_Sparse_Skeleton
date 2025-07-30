@@ -184,14 +184,12 @@ namespace libcore
         }
 
         // Calculate outwards normal for each facet
-        int num_facet = node->facets.size();
-        for (int i = 0; i < num_facet; i++) {
+        /* OLD CODE
+        for (int i = 0; i < node->facets.size(); i++) {
             FacetPtr facet_ptr = node->facets.at(i);
 
-            Eigen::Vector3d v1 =
-                facet_ptr->vertices.at(1)->coord - facet_ptr->vertices.at(0)->coord;
-            Eigen::Vector3d v2 =
-                facet_ptr->vertices.at(2)->coord - facet_ptr->vertices.at(0)->coord;
+            Eigen::Vector3d v1 = facet_ptr->vertices.at(1)->coord - facet_ptr->vertices.at(0)->coord;
+            Eigen::Vector3d v2 = facet_ptr->vertices.at(2)->coord - facet_ptr->vertices.at(0)->coord;
             Eigen::Vector3d candidate_normal = v1.cross(v2);
             candidate_normal.normalize();
 
@@ -200,6 +198,19 @@ namespace libcore
                 facet_ptr->outwards_unit_normal = -candidate_normal;
             else
                 facet_ptr->outwards_unit_normal = candidate_normal;
+        }*/
+
+        // Calculate outwards normal for each facet
+        for (FacetPtr facet : node->facets) {
+            Eigen::Vector3d normal = computeNormalNewell(facet->vertices);
+
+            // if the point is inside flip it
+            Eigen::Vector3d center_dir = facet->center - node->coord;
+            if (center_dir.dot(normal) < 0) {
+                facet->outwards_unit_normal = -normal;
+            } else {
+                facet->outwards_unit_normal = normal;
+            }
         }
 
         // Create frontiers given group black vertices

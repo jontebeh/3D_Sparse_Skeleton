@@ -79,33 +79,29 @@ namespace libcore
     }
 
     bool initNode(NodePtr curNodePtr, const Config& config, SharedVars& vars) {
-        if (!checkWithinBbx(curNodePtr->coord,vars.bbx_min,vars.bbx_max)) {
+        if (!checkWithinBbx(curNodePtr->coord,vars.bbx_min,vars.bbx_max)) { // check if the point is within the bounding box
             return false;
         }
         
-        if (!checkFloor(curNodePtr, config.max_ray_length, config.max_height_diff, config, vars)) {
+        if (!checkFloor(curNodePtr, config.max_ray_length, config.max_height_diff, config, vars)) { // check if the point is on the floor ToDO: check height
             return false;
         }
-
-        auto t_2 = std::chrono::high_resolution_clock::now();
 
         if (!curNodePtr->isGate) {
             genBlackAndWhiteVertices(
                 curNodePtr,
                 config,
                 vars
-            );
+            ); // Generate black and white vertices for the node
 
             if (curNodePtr->black_vertices.size() < 4) return false;
 
-            centralizeNodePos(curNodePtr);
+            centralizeNodePos(curNodePtr); // Centralize the node position according to the black vertices
 
-            double radius = getNodeRadius(curNodePtr);
+            double radius = getNodeRadius(curNodePtr); // avg distance to all vertices
             if (radius < config.min_node_radius && 
-                curNodePtr->white_vertices.empty()) return false;
+                curNodePtr->white_vertices.empty()) return false; // if the radius is too small and there are no white vertices, discard the node
 
-            auto t_1 = std::chrono::high_resolution_clock::now();
-            // Absorb node inside node
             if (curNodePtr->seed_frontier != NULL) {
                 bool diff_ind = false;
                 int ind = curNodePtr->black_vertices.at(0)->collision_node_index;
@@ -117,26 +113,14 @@ namespace libcore
                 }
                 if (!diff_ind) return false;
             }
-            findFlowBack(curNodePtr, config, vars);
-            auto t_2 = std::chrono::high_resolution_clock::now();
-            std::cout << "Timer 2: "
-                  << std::chrono::duration_cast<std::chrono::milliseconds>(t_2 - t_1).count()
-                  << " ms." << std::endl;
+
+            findFlowBack(curNodePtr, config, vars); // ToDo figure out what this does
 
             identifyFacets(curNodePtr, vars.bw_facets_directions);
 
             identifyFrontiers(curNodePtr, config, vars);
-            auto t_3 = std::chrono::high_resolution_clock::now();
-            std::cout << "Timer 3: "
-                    << std::chrono::duration_cast<std::chrono::milliseconds>(t_3 - t_2).count()
-                    << " ms." << std::endl;
 
-            addFacetsToPcl(curNodePtr,config.resolution, vars.kdtreesForPolys);
-
-            auto t_4 = std::chrono::high_resolution_clock::now();
-            std::cout << "Timer 4: "
-                    << std::chrono::duration_cast<std::chrono::milliseconds>(t_4 - t_3).count()
-                    << " ms." << std::endl;
+            addFacetsToPcl(curNodePtr,config.resolution, vars.kdtreesForPolys); // add the facets as points to the kdtrees so collision detection can be done on them
         }
 
 
@@ -304,9 +288,9 @@ namespace libcore
     }
 
     bool processFrontier(FrontierPtr curFtrPtr, const Config& config, SharedVars& vars) {
-
         // Gate node: midpoint of frontier
         NodePtr gate;
+
         if (curFtrPtr->gate_node == NULL) {
             gate = std::make_shared<Node>(curFtrPtr->proj_center, curFtrPtr, true);
             curFtrPtr->gate_node = gate;
