@@ -45,7 +45,7 @@ namespace libcore {
                     Eigen::Vector3d new_pos(node->coord(0), node->coord(1), node->coord(2));
                     auto sphere = geometry::TriangleMesh::CreateSphere(0.1);
                     sphere->Translate(new_pos);
-                    sphere->PaintUniformColor({1.0, 0.0, 0.0});
+                    sphere->PaintUniformColor({1.0, 0.0, 0.0}); // Red for nodes
                     spheres_.push_back(sphere);
                     node_spheres_[node->id] = sphere;
                     vis_->AddGeometry(sphere, false);
@@ -65,6 +65,23 @@ namespace libcore {
                         line->PaintUniformColor({0.0, 1.0, 0.0});
                         vis_->AddGeometry(line, false);
                     }
+
+                    // display white and black vertices
+                    for (const auto &v : node->black_vertices) {
+                        auto sphere = geometry::TriangleMesh::CreateSphere(0.05);
+                        sphere->Translate(v->coord);
+                        sphere->PaintUniformColor({0.0, 0.0, 1.0}); // Blue for black vertices
+                        //vis_->AddGeometry(sphere, false);
+                    }
+
+                    for (const auto &v : node->white_vertices) {
+                        auto sphere = geometry::TriangleMesh::CreateSphere(0.05);
+                        sphere->Translate(v->coord);
+                        sphere->PaintUniformColor({1.0, 1.0, 0.0}); // Yellow for white vertices
+                        //vis_->AddGeometry(sphere, false);
+                    }
+
+                    
                 }
             }
 

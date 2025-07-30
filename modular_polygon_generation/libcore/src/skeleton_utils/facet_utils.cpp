@@ -5,10 +5,10 @@
 
 namespace libcore
 {
-    void identifyBwFacets(std::vector<Eigen::Vector3d> &sample_directions,
-                          std::vector<std::vector<Eigen::Vector3d>> &bw_facets_directions)
+    void identifyBwFacets(
+        std::vector<Eigen::Vector3d> &sample_directions,
+        std::vector<std::vector<Eigen::Vector3d>> &bw_facets_directions)
     {
-        // Mesh2 is for black and white polygon
         quickhull::QuickHull<double> qh;
         quickhull::HalfEdgeMesh<double, size_t> mesh2 = qh.getConvexHullAsMesh(
             &sample_directions[0](0), sample_directions.size(), true);
