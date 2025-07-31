@@ -200,7 +200,7 @@ namespace libcore
                 facet_ptr->outwards_unit_normal = candidate_normal;
         }*/
 
-        // Calculate outwards normal for each facet
+        // Calculate outwards normal for each facet using Newell's method
         for (FacetPtr facet : node->facets) {
             Eigen::Vector3d normal = computeNormalNewell(facet->vertices);
 

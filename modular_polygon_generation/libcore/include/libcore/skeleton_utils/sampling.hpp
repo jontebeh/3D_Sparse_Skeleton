@@ -6,7 +6,8 @@
 #include <libcore/data_types/contexts.hpp>
 
 namespace libcore{
-    void genSamplesOnUnitSphere(const Config& config, SharedVars& vars);
+
+    void genSamplesOnShape(const Config& config, SharedVars& vars);
 
     void genBlackAndWhiteVertices(
         NodePtr nodePtr,

@@ -12,7 +12,7 @@ namespace libcore
                   << startPt.transpose() << std::endl;
 
         std::cout << "Generating samples on unit sphere." << std::endl;
-        genSamplesOnUnitSphere(config, vars);
+        genSamplesOnShape(config, vars);
         std::cout << "Generated " 
                   << vars.sample_directions.size() << " sample directions." << std::endl;
 
@@ -122,7 +122,6 @@ namespace libcore
 
             addFacetsToPcl(curNodePtr,config.resolution, vars.kdtreesForPolys); // add the facets as points to the kdtrees so collision detection can be done on them
         }
-
 
         recordNode(curNodePtr, vars);
 
@@ -284,6 +283,8 @@ namespace libcore
         // Visualize the node
         if (vars.vis.isInitialized()) {
             vars.vis.EnqueueNode(new_node);
+            // wait for input for debugging
+            //std::cin.get();
         }
     }
 

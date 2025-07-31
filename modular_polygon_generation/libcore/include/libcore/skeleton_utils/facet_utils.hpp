@@ -11,7 +11,7 @@
 namespace libcore
 {
     void identifyBwFacets(
-        std::vector<Eigen::Vector3d> &sample_directions,
+        std::vector<std::pair<Eigen::Vector3d, double>> &sample_directions,
         std::vector<std::vector<Eigen::Vector3d>> &bw_facets_directions);
     
     bool checkPtOnFacet(
