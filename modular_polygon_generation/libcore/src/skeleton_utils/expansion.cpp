@@ -12,7 +12,7 @@ namespace libcore
                   << startPt.transpose() << std::endl;
 
         std::cout << "Generating samples on unit sphere." << std::endl;
-        genSamplesOnUnitSphere(config, vars);
+        genSamplesOnShape(config, vars);
         std::cout << "Generated " 
                   << vars.sample_directions.size() << " sample directions." << std::endl;
 

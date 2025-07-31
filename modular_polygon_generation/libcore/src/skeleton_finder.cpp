@@ -57,6 +57,7 @@ namespace libcore {
             [&vars, &config]() {
                 std::cout << "Starting skeleton expansion..." << std::endl;
                 skeletonExpansion(config, vars);
+                std::cout << "Skeleton expansion completed." << std::endl;
             }
         );
 
@@ -128,7 +129,6 @@ namespace libcore {
 
         Config cfg;
         cfg.is_simulation = ini.GetBoolValue("Map", "is_simulation", cfg.is_simulation);
-        cfg.resolution = ini.GetDoubleValue("Map", "resolution", cfg.resolution);
         cfg.x_min = ini.GetDoubleValue("Map", "x_min", cfg.x_min);
         cfg.x_max = ini.GetDoubleValue("Map", "x_max", cfg.x_max);
         cfg.y_min = ini.GetDoubleValue("Map", "y_min", cfg.y_min);
@@ -139,13 +139,14 @@ namespace libcore {
         cfg.map = ini.GetValue("Map", "map_name", cfg.map.c_str());
         cfg.vis_map = ini.GetValue("Map", "vis_map_name", cfg.vis_map.c_str());
 
+
+        cfg.resolution = ini.GetDoubleValue("Raycasting", "resolution", cfg.resolution);
         cfg.search_margin = ini.GetDoubleValue("Raycasting", "search_margin", cfg.search_margin);
         cfg.max_ray_length = ini.GetDoubleValue("Raycasting", "max_ray_length", cfg.max_ray_length);
         cfg.max_expansion_ray_length = ini.GetDoubleValue("Raycasting", "max_expansion_ray_length", cfg.max_expansion_ray_length);
         cfg.frontier_creation_threshold = ini.GetDoubleValue("Raycasting", "frontier_creation_threshold", cfg.frontier_creation_threshold);
         cfg.frontier_jump_threshold = ini.GetDoubleValue("Raycasting", "frontier_jump_threshold", cfg.frontier_jump_threshold);
         cfg.frontier_split_threshold = ini.GetDoubleValue("Raycasting", "frontier_split_threshold", cfg.frontier_split_threshold);
-        cfg.sampling_density = ini.GetLongValue("Raycasting", "sampling_density", cfg.sampling_density);
         cfg.max_height_diff = ini.GetDoubleValue("Raycasting", "max_height_diff", cfg.max_height_diff);
         cfg.min_node_radius = ini.GetDoubleValue("Raycasting", "min_node_radius", cfg.min_node_radius);
         cfg.min_flowback_creation_threshold = ini.GetLongValue("Raycasting", "min_flowback_creation_threshold", cfg.min_flowback_creation_threshold);
@@ -156,6 +157,13 @@ namespace libcore {
         cfg.start_x = ini.GetDoubleValue("Raycasting", "start_x", cfg.start_x);
         cfg.start_y = ini.GetDoubleValue("Raycasting", "start_y", cfg.start_y);
         cfg.start_z = ini.GetDoubleValue("Raycasting", "start_z", cfg.start_z);
+
+
+        cfg.sampling_density = ini.GetLongValue("Sampling", "sampling_density", cfg.sampling_density);
+        cfg.sampling_width = ini.GetDoubleValue("Sampling", "sampling_width", cfg.sampling_width);
+        cfg.sampling_height = ini.GetDoubleValue("Sampling", "sampling_height", cfg.sampling_height);
+        cfg.sampling_depth = ini.GetDoubleValue("Sampling", "sampling_depth", cfg.sampling_depth);
+        cfg.sampling_sharpness = ini.GetDoubleValue("Sampling", "sampling_sharpness", cfg.sampling_sharpness);
 
         std::cout << "Config loaded from " << config_file << "\n";
         return cfg;

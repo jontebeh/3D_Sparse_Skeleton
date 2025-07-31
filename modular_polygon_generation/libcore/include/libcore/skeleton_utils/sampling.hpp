@@ -6,7 +6,15 @@
 #include <libcore/data_types/contexts.hpp>
 
 namespace libcore{
-    void genSamplesOnUnitSphere(const Config& config, SharedVars& vars);
+    double superquadricFunction(
+        const Eigen::Vector3d& direction,
+        double width,
+        double height,
+        double depth,
+        double sharpness
+    );
+
+    void genSamplesOnShape(const Config& config, SharedVars& vars);
 
     void genBlackAndWhiteVertices(
         NodePtr nodePtr,
