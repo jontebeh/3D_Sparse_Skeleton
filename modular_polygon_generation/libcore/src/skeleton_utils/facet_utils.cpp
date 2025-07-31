@@ -10,8 +10,17 @@ namespace libcore
         std::vector<std::vector<Eigen::Vector3d>> &bw_facets_directions)
     {
         quickhull::QuickHull<double> qh;
+        std::vector<double> flat_points;
+        flat_points.reserve(sample_directions.size() * 3);
+
+        for (const auto& [dir, _] : sample_directions) {
+            flat_points.push_back(dir.x());
+            flat_points.push_back(dir.y());
+            flat_points.push_back(dir.z());
+        }
+
         quickhull::HalfEdgeMesh<double, size_t> mesh2 = qh.getConvexHullAsMesh(
-            &sample_directions[0].first(0), sample_directions.size(), true);
+            flat_points.data(), sample_directions.size(), true);
 
         for (auto &face : mesh2.m_faces) {
             quickhull::HalfEdgeMesh<double, size_t>::HalfEdge &halfedge =
@@ -72,6 +81,12 @@ namespace libcore
             v1 = getVertexFromDire(node, facet_vertices.at(0));
             v2 = getVertexFromDire(node, facet_vertices.at(1));
             v3 = getVertexFromDire(node, facet_vertices.at(2));
+
+            if (!v1 || !v2 || !v3) {
+                std::cerr << "Warning: Facet vertex missing\n";
+                continue;
+            }
+
             v1->connected_vertices.push_back(v2);
             v2->connected_vertices.push_back(v3);
             v3->connected_vertices.push_back(v1);

@@ -163,7 +163,8 @@ namespace libcore {
         cfg.sampling_width = ini.GetDoubleValue("Sampling", "sampling_width", cfg.sampling_width);
         cfg.sampling_height = ini.GetDoubleValue("Sampling", "sampling_height", cfg.sampling_height);
         cfg.sampling_depth = ini.GetDoubleValue("Sampling", "sampling_depth", cfg.sampling_depth);
-        cfg.sampling_sharpness = ini.GetDoubleValue("Sampling", "sampling_sharpness", cfg.sampling_sharpness);
+        cfg.sampling_sharpness_eps1 = ini.GetDoubleValue("Sampling", "sampling_sharpness_eps1", cfg.sampling_sharpness_eps1);
+        cfg.sampling_sharpness_eps2 = ini.GetDoubleValue("Sampling", "sampling_sharpness_eps2", cfg.sampling_sharpness_eps2);
 
         std::cout << "Config loaded from " << config_file << "\n";
         return cfg;
