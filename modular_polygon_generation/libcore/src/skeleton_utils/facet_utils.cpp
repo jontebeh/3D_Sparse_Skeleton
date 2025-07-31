@@ -6,12 +6,12 @@
 namespace libcore
 {
     void identifyBwFacets(
-        std::vector<Eigen::Vector3d> &sample_directions,
+        std::vector<std::pair<Eigen::Vector3d, double>> &sample_directions,
         std::vector<std::vector<Eigen::Vector3d>> &bw_facets_directions)
     {
         quickhull::QuickHull<double> qh;
         quickhull::HalfEdgeMesh<double, size_t> mesh2 = qh.getConvexHullAsMesh(
-            &sample_directions[0](0), sample_directions.size(), true);
+            &sample_directions[0].first(0), sample_directions.size(), true);
 
         for (auto &face : mesh2.m_faces) {
             quickhull::HalfEdgeMesh<double, size_t>::HalfEdge &halfedge =

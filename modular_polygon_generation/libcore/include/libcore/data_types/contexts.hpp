@@ -33,6 +33,10 @@ namespace libcore
         double frontier_split_threshold = 0.5; // Threshold for splitting frontiers.
 
         int sampling_density = 100; // Density of the sampling used in the expansion.
+        double sampling_width = 0.5; // Width of the sampling used in the expansion.
+        double sampling_height = 0.5; // Height of the sampling used in the expansion.
+        double sampling_depth = 0.5; // Depth of the sampling used in the expansion.
+        double sampling_sharpness = 0.5; // Sharpness of the sampling used in the expansion.
 
         double max_height_diff = 2.5; // Maximum height difference allowed for floor checking.
         double min_node_radius = 1.0; // Minimum radius for nodes in the skeleton.
@@ -65,7 +69,7 @@ namespace libcore
 
         std::vector<NodePtr> NodeList; // List of nodes for raycasting operations.
         std::vector<NodePtr> center_NodeList; // List of center nodes for the skeleton.
-        std::vector<Eigen::Vector3d> sample_directions; // Directions for sampling in the raycasting process.
+        std::vector<std::pair<Eigen::Vector3d, double>> sample_directions; // Directions for sampling in the raycasting process and their corresponding distances.
 
         Eigen::Vector3d startPt; // The starting point for the skeleton expansion.
         Eigen::Vector3d bbx_min; // Minimum corner of the bounding box.
