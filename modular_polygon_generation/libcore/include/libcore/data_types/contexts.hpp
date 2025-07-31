@@ -36,7 +36,8 @@ namespace libcore
         double sampling_width = 0.5; // Width of the sampling used in the expansion.
         double sampling_height = 0.5; // Height of the sampling used in the expansion.
         double sampling_depth = 0.5; // Depth of the sampling used in the expansion.
-        double sampling_sharpness = 0.5; // Sharpness of the sampling used in the expansion.
+        double sampling_sharpness_eps1 = 0.5; // Sharpness of the sampling used in the expansion for x and y directions.
+        double sampling_sharpness_eps2 = 0.5; // Sharpness of the sampling used in the expansion for z direction.
 
         double max_height_diff = 2.5; // Maximum height difference allowed for floor checking.
         double min_node_radius = 1.0; // Minimum radius for nodes in the skeleton.

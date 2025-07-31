@@ -9,61 +9,77 @@
 namespace libcore
 {
 
-    double superquadricFunction(
-        const Eigen::Vector3d& dir,
-        double width, double height, double depth, double sharpness)
-    {
-        double x = dir.x();
-        double y = dir.y();
-        double z = dir.z();
+    std::vector<Eigen::Vector3d> genUnitSphereDir(int num_samples) {
+        // Fibonicci sphere
+        double phi = M_PI * (3 - sqrt(5));
+        double x, y, z, radius, theta;
 
-        double term1 = std::pow(
-            std::pow(std::abs(x / width), 2.0 / sharpness) +
-            std::pow(std::abs(y / height), 2.0 / sharpness),
-            sharpness / 2.0
-        );
-        double term2 = std::pow(std::abs(z / depth), 2.0 / sharpness);
+        std::vector<Eigen::Vector3d> directions;
+        directions.reserve(num_samples);
 
-        double denom = term1 + term2;
-        if (denom < 1e-6) denom = 1e-6;  // avoid division by zero
+        for (int i = 0; i < num_samples; i++) {
+            y = 1 - 2 * ((float)i / (float)(num_samples - 1));
+            radius = sqrt(1 - y * y);
+            theta = phi * i;
+            x = cos(theta) * radius;
+            z = sin(theta) * radius;
 
-        return 1.0 / std::pow(denom, 0.5);
+            Eigen::Vector3d sample;
+            sample << x, y, z;
+            sample.normalize();
+            directions.push_back(sample);
+        }
+        return directions;
     }
+
+    double superquadricDistanceAlongDirection(
+        const Eigen::Vector3d& dir,
+        double width, double height, double depth,
+        double epsilon1, double epsilon2)
+    {
+        Eigen::Vector3d d = dir.normalized();
+
+        double dx = d.x();
+        double dy = d.y();
+        double dz = d.z();
+
+        double term_xy = std::pow(
+            std::pow(std::abs(dx / width), 2.0 / epsilon2) +
+            std::pow(std::abs(dy / depth), 2.0 / epsilon2),
+            epsilon2 / epsilon1
+        );
+
+        double term_z = std::pow(std::abs(dz / height), 2.0 / epsilon1);
+
+        double denom = term_xy + term_z;
+
+        if (denom < 1e-12)
+            return 0.0; // Avoid division by zero; direction aligned with null superquadric
+
+        return std::pow(denom, -epsilon1 / 2.0);
+    }
+
 
     void genSamplesOnShape(const Config& config, SharedVars& vars) {
         // Morphological shape sampling
         double width = config.sampling_width;
         double height = config.sampling_height;
         double depth = config.sampling_depth;
-        double sharpness = config.sampling_sharpness;
+        double eps_1 = config.sampling_sharpness_eps1;
+        double eps_2 = config.sampling_sharpness_eps2;
         int samples = config.sampling_density;
 
-        // Generate sampling directions based on the shape parameters
-        int lat_samples = std::sqrt(samples);
-        int lon_samples = lat_samples; // Assuming a square distribution for simplicity
-
         vars.sample_directions.clear();
-        //vars.sample_directions.reserve(lat_samples * lon_samples);
+        vars.sample_directions.reserve(samples);
 
-        for (int i = 0; i < lat_samples; ++i) {
-            double theta = M_PI * double(i) / (lat_samples - 1); // Polar angle
-            for (int j = 0; j < lon_samples; ++j) {
-                double phi = 2 * M_PI * double(j) / lon_samples; // Azimuthal angle
+        std::vector<Eigen::Vector3d> unit_sphere_dirs = genUnitSphereDir(samples);
 
-                // Spherical to Cartesian conversion
-                Eigen::Vector3d direction(
-                    std::sin(theta) * std::cos(phi),
-                    std::sin(theta) * std::sin(phi),
-                    std::cos(theta)
-                );
-                direction.normalize();
+        for (const Eigen::Vector3d& dir : unit_sphere_dirs) {
 
-                // Scale the direction vector by the superquadric function
-                double scale = superquadricFunction(direction, width, height, depth, sharpness);
-                if (scale > 0) {
-                    direction.normalize(); // Normalize the direction vector
-                    vars.sample_directions.emplace_back(direction, scale);
-                }
+            // Scale the direction vector by the superquadric function
+            double scale = superquadricDistanceAlongDirection(dir, width, height, depth, eps_1, eps_2);
+            if (scale > 0) {
+                vars.sample_directions.emplace_back(dir, scale);
             }
         }
     }
@@ -83,7 +99,7 @@ namespace libcore
 
             std::pair<Eigen::Vector3d, int> raycast_result = raycast(
                 nodePtr->coord, direction, 
-                config.max_ray_length, 
+                length,
                 config, vars); // find the intersection point with the map
 
             Eigen::Vector3d newVertex = raycast_result.first;

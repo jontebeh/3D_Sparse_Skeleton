@@ -71,14 +71,14 @@ namespace libcore {
                         auto sphere = geometry::TriangleMesh::CreateSphere(0.05);
                         sphere->Translate(v->coord);
                         sphere->PaintUniformColor({0.0, 0.0, 1.0}); // Blue for black vertices
-                        vis_->AddGeometry(sphere, false);
+                        //vis_->AddGeometry(sphere, false);
                     }
 
                     for (const auto &v : node->white_vertices) {
                         auto sphere = geometry::TriangleMesh::CreateSphere(0.05);
                         sphere->Translate(v->coord);
                         sphere->PaintUniformColor({1.0, 1.0, 0.0}); // Yellow for white vertices
-                        vis_->AddGeometry(sphere, false);
+                        //vis_->AddGeometry(sphere, false);
                     }
 
                     
