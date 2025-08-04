@@ -26,6 +26,7 @@ namespace libcore {
         // Index of the node in the mesh
         int index;
         int id;
+        int debug_id = 0; // Debugging identifier
 
         // Coordinates of the node in 3D space
         Eigen::Vector3d coord;

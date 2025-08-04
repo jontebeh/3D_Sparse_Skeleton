@@ -79,6 +79,9 @@ namespace libcore
     }
 
     bool initNode(NodePtr curNodePtr, const Config& config, SharedVars& vars) {
+        // give the node an unique id
+        curNodePtr->debug_id = vars.node_index++;
+
         if (!checkWithinBbx(curNodePtr->coord,vars.bbx_min,vars.bbx_max)) { // check if the point is within the bounding box
             return false;
         }

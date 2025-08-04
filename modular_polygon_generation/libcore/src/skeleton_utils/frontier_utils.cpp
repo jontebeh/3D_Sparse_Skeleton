@@ -423,6 +423,10 @@ namespace libcore
         double nz = frontier->outwards_unit_normal(2);
 
         int num_facet = frontier->facets.size();
+        if (num_facet == 0) {
+            std::cerr << "No facets in frontier!" << std::endl;
+            return false;
+        }
         for (int i = 0; i < num_facet; i++) {
             double a = frontier->facets.at(i)->plane_equation(0);
             double b = frontier->facets.at(i)->plane_equation(1);
@@ -458,8 +462,7 @@ namespace libcore
             double min_angle = M_PI;
             FacetPtr best_facet;
             for (FacetPtr f : frontier->facets) {
-                double angle =
-                    acos(frontier->outwards_unit_normal.dot(f->outwards_unit_normal));
+                double angle = acos(frontier->outwards_unit_normal.dot(f->outwards_unit_normal));
                 if (angle < min_angle) {
                     min_angle = angle;
                     best_facet = f;
