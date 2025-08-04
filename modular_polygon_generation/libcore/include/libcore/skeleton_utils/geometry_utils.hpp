@@ -20,6 +20,19 @@ namespace libcore
         const double max_height_diff,
         const Config& config, SharedVars& vars
     );
+
+    /**
+     * @brief Computes the height difference between a point and the floor.
+     * 
+     * @param coord The coordinates to check.
+     * @param config The configuration containing parameters for raycasting.
+     * @param vars Shared variables containing context for the operation.
+     * 
+     * @return The height difference between the point and the floor.
+     */
+    double getFloorHeight(
+        Eigen::Vector3d& coord, 
+        const Config& config, SharedVars& vars);
     
     /**
      * @brief Performs a knn search on the raw map for finding the min distance to the nearest point.

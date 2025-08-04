@@ -2,6 +2,7 @@
 #include <libcore/skeleton_utils/map_interface.hpp>
 #include <libcore/skeleton_utils/expansion.hpp>
 #include <libcore/visualizer.hpp>
+#include <libcore/logger.hpp>
 #include <iostream>
 #include <chrono>
 #include <libcore/ini/SimpleIni.h>
@@ -12,29 +13,16 @@ namespace libcore {
     SkeletonFinder::~SkeletonFinder() {}
 
     void SkeletonFinder::init(std::string config_file) {
-        auto timer_1 = std::chrono::high_resolution_clock::now();
-        std::cout << "Initializing SkeletonFinder with parameters." << std::endl;
-
+        libcore::info << "Initializing SkeletonFinder with parameters." << std::endl;
         Config config = readConfigFile(config_file);
-        std::cout << "config.max_ray_length: " << config.max_ray_length << std::endl;
-
         SharedVars vars(config);
 
-        std::cout << "Setting up maps for skeleton finding." << std::endl;
+        libcore::info << "Setting up maps for skeleton finding." << std::endl;
         pcl::PointCloud<pcl::PointXYZ> map_pcl = getMap(config);
         pcl::PointCloud<pcl::PointXYZ> raw_map_pcl;
-        auto timer_2 = std::chrono::high_resolution_clock::now();
-        std::cout << "Timer 1: "
-                  << std::chrono::duration_cast<std::chrono::milliseconds>(timer_2 - timer_1).count()
-                  << " ms." << std::endl;
 
-        std::cout << "Pre-processing maps for visualization and search." << std::endl;
+        libcore::info << "Pre-processing maps for visualization and search." << std::endl;
         preProcessMaps(map_pcl, raw_map_pcl, config);
-
-        auto timer_3 = std::chrono::high_resolution_clock::now();
-        std::cout << "Timer 2: "
-                  << std::chrono::duration_cast<std::chrono::milliseconds>(timer_3 - timer_2).count()
-                  << " ms." << std::endl;
 
         pcl::PointCloud<pcl::PointXYZRGB> map_pcl_rgb = getRGBMap(config);
 
@@ -44,30 +32,23 @@ namespace libcore {
 
         vars.vis.InitWindow(map_pcl_rgb);
 
-        auto timer_4 = std::chrono::high_resolution_clock::now();
-        std::cout << "Timer 3: "
-                  << std::chrono::duration_cast<std::chrono::milliseconds>(timer_4 - timer_3).count()
-                  << " ms." << std::endl;
-
-        std::cout << "Generating skeleton..." << std::endl;
-        auto begin = std::chrono::high_resolution_clock::now();
+        libcore::info << "Generating skeleton..." << std::endl;
 
         vars.startPt << config.start_x, config.start_y, config.start_z;
         std::thread compute_thread(
             [&vars, &config]() {
-                std::cout << "Starting skeleton expansion..." << std::endl;
+                libcore::info << "Starting skeleton expansion..." << std::endl;
                 skeletonExpansion(config, vars);
-                std::cout << "Skeleton expansion completed." << std::endl;
+                libcore::info << "Skeleton expansion completed." << std::endl;
             }
         );
 
+        vars.vis.Run(); // This will block until the visualizer is closed
+        compute_thread.join(); // Wait for the skeleton expansion to finish
+        vars.vis.Close();
 
-        auto end = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
-        std::cout << "Skeleton generation completed in " << duration.count() << " ms." << std::endl;
-
-        std::cout << "created " << vars.NodeList.size() << " nodes." << std::endl;
-        std::cout << "created " << vars.center_NodeList.size() << " center nodes." << std::endl;
+        libcore::info << "Created " << vars.NodeList.size() << " nodes." << std::endl;
+        libcore::info << "Created " << vars.center_NodeList.size() << " center nodes." << std::endl;
 
         // save node list to file
         std::ofstream node_file("node_list.txt");
@@ -79,9 +60,9 @@ namespace libcore {
                           << node->coord.z() << "\n";
             }
             node_file.close();
-            std::cout << "Node list saved to node_list.txt." << std::endl;
+            libcore::info << "Node list saved to node_list.txt." << std::endl;
         } else {
-            std::cerr << "Unable to open node_list.txt for writing." << std::endl;
+            libcore::error << "Unable to open node_list.txt for writing." << std::endl;
         }
 
         // save edge list to file
@@ -94,14 +75,10 @@ namespace libcore {
                 }
             }
             edge_file.close();
-            std::cout << "Edge list saved to edge_list.txt." << std::endl;
+            libcore::info << "Edge list saved to edge_list.txt." << std::endl;
         } else {
-            std::cerr << "Unable to open edge_list.txt for writing." << std::endl;
+            libcore::error << "Unable to open edge_list.txt for writing." << std::endl;
         }
-
-        vars.vis.Run(); // This will block until the visualizer is closed
-        compute_thread.join(); // Wait for the skeleton expansion to finish
-        vars.vis.Close();
 
     }
 
@@ -111,7 +88,7 @@ namespace libcore {
         std::string config_path = "../modular_polygon_generation/libcore/data/configs/" + config_file;
         if (ini.LoadFile(config_path.c_str()) < 0) {
             // throw an exception and terminate if the file cannot be loaded
-            std::cerr << "Error loading configuration file: " << config_path << std::endl;
+            libcore::error << "Error loading configuration file: " << config_path << std::endl;
             throw std::runtime_error("Failed to load configuration file.");
         }
         CSimpleIniA::TNamesDepend sections;
@@ -121,7 +98,7 @@ namespace libcore {
             CSimpleIniA::TNamesDepend keys;
             ini.GetAllKeys(section.pItem, keys);
             for (const auto& key : keys) {
-                std::cout << "[" << section.pItem << "] "
+                libcore::info << "[" << section.pItem << "] "
                         << key.pItem << " = "
                         << ini.GetValue(section.pItem, key.pItem, "<not found>") << "\n";
             }

@@ -21,7 +21,7 @@ namespace libcore
         std::pair<Eigen::Vector3d, int> raycast_result =
             raycastOnRawMap(node->coord, downwards, max_ray_length, config, vars); 
         
-        if (raycast_result.second == -2) return false;
+        if (raycast_result.second == -2) return false; // Invalid raycast
         double floor_height = raycast_result.first(2);
 
         // First node case
@@ -49,6 +49,18 @@ namespace libcore
         node->dis_to_floor = floor_height;
 
         return true;
+    }
+
+    double getFloorHeight(
+        Eigen::Vector3d& coord, 
+        const Config& config, SharedVars& vars) 
+    {
+        // raycast downwards from the coordinate to find the floor height
+        Eigen::Vector3d downwards(0, 0, -1); // Direction vector pointing downwards
+        std::pair<Eigen::Vector3d, int> raycast_result = raycastOnRawMap(coord, downwards, config.max_ray_length, config, vars);
+        if (raycast_result.second != -1) return -1; // Invalid raycast
+
+        return coord.z() - raycast_result.first.z(); // Return the height difference
     }
 
     double radiusSearchOnRawMap(const Eigen::Vector3d& search_Pt, 
@@ -215,8 +227,7 @@ namespace libcore
 
     VertexPtr getVertexFromDire(
         NodePtr node,
-        const Eigen::Vector3d &dire
-    ) 
+        const Eigen::Vector3d &dire) 
     {
         for (VertexPtr v : node->black_vertices) {
             if (isSamePos(v->unit_direction, dire))
