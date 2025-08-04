@@ -46,7 +46,6 @@ namespace libcore {
                     auto sphere = geometry::TriangleMesh::CreateSphere(0.1);
                     sphere->Translate(new_pos);
                     sphere->PaintUniformColor({1.0, 0.0, 0.0}); // Red for nodes
-                    if (node->debug_id == 403) sphere->PaintUniformColor({0.0, 1.0, 0.0}); // Green for debug node
                     spheres_.push_back(sphere);
                     node_spheres_[node->id] = sphere;
                     vis_->AddGeometry(sphere, false);
@@ -72,7 +71,7 @@ namespace libcore {
                         auto sphere = geometry::TriangleMesh::CreateSphere(0.05);
                         sphere->Translate(v->coord);
                         sphere->PaintUniformColor({0.0, 0.0, 1.0}); // Blue for black vertices
-                        if (node->debug_id == 403) vis_->AddGeometry(sphere, false);
+                        //if (node->debug_id == 403) vis_->AddGeometry(sphere, false);
                         //vis_->AddGeometry(sphere, false);
                     }
 
@@ -80,7 +79,7 @@ namespace libcore {
                         auto sphere = geometry::TriangleMesh::CreateSphere(0.05);
                         sphere->Translate(v->coord);
                         sphere->PaintUniformColor({1.0, 1.0, 0.0}); // Yellow for white vertices
-                        if (node->debug_id == 403) vis_->AddGeometry(sphere, false);
+                        //if (node->debug_id == 403) vis_->AddGeometry(sphere, false);
                         //vis_->AddGeometry(sphere, false);
                     }
 

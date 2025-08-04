@@ -54,28 +54,66 @@ namespace libcore {
         if (clearance > cut_off_length) {
             std::pair<Eigen::Vector3d, int> return_pair(ray_source, -2);
             return return_pair;
-        } else {
-            Eigen::Vector3d current_pos = ray_source + clearance * direction;
-            double length = clearance;
-            while (length <= cut_off_length) {
-                std::pair<double, int> rs = radiusSearch(
-                    current_pos,
-                    config.search_margin,
-                    config.max_ray_length,
-                    vars.NodeList,
-                    vars.kdtreeForRawMap,
-                    vars.kdtreesForPolys
-                );
-                double radius = rs.first;
+        }
 
-                if (radius < config.search_margin) {
-                    return std::make_pair(current_pos, rs.second);
+        if (config.max_floor_height > 0.0 && direction.z() > 0.0) {
+            // If the ray is pointing upward, check the max floor height
+            double floor_height = getFloorHeight(ray_source, config, vars);
+            // if ray_source + clearance * direction.z() > max_floor_heigt, compute new clearance
+            if (ray_source.z() + clearance * direction.z() > config.max_floor_height) {
+                clearance = (config.max_floor_height - ray_source.z()) / direction.z();
+            }
+        }
+
+        if (config.min_floor_height > 0.0 && direction.z() < 0.0) {
+            // If the ray is pointing downward, check the min floor height
+            double floor_height = getFloorHeight(ray_source, config, vars);
+            // if ray_source + clearance * direction.z() < min_floor_heigt, compute new clearance
+            if (ray_source.z() + clearance * direction.z() < config.min_floor_height) {
+                clearance = (config.min_floor_height - ray_source.z()) / direction.z();
+            }
+        }
+
+        Eigen::Vector3d current_pos = ray_source + clearance * direction;
+        double length = clearance;
+
+        while (length <= cut_off_length) {
+            std::pair<double, int> rs = radiusSearch(
+                current_pos,
+                config.search_margin,
+                config.max_ray_length,
+                vars.NodeList,
+                vars.kdtreeForRawMap,
+                vars.kdtreesForPolys
+            );
+            clearance = rs.first;
+
+            if (config.max_floor_height > 0.0 && direction.z() > 0.0) {
+                // If the ray is pointing upward, check the max floor height
+                double floor_height = getFloorHeight(current_pos, config, vars);
+                // if ray_source + clearance * direction.z() > max_floor_heigt, compute new clearance
+                if (current_pos.z() + clearance * direction.z() > config.max_floor_height) {
+                    clearance = (config.max_floor_height - current_pos.z()) / direction.z();
                 }
-                current_pos += radius * direction;
-                length += radius;
             }
 
-            return std::make_pair(ray_source, -2);
+            if (config.min_floor_height > 0.0 && direction.z() < 0.0) {
+                // If the ray is pointing downward, check the min floor height
+                double floor_height = getFloorHeight(current_pos, config, vars);
+                // if ray_source + clearance * direction.z() < min_floor_heigt, compute new clearance
+                if (current_pos.z() + clearance * direction.z() < config.min_floor_height) {
+                    clearance = (config.min_floor_height - current_pos.z()) / direction.z();
+                }
+            }
+
+            if (clearance < config.search_margin) {
+                return std::make_pair(current_pos, rs.second);
+            }
+            
+            current_pos += clearance * direction;
+            length += clearance;
         }
+
+        return std::make_pair(ray_source, -2);
     }
 } // namespace libcore

@@ -42,6 +42,8 @@ namespace libcore
         double max_height_diff = 2.5; // Maximum height difference allowed for floor checking.
         double min_node_radius = 1.0; // Minimum radius for nodes in the skeleton.
         double fix_height = 1.0; // Fixed height for nodes in the skeleton, if 0 it is not used.
+        double min_floor_height = 0.7; // Minimum height for the floor in the skeleton.
+        double max_floor_height = 1.2; // Maximum height for the floor in the skeleton.
 
         int min_flowback_creation_threshold = 5; // Minimum threshold for creating flowback frontiers.
         double min_flowback_creation_radius_threshold = 0.5; // Minimum radius threshold for flowback creation.
