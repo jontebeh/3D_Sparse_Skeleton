@@ -83,6 +83,8 @@ namespace libcore
         
         Visualizer vis; // Visualizer for displaying the skeleton and other elements.
 
+        int node_index = 0; // Index for the next node to be created.
+
         // constructer with config
         SharedVars(const Config& config)
             : bbx_min(config.x_min, config.y_min, config.z_min),
