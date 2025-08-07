@@ -13,7 +13,7 @@ namespace libcore {
             return std::pair<Eigen::Vector3d, int>(Eigen::Vector3d::Zero(), 0);
         }
 
-        double clearance = radiusSearchOnRawMap(ray_source, vars.kdtreeForRawMap); // Distance to the nearest point
+        double clearance = radiusSearchOnRawMap(ray_source, vars.kdtreeForRawMap) - config.min_wall_distance; // Distance to the nearest point minus the minimum wall distance
         if (clearance > cut_off_length) { // If the nearest point is farther than the cut-off length
             return std::pair<Eigen::Vector3d, int>(ray_source, -2);
         }
@@ -22,7 +22,7 @@ namespace libcore {
         double length = clearance; // total length of the ray
 
         while (length <= cut_off_length) { // While the ray length is within the cut-off length
-            double radius = radiusSearchOnRawMap(current_pos, vars.kdtreeForRawMap); // Distance to the nearest point from the current position
+            double radius = radiusSearchOnRawMap(current_pos, vars.kdtreeForRawMap) - config.min_wall_distance; // Distance to the nearest point minus the minimum wall distance
 
             if (radius < config.search_margin) { // If the distance to the nearest point is less than the search margin return the current position with the flag -1 meaning a point was found
                 return std::pair<Eigen::Vector3d, int>(current_pos, -1);
@@ -49,14 +49,18 @@ namespace libcore {
             vars.NodeList,
             vars.kdtreeForRawMap,
             vars.kdtreesForPolys
-        ).first;
+        ).first - config.min_wall_distance; // Distance to the nearest point plus the minimum wall distance
         
         if (clearance > cut_off_length) {
             std::pair<Eigen::Vector3d, int> return_pair(ray_source, -2);
             return return_pair;
         }
 
-        if (config.max_floor_height > 0.0 && direction.z() > 0.0) {
+        if (clearance < 0.0) {
+            return std::make_pair(ray_source, -2); // If the clearance is negative, return the ray source with the flag -2 meaning no point was found
+        }
+
+        if (config.max_floor_height > 0.0 && direction.z() >= 0.0) {
             // If the ray is pointing upward, check the max floor height
             double floor_height = getFloorHeight(ray_source, config, vars);
             // if ray_source + clearance * direction.z() > max_floor_heigt, compute new clearance
@@ -86,22 +90,26 @@ namespace libcore {
                 vars.kdtreeForRawMap,
                 vars.kdtreesForPolys
             );
-            clearance = rs.first;
+            clearance = rs.first - config.min_wall_distance; // Distance to the nearest point plus the minimum wall distance
 
-            if (config.max_floor_height > 0.0 && direction.z() > 0.0) {
+            if (config.max_floor_height > 0.0) {
                 // If the ray is pointing upward, check the max floor height
                 double floor_height = getFloorHeight(current_pos, config, vars);
+                // if the floor height is less than the maximum floor height, return the current position with the flag -2
+                if (floor_height < config.min_floor_height) return std::make_pair(current_pos, rs.second);
                 // if ray_source + clearance * direction.z() > max_floor_heigt, compute new clearance
-                if (current_pos.z() + clearance * direction.z() > config.max_floor_height) {
+                if (current_pos.z() + clearance * direction.z() > config.max_floor_height && direction.z() > 0.0) {
                     clearance = (config.max_floor_height - current_pos.z()) / direction.z();
                 }
             }
 
-            if (config.min_floor_height > 0.0 && direction.z() < 0.0) {
+            if (config.min_floor_height > 0.0) {
                 // If the ray is pointing downward, check the min floor height
                 double floor_height = getFloorHeight(current_pos, config, vars);
+                // if the floor height is less than the minimum floor height, return the current position with the flag -2
+                if (floor_height < config.min_floor_height) return std::make_pair(current_pos, rs.second);
                 // if ray_source + clearance * direction.z() < min_floor_heigt, compute new clearance
-                if (current_pos.z() + clearance * direction.z() < config.min_floor_height) {
+                if (current_pos.z() + clearance * direction.z() < config.min_floor_height && direction.z() < 0.0) {
                     clearance = (config.min_floor_height - current_pos.z()) / direction.z();
                 }
             }

@@ -33,6 +33,11 @@ namespace libcore {
         node_queue_.push(node);
     }
 
+    void Visualizer::EnqueueDebugNode(const Eigen::Vector3d& position, const Eigen::Vector3d& color) {
+        std::lock_guard<std::mutex> lock(queue_mutex_);
+        debug_node_queue_.emplace(std::make_pair(position, color));
+    }
+
     void Visualizer::Run() {
         running_ = true;
         while (running_) {
@@ -46,6 +51,9 @@ namespace libcore {
                     auto sphere = geometry::TriangleMesh::CreateSphere(0.1);
                     sphere->Translate(new_pos);
                     sphere->PaintUniformColor({1.0, 0.0, 0.0}); // Red for nodes
+                    if (node->rollbacked) {
+                        sphere->PaintUniformColor({0.5, 0.5, 0.5}); // Gray for rollbacked nodes
+                    }
                     spheres_.push_back(sphere);
                     node_spheres_[node->id] = sphere;
                     vis_->AddGeometry(sphere, false);
@@ -71,19 +79,33 @@ namespace libcore {
                         auto sphere = geometry::TriangleMesh::CreateSphere(0.05);
                         sphere->Translate(v->coord);
                         sphere->PaintUniformColor({0.0, 0.0, 1.0}); // Blue for black vertices
-                        //if (node->debug_id == 403) vis_->AddGeometry(sphere, false);
-                        //vis_->AddGeometry(sphere, false);
+                        if (node->debug_id == 317) vis_->AddGeometry(sphere, false);
+                        if (node->debug_id == 349) vis_->AddGeometry(sphere, false);
+                        if (node->debug_id == 348) vis_->AddGeometry(sphere, false);
+                        vis_->AddGeometry(sphere, false);
                     }
 
                     for (const auto &v : node->white_vertices) {
                         auto sphere = geometry::TriangleMesh::CreateSphere(0.05);
                         sphere->Translate(v->coord);
                         sphere->PaintUniformColor({1.0, 1.0, 0.0}); // Yellow for white vertices
-                        //if (node->debug_id == 403) vis_->AddGeometry(sphere, false);
-                        //vis_->AddGeometry(sphere, false);
+                        if (node->debug_id == 317) vis_->AddGeometry(sphere, false);
+                        if (node->debug_id == 349) vis_->AddGeometry(sphere, false);
+                        if (node->debug_id == 348) vis_->AddGeometry(sphere, false);
+                        vis_->AddGeometry(sphere, false);
                     }
 
                     
+                }
+
+                while (!debug_node_queue_.empty()) {
+                    Eigen::Vector3d position = debug_node_queue_.front().first;
+                    debug_node_queue_.pop();
+                    auto sphere = geometry::TriangleMesh::CreateSphere(0.06);
+                    sphere->Translate(position);
+                    sphere->PaintUniformColor(debug_node_queue_.front().second); // Use the color from the queue
+                    spheres_.push_back(sphere);
+                    vis_->AddGeometry(sphere, false);   
                 }
             }
 
@@ -91,10 +113,11 @@ namespace libcore {
             vis_->UpdateRender();
             std::this_thread::sleep_for(std::chrono::milliseconds(16));
         }
+
+        vis_->DestroyVisualizerWindow();
     }
 
     void Visualizer::Close() {
         running_ = false;
-        vis_->DestroyVisualizerWindow();
     }
 }

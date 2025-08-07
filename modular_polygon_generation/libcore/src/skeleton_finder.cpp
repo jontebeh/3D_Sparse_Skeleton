@@ -40,12 +40,16 @@ namespace libcore {
                 libcore::info << "Starting skeleton expansion..." << std::endl;
                 skeletonExpansion(config, vars);
                 libcore::info << "Skeleton expansion completed." << std::endl;
+                std::cin.get(); // Wait for user input to keep the visualizer open
+
+                libcore::info << "Closing visualizer." << std::endl;
+                vars.vis.Close();
+                libcore::info << "Visualizer closed." << std::endl;
             }
         );
 
         vars.vis.Run(); // This will block until the visualizer is closed
         compute_thread.join(); // Wait for the skeleton expansion to finish
-        vars.vis.Close();
 
         libcore::info << "Created " << vars.NodeList.size() << " nodes." << std::endl;
         libcore::info << "Created " << vars.center_NodeList.size() << " center nodes." << std::endl;
@@ -126,6 +130,7 @@ namespace libcore {
         cfg.frontier_split_threshold = ini.GetDoubleValue("Raycasting", "frontier_split_threshold", cfg.frontier_split_threshold);
         cfg.max_height_diff = ini.GetDoubleValue("Raycasting", "max_height_diff", cfg.max_height_diff);
         cfg.min_node_radius = ini.GetDoubleValue("Raycasting", "min_node_radius", cfg.min_node_radius);
+        cfg.min_wall_distance = ini.GetDoubleValue("Raycasting", "min_wall_distance", cfg.min_wall_distance);
         cfg.min_flowback_creation_threshold = ini.GetLongValue("Raycasting", "min_flowback_creation_threshold", cfg.min_flowback_creation_threshold);
         cfg.min_flowback_creation_radius_threshold = ini.GetDoubleValue("Raycasting", "min_flowback_creation_radius_threshold", cfg.min_flowback_creation_radius_threshold);
         cfg.bad_loop_setting = ini.GetBoolValue("Raycasting", "bad_loop_setting", cfg.bad_loop_setting);
