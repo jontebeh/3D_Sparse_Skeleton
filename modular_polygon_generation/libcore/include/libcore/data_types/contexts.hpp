@@ -14,7 +14,6 @@ namespace libcore
     {
         /*****************Map*****************/
         bool is_simulation = false; // Flag indicating if the context is for simulation.
-        double resolution = 0.2; // The resolution of the map.
         double x_min = -24.0; // The minimum x-coordinate of the bounding box.
         double x_max = 85.0; // The minimum and maximum x-coordinates of the bounding box.
         double y_min = -18.0; // The minimum y-coordinate
@@ -23,8 +22,13 @@ namespace libcore
         double z_max = 13.0; // The maximum z-coordinate
         int map_representation = 0; // The representation of the map (e.g., point cloud, voxel grid, etc.).
 
+        std::string map = "map.pcd"; // The name of the map file to be used.
+
+        std::string vis_map = "vis_map.pcd"; // The name of the visualization map file.
+
         /*****************Raycasting*****************/
         double search_margin = 0.3; // Margin for searching in the map.
+        double resolution = 0.2; // The resolution of the created points in the hull
         double max_ray_length = 5.0; // Maximum length of the ray for raycasting.
         double max_expansion_ray_length = 4.0; // Maximum length for ray expansion.
 
@@ -41,9 +45,9 @@ namespace libcore
 
         double max_height_diff = 2.5; // Maximum height difference allowed for floor checking.
         double min_node_radius = 1.0; // Minimum radius for nodes in the skeleton.
-        double fix_height = 1.0; // Fixed height for nodes in the skeleton, if 0 it is not used.
         double min_floor_height = 0.7; // Minimum height for the floor in the skeleton.
         double max_floor_height = 1.2; // Maximum height for the floor in the skeleton.
+        double min_wall_distance = 0.5; // Minimum distance to walls for the skeleton.
 
         int min_flowback_creation_threshold = 5; // Minimum threshold for creating flowback frontiers.
         double min_flowback_creation_radius_threshold = 0.5; // Minimum radius threshold for flowback creation.
@@ -51,13 +55,10 @@ namespace libcore
 
         int max_facets_grouped = 10;
 
+        /*****************Start Point*****************/
         double start_x = 45.0; // Starting x-coordinate for the skeleton expansion.
         double start_y = -16.0; // Starting y-coordinate for the skeleton expansion.
         double start_z = 7.0; // Starting z-coordinate for the skeleton expansion
-
-        std::string map = "map.pcd"; // The name of the map file to be used.
-
-        std::string vis_map = "vis_map.pcd"; // The name of the visualization map file.
 
         // default constructor
         Config() = default;

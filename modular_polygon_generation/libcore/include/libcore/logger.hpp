@@ -2,11 +2,13 @@
 
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <mutex>
 #include <string>
 #include <iomanip>
 #include <chrono>
 #include <ctime>
+#include <filesystem>
 
 namespace libcore {
 class LogStream {
@@ -20,20 +22,27 @@ public:
     template<typename T>
     LogStream& operator<<(const T& val) {
         std::lock_guard<std::mutex> lock(mutex_);
+        ensureLogFileOpen();
+
         if (!prefixPrinted_) {
-            std::cerr << getColorCode() << "[" << getTimestamp() << "] [" << levelToString() << "] ";
+            std::string prefix = "[" + getTimestamp() + "] [" + levelToString() + "] ";
+            std::cerr << getColorCode() << prefix;
+            logfile_ << prefix;
             prefixPrinted_ = true;
         }
+
         std::cerr << val;
+        logfile_ << val;
         return *this;
     }
 
     LogStream& operator<<(std::ostream& (*manip)(std::ostream&)) {
         std::lock_guard<std::mutex> lock(mutex_);
         std::cerr << manip;
+        logfile_ << manip;
         if (manip == static_cast<std::ostream& (*)(std::ostream&)>(std::endl)) {
             std::cerr << "\033[0m";  // Reset color
-            prefixPrinted_ = false; // Next message will get prefix again
+            prefixPrinted_ = false;
         }
         return *this;
     }
@@ -42,6 +51,27 @@ private:
     Level level_;
     bool prefixPrinted_ = false;
     std::mutex mutex_;
+
+    static inline std::ofstream logfile_;
+    static inline std::once_flag init_flag_;
+    static inline std::string logfile_path_;
+
+    void ensureLogFileOpen() {
+        std::call_once(init_flag_, []() {
+            // Create log directory
+            std::filesystem::create_directories("log");
+
+            // Generate filename: log/YYYY-MM-DD_HH-MM-SS.log
+            auto now = std::chrono::system_clock::now();
+            auto itt = std::chrono::system_clock::to_time_t(now);
+            std::ostringstream ss;
+            ss << "log/" << std::put_time(std::localtime(&itt), "%Y-%m-%d_%H-%M-%S") << ".log";
+            logfile_path_ = ss.str();
+
+            // Open log file
+            logfile_.open(logfile_path_, std::ios::app);
+        });
+    }
 
     std::string levelToString() const {
         switch (level_) {

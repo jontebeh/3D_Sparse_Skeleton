@@ -211,7 +211,9 @@ namespace libcore
             } else {
                 facet->outwards_unit_normal = normal;
             }
+            vars.vis.EnqueueDebugNode(facet->center, Eigen::Vector3d(0.0, 1.0, 0.0)); // TODO debugging
         }
+        
 
         // Create frontiers given group black vertices
         for (int i = 0; i < num_groups; i++) {
@@ -532,6 +534,12 @@ namespace libcore
                 config, vars
             );
         Eigen::Vector3d hit_on_pcl = raycast_result.first;
+        vars.vis.EnqueueDebugNode(hit_on_pcl, Eigen::Vector3d(1.0, 0.0, 1.0)); // TODO debugging magenta
+        vars.vis.EnqueueDebugNode(ftr_ptr->proj_center, Eigen::Vector3d(1.0, 0.5, 1.0)); // TODO debugging purple
+        vars.vis.EnqueueDebugNode(
+            ftr_ptr->proj_center + ftr_ptr->outwards_unit_normal,
+            Eigen::Vector3d(0.0, 1.0, 1.0)
+        ); // TODO debugging blueish
 
         // raycast into a long corridor
         if (hit_on_pcl == raycast_start_pt) {

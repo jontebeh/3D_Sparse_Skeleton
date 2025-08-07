@@ -16,7 +16,7 @@ namespace libcore
         libcore::info << "Generated " << vars.sample_directions.size() << " sample directions." << std::endl;
 
         libcore::info << "Identifying first black and white facets." << std::endl;
-        identifyBwFacets(vars.sample_directions, vars.bw_facets_directions);
+        identifyBwFacets(vars.sample_directions, vars.bw_facets_directions); // Identify black and white facets based on sample directions (triangle mesh)
         libcore::info << "Identified " << vars.bw_facets_directions.size() << " black and white facets." << std::endl;
 
         setStartPt(startPt, config, vars);
@@ -83,6 +83,8 @@ namespace libcore
     }
 
     bool initNode(NodePtr curNodePtr, const Config& config, SharedVars& vars) {
+        // wait for input
+        std::cin.get();
         // give the node an unique id
         curNodePtr->debug_id = vars.node_index++;
 
@@ -108,9 +110,15 @@ namespace libcore
             centralizeNodePos(curNodePtr); // Centralize the node position according to the black vertices
 
             double radius = getNodeRadius(curNodePtr); // avg distance to all vertices
-            if (radius < config.min_node_radius && curNodePtr->white_vertices.empty()) {
+            if (radius < config.min_node_radius) {
                 libcore::warning << "Node " << curNodePtr->debug_id 
                                  << " has too small radius: " << radius << std::endl;
+                return false;
+            }
+
+            if (curNodePtr->white_vertices.empty()) { // TODO: check if this is needed
+                libcore::warning << "Node " << curNodePtr->debug_id 
+                                 << " has no white vertices." << std::endl;
                 return false;
             }
 
@@ -346,6 +354,8 @@ namespace libcore
                 }
             }
             libcore::warning << "Failed to initialize node for frontier " << curFtrPtr->index << std::endl;
+            vars.vis.EnqueueNode(new_node); // Visualize the node even if initialization failed
+            vars.vis.EnqueueNode(gate); // Visualize the gate node
         }
 
         return init_success;
