@@ -225,8 +225,7 @@ namespace libcore
                     config.z_max,
                     config.search_margin
                 );
-            if (group_facets.empty())
-            continue;
+            if (group_facets.empty()) continue;
 
             findNbhdFacets(group_facets);
             std::vector<std::vector<FacetPtr>> linked_groups;

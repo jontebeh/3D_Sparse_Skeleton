@@ -78,6 +78,7 @@ namespace libcore
     }
 
     void setStartPt(Eigen::Vector3d& startPt, const Config config, SharedVars& vars) {
+        libcore::info << "Setting start point: " << startPt.transpose() << std::endl;
         NodePtr start_node = std::make_shared<Node>(startPt, nullptr);
         initNode(start_node, config, vars);
     }
@@ -87,16 +88,19 @@ namespace libcore
         std::cin.get();
         // give the node an unique id
         curNodePtr->debug_id = vars.node_index++;
+        libcore::debug << "Initializing node " << curNodePtr->debug_id << std::endl;
 
         if (!checkWithinBbx(curNodePtr->coord,vars.bbx_min,vars.bbx_max)) { // check if the point is within the bounding box
             libcore::warning << "Node " << curNodePtr->debug_id << " is outside the bounding box." << std::endl;
             return false;
         }
-        
+        libcore::debug << "Check within bounding box passed for node " << curNodePtr->debug_id << std::endl;
+
         if (!checkFloor(curNodePtr, config.max_ray_length, config.max_height_diff, config, vars)) { // check if the point is on the floor ToDO: check height
             libcore::warning << "Node " << curNodePtr->debug_id << " is not on the floor." << std::endl;
             return false;
         }
+        libcore::debug << "Check floor passed for node " << curNodePtr->debug_id << std::endl;
 
         if (!curNodePtr->isGate) {
             genBlackAndWhiteVertices(
@@ -104,10 +108,12 @@ namespace libcore
                 config,
                 vars
             ); // Generate black and white vertices for the node
+            libcore::debug << "Generated black and white vertices for node " << curNodePtr->debug_id << std::endl;
 
             if (curNodePtr->black_vertices.size() < 4) return false;
 
             centralizeNodePos(curNodePtr); // Centralize the node position according to the black vertices
+            libcore::debug << "Centralized position for node " << curNodePtr->debug_id << std::endl;
 
             double radius = getNodeRadius(curNodePtr); // avg distance to all vertices
             if (radius < config.min_node_radius) {
@@ -121,6 +127,7 @@ namespace libcore
                                  << " has no white vertices." << std::endl;
                 return false;
             }
+            libcore::debug << "Node " << curNodePtr->debug_id << " has white vertices." << std::endl;
 
             if (curNodePtr->seed_frontier != NULL) {
                 bool diff_index = false;
@@ -137,12 +144,16 @@ namespace libcore
                     return false;
                 }
             }
+            libcore::debug << "Node " << curNodePtr->debug_id << " has seed frontiers." << std::endl;
 
             findFlowBack(curNodePtr, config, vars);
+            libcore::debug << "Flow back completed for node " << curNodePtr->debug_id << std::endl;
 
             identifyFacets(curNodePtr, vars.bw_facets_directions);
+            libcore::debug << "Facets identified for node " << curNodePtr->debug_id << std::endl;
 
             identifyFrontiers(curNodePtr, config, vars);
+            libcore::debug << "Frontiers identified for node " << curNodePtr->debug_id << std::endl;
             if (curNodePtr->frontiers.empty()) libcore::warning << "Node " << curNodePtr->debug_id << " has no frontiers." << std::endl;
 
             addFacetsToPcl(curNodePtr,config.resolution, vars.kdtreesForPolys); // add the facets as points to the kdtrees so collision detection can be done on them
