@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(Eigen3 REQUIRED)
 find_package(PCL REQUIRED COMPONENTS common io search)
 set(Open3D_DIR "$ENV{HOME}/libs/open3d-install/lib/cmake/Open3D")
-find_package(Open3D REQUIRED)
+find_package(Open3D REQUIRED COMPONENTS Gui)
 # Core library
 add_library(libcore
   modular_polygon_generation/libcore/src/skeleton_finder.cpp

@@ -82,7 +82,7 @@ namespace libcore {
                         if (node->debug_id == 317) vis_->AddGeometry(sphere, false);
                         if (node->debug_id == 349) vis_->AddGeometry(sphere, false);
                         if (node->debug_id == 348) vis_->AddGeometry(sphere, false);
-                        vis_->AddGeometry(sphere, false);
+                        //vis_->AddGeometry(sphere, false);
                     }
 
                     for (const auto &v : node->white_vertices) {
@@ -92,10 +92,28 @@ namespace libcore {
                         if (node->debug_id == 317) vis_->AddGeometry(sphere, false);
                         if (node->debug_id == 349) vis_->AddGeometry(sphere, false);
                         if (node->debug_id == 348) vis_->AddGeometry(sphere, false);
-                        vis_->AddGeometry(sphere, false);
+                        //vis_->AddGeometry(sphere, false);
                     }
 
-                    
+                    std::vector<Eigen::Vector3d> facet_points;
+                    std::vector<Eigen::Vector3i> facet_triangles;
+
+                    for (const auto &f : node->facets) {
+                        facet_points.push_back(f->vertices[0]->coord);
+                        facet_points.push_back(f->vertices[1]->coord);
+                        facet_points.push_back(f->vertices[2]->coord);
+                    }
+
+                    for (size_t i = 0; i < facet_points.size(); i += 3) {
+                        facet_triangles.push_back({static_cast<int>(i), static_cast<int>(i + 1), static_cast<int>(i + 2)});
+                    }
+
+                    auto mesh = std::make_shared<geometry::TriangleMesh>();
+                    mesh->vertices_ = facet_points;
+                    mesh->triangles_ = facet_triangles;
+                    mesh->PaintUniformColor({0.0, 1.0, 1.0}); // Cyan for facets
+                    vis_->AddGeometry(mesh, false);
+
                 }
 
                 while (!debug_node_queue_.empty()) {

@@ -1,5 +1,6 @@
 #include <libcore/skeleton_utils/raycasting.hpp>
 #include <libcore/skeleton_utils/geometry_utils.hpp>
+#include <libcore/logger.hpp>
 
 namespace libcore {
     std::pair<Eigen::Vector3d, int> raycastOnRawMap(
@@ -10,7 +11,8 @@ namespace libcore {
         SharedVars& vars)
     {
         if (config.map_representation != 0) { // not a point cloud
-            return std::pair<Eigen::Vector3d, int>(Eigen::Vector3d::Zero(), 0);
+            return std::pair<Eigen::Vector3d, 
+            int>(Eigen::Vector3d::Zero(), 0);
         }
 
         double clearance = radiusSearchOnRawMap(ray_source, vars.kdtreeForRawMap) - config.min_wall_distance; // Distance to the nearest point minus the minimum wall distance
@@ -49,7 +51,7 @@ namespace libcore {
             vars.NodeList,
             vars.kdtreeForRawMap,
             vars.kdtreesForPolys
-        ).first - config.min_wall_distance; // Distance to the nearest point plus the minimum wall distance
+        ).first; // Distance to the nearest point plus the minimum wall distance
         
         if (clearance > cut_off_length) {
             std::pair<Eigen::Vector3d, int> return_pair(ray_source, -2);
@@ -60,7 +62,7 @@ namespace libcore {
             return std::make_pair(ray_source, -2); // If the clearance is negative, return the ray source with the flag -2 meaning no point was found
         }
 
-        if (config.max_floor_height > 0.0 && direction.z() >= 0.0) {
+        if (config.max_floor_height > 0.0 && direction.z() > 0.0) {
             // If the ray is pointing upward, check the max floor height
             double floor_height = getFloorHeight(ray_source, config, vars);
             // if ray_source + clearance * direction.z() > max_floor_heigt, compute new clearance
