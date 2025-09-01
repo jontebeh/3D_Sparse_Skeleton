@@ -68,18 +68,25 @@ namespace libcore {
         {
             // Calculate the average center and outwards unit normal of the facets
             Eigen::Vector3d coord_sum = Eigen::Vector3d::Zero();
+            float area_sum = 0.0f;
             Eigen::Vector3d normal_sum = Eigen::Vector3d::Zero();
 
             // Iterate through the facets to compute the average center and normal
             for (const auto& f : facet_list) {
-                coord_sum += f->center;
-                normal_sum += f->outwards_unit_normal;
+                Eigen::Vector3d v1 = f->vertices[0]->coord;
+                Eigen::Vector3d v2 = f->vertices[1]->coord;
+                Eigen::Vector3d v3 = f->vertices[2]->coord;
+                float area = ((v2 - v1).cross(v3 - v1)).norm();
+                area_sum += area;
+                coord_sum += f->center * area;
+                normal_sum += f->outwards_unit_normal * area;
             }
 
             // Normalize the outwards unit normal vector
-            int num_facet = static_cast<int>(facet_list.size());
-            avg_center = coord_sum / num_facet;
-            outwards_unit_normal = normal_sum / num_facet;
+            avg_center = coord_sum / area_sum;
+            outwards_unit_normal = normal_sum / area_sum;
+
+            outwards_unit_normal.normalize();
         }
     };
 
