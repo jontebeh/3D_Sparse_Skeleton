@@ -74,28 +74,28 @@ void Visualizer::DrainQueuesOnGuiThread_() {
         }
 
         // Keep alive + map id -> sphere
-        node_spheres_[node->id] = sphere;
+        node_spheres_[node->debug_id] = sphere;
         scratch_geoms_.push_back(sphere);
-        const std::string sphere_name = "node_sphere_" + std::to_string(node->id);
+        const std::string sphere_name = "node_sphere_" + std::to_string(node->debug_id);
 
         // 0.19: pointer + bool
         scene_->AddGeometry(sphere_name.c_str(), sphere.get(), mat_node_, false);
 
         // Edges to connected nodes (if they already exist)
         for (const auto& conn : node->connected_nodes) {
-            if (!conn || conn->id == 0) continue;
-            auto it = node_spheres_.find(conn->id);
+            if (!conn || conn->debug_id == 0) continue;
+            auto it = node_spheres_.find(conn->debug_id);
             if (it == node_spheres_.end()) continue;
 
             auto line = std::make_shared<geometry::LineSet>();
-            line->points_.push_back(node_spheres_[node->id]->GetCenter());
+            line->points_.push_back(node_spheres_[node->debug_id]->GetCenter());
             line->points_.push_back(it->second->GetCenter());
             line->lines_.push_back(Eigen::Vector2i(0, 1));
             line->PaintUniformColor({0.0, 1.0, 0.0}); // green
 
             scratch_geoms_.push_back(line);
             const std::string edge_name =
-                "edge_" + std::to_string(node->id) + "_" + std::to_string(conn->id);
+                "edge_" + std::to_string(node->debug_id) + "_" + std::to_string(conn->debug_id);
             scene_->AddGeometry(edge_name.c_str(), line.get(), mat_line_, false);
         }
 
@@ -107,7 +107,7 @@ void Visualizer::DrainQueuesOnGuiThread_() {
             s->Translate(v->coord);
             s->PaintUniformColor({0.0, 0.0, 1.0});
             scratch_geoms_.push_back(s);
-            const std::string name = "black_v_" + std::to_string(node->id) + "_" +
+            const std::string name = "black_v_" + std::to_string(node->debug_id) + "_" +
                                      std::to_string(reinterpret_cast<uintptr_t>(v.get()));
             scene_->AddGeometry(name.c_str(), s.get(), mat_debug_, false);
         }
@@ -120,12 +120,12 @@ void Visualizer::DrainQueuesOnGuiThread_() {
             s->Translate(v->coord);
             s->PaintUniformColor({1.0, 1.0, 0.0});
             scratch_geoms_.push_back(s);
-            const std::string name = "white_v_" + std::to_string(node->id) + "_" +
+            const std::string name = "white_v_" + std::to_string(node->debug_id) + "_" +
                                      std::to_string(reinterpret_cast<uintptr_t>(v.get()));
             scene_->AddGeometry(name.c_str(), s.get(), mat_debug_, false);
         }
 
-        // add facest as mesh
+        // add facets as mesh
         std::vector<Eigen::Vector3d> vertices;
         std::vector<Eigen::Vector3i> triangles;
         for (const auto& f : node->facets) {
@@ -144,10 +144,39 @@ void Visualizer::DrainQueuesOnGuiThread_() {
             // set color with alpha
             mesh->PaintUniformColor({0.5, 0.5, 0.5}); // gray w
             scratch_geoms_.push_back(mesh);
-            const std::string mesh_name = "facet_mesh_" + std::to_string(node->id);
+            const std::string mesh_name = "facet_mesh_" + std::to_string(node->debug_id);
             scene_->AddGeometry(mesh_name.c_str(), mesh.get(), mat_facet_, false);
         }
 
+        for (const auto& f : node->frontiers) {
+            std::vector<Eigen::Vector3d> frontier_vertices;
+            std::vector<Eigen::Vector3i> frontier_triangles;
+            for (const auto& facet : f->facets) {
+                if (!facet) continue;
+                // Add vertices
+                frontier_vertices.push_back(facet->vertices[0]->coord);
+                frontier_vertices.push_back(facet->vertices[1]->coord);
+                frontier_vertices.push_back(facet->vertices[2]->coord);
+                // Add triangle
+                frontier_triangles.emplace_back(
+                    frontier_vertices.size() - 3, 
+                    frontier_vertices.size() - 2,
+                    frontier_vertices.size() - 1);
+            }
+            if (!frontier_triangles.empty()) {
+                auto frontier_mesh = std::make_shared<geometry::TriangleMesh>(
+                    frontier_vertices, frontier_triangles);
+                frontier_mesh->ComputeVertexNormals();
+                // generate a random color for the frontier mesh
+                Eigen::Vector3d frontier_color = Eigen::Vector3d::Random().cwiseAbs();
+                frontier_color.normalize();
+                frontier_mesh->PaintUniformColor(frontier_color);
+                scratch_geoms_.push_back(frontier_mesh);
+                const std::string frontier_name = "frontier_mesh_" + std::to_string(node->debug_id) +
+                                                  "_" + std::to_string(f->index);
+                scene_->AddGeometry(frontier_name.c_str(), frontier_mesh.get(), mat_facet_, false);
+            }
+        }
     }
 
     // Debug nodes (colored spheres)
