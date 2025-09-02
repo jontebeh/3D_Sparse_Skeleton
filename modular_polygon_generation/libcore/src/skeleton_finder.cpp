@@ -41,7 +41,6 @@ namespace libcore {
                 skeletonExpansion(config, vars);
                 libcore::info << "Skeleton expansion completed." << std::endl;
                 std::cin.get(); // Wait for user input to keep the visualizer open
-
                 libcore::info << "Closing visualizer." << std::endl;
                 vars.vis.Close();
                 libcore::info << "Visualizer closed." << std::endl;
