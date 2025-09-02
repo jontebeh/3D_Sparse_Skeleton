@@ -1,5 +1,6 @@
 #include <libcore/visualizer.hpp>
 #include <Eigen/Core>
+#include <libcore/logger.hpp>
 
 using namespace open3d;
 namespace gui = open3d::visualization::gui;
@@ -77,10 +78,12 @@ void Visualizer::DrainQueuesOnGuiThread_() {
         node_spheres_[node->debug_id] = sphere;
         scratch_geoms_.push_back(sphere);
         const std::string sphere_name = "node_sphere_" + std::to_string(node->debug_id);
+        libcore::debug << "Adding Vis sphere " << sphere_name << std::endl;
 
         // 0.19: pointer + bool
         scene_->AddGeometry(sphere_name.c_str(), sphere.get(), mat_node_, false);
 
+        libcore::debug << "Adding Vis lines for " << sphere_name << std::endl;
         // Edges to connected nodes (if they already exist)
         for (const auto& conn : node->connected_nodes) {
             if (!conn || conn->debug_id == 0) continue;
@@ -99,6 +102,7 @@ void Visualizer::DrainQueuesOnGuiThread_() {
             scene_->AddGeometry(edge_name.c_str(), line.get(), mat_line_, false);
         }
 
+        libcore::debug << "Adding Vis black vertices for " << sphere_name << std::endl;
         // Black vertices (blue)
         for (const auto& v : node->black_vertices) {
             if (!v) continue;
@@ -109,9 +113,16 @@ void Visualizer::DrainQueuesOnGuiThread_() {
             scratch_geoms_.push_back(s);
             const std::string name = "black_v_" + std::to_string(node->debug_id) + "_" +
                                      std::to_string(reinterpret_cast<uintptr_t>(v.get()));
+            libcore::debug << "Adding Vis black vertex at " << v->coord.transpose() << std::endl;
+            // check if name already exists
+            if (scene_->HasGeometry(name.c_str())) {
+                libcore::error << "Geometry with name " << name << " already exists. Skipping." << std::endl;
+                continue;
+            }
             scene_->AddGeometry(name.c_str(), s.get(), mat_debug_, false);
         }
 
+        libcore::debug << "Adding Vis white vertices for " << sphere_name << std::endl;
         // White vertices (yellow)
         for (const auto& v : node->white_vertices) {
             if (!v) continue;
@@ -125,6 +136,7 @@ void Visualizer::DrainQueuesOnGuiThread_() {
             scene_->AddGeometry(name.c_str(), s.get(), mat_debug_, false);
         }
 
+        libcore::debug << "Adding Vis facets for " << sphere_name << std::endl;
         // add facets as mesh
         std::vector<Eigen::Vector3d> vertices;
         std::vector<Eigen::Vector3i> triangles;
@@ -145,9 +157,10 @@ void Visualizer::DrainQueuesOnGuiThread_() {
             mesh->PaintUniformColor({0.5, 0.5, 0.5}); // gray w
             scratch_geoms_.push_back(mesh);
             const std::string mesh_name = "facet_mesh_" + std::to_string(node->debug_id);
-            scene_->AddGeometry(mesh_name.c_str(), mesh.get(), mat_facet_, false);
+            //scene_->AddGeometry(mesh_name.c_str(), mesh.get(), mat_facet_, false);
         }
 
+        libcore::debug << "Adding Vis frontiers for " << sphere_name << std::endl;
         for (const auto& f : node->frontiers) {
             std::vector<Eigen::Vector3d> frontier_vertices;
             std::vector<Eigen::Vector3i> frontier_triangles;
@@ -157,6 +170,15 @@ void Visualizer::DrainQueuesOnGuiThread_() {
                 frontier_vertices.push_back(facet->vertices[0]->coord);
                 frontier_vertices.push_back(facet->vertices[1]->coord);
                 frontier_vertices.push_back(facet->vertices[2]->coord);
+
+                // if 2 points have the same coord, log error
+                if (facet->vertices[0]->coord == facet->vertices[1]->coord ||
+                    facet->vertices[0]->coord == facet->vertices[2]->coord ||
+                    facet->vertices[1]->coord == facet->vertices[2]->coord) {
+                    libcore::error << "Found duplicate vertex coordinates in facet for node " << node->debug_id << std::endl;
+                    continue;
+                }
+
                 // Add triangle
                 frontier_triangles.emplace_back(
                     frontier_vertices.size() - 3, 
@@ -190,6 +212,7 @@ void Visualizer::DrainQueuesOnGuiThread_() {
         s->PaintUniformColor(color);
         scratch_geoms_.push_back(s);
         const std::string name = "debug_" + std::to_string(reinterpret_cast<uintptr_t>(s.get()));
+        libcore::debug << "Adding Debug sphere " << name << std::endl;
         scene_->AddGeometry(name.c_str(), s.get(), mat_debug_, false);
     }
 }

@@ -365,8 +365,8 @@ namespace libcore
                 }
             }
             libcore::warning << "Failed to initialize node for frontier " << curFtrPtr->index << std::endl;
-            vars.vis.EnqueueNode(new_node); // Visualize the node even if initialization failed
-            vars.vis.EnqueueNode(gate); // Visualize the gate node
+            vars.vis.EnqueueDebugNode(new_node->coord, /* color */ Eigen::Vector3d(1.0, 0.0, 0.0)); // Visualize the node even if initialization failed
+            vars.vis.EnqueueDebugNode(gate->coord, /* color */ Eigen::Vector3d(0.0, 1.0, 0.0)); // Visualize the gate node
         }
 
         return init_success;

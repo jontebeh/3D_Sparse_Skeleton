@@ -64,7 +64,8 @@ namespace libcore
     }
 
     double radiusSearchOnRawMap(const Eigen::Vector3d& search_Pt, 
-                                const pcl::search::KdTree<pcl::PointXYZ>& kdtreeForRawMap) {
+                                const pcl::search::KdTree<pcl::PointXYZ>& kdtreeForRawMap,
+                                const float min_wall_distance) {
         pcl::PointXYZ searchPoint; // Create a point new point of type pcl::PointXYZ
         searchPoint.x = search_Pt(0);
         searchPoint.y = search_Pt(1);
@@ -75,7 +76,8 @@ namespace libcore
 
         kdtreeForRawMap.nearestKSearch(searchPoint, 1, indices, distance); // Perform the nearest neighbor search
         double radius = sqrt(distance[0]); // Convert squared distance to radius
-        return radius;
+
+        return std::max(0.0, radius - min_wall_distance);
     }
 
     std::pair<double, int> radiusSearch(
@@ -84,10 +86,11 @@ namespace libcore
         double max_ray_length,
         const std::vector<NodePtr>& NodeList,
         const pcl::search::KdTree<pcl::PointXYZ>& kdtreeForRawMap,
-        const std::vector<std::shared_ptr<pcl::search::KdTree<pcl::PointXYZ>>>& kdtreesForPolys
+        const std::vector<std::shared_ptr<pcl::search::KdTree<pcl::PointXYZ>>>& kdtreesForPolys,
+        const float min_wall_distance
     ) 
     {
-        double min_dis = radiusSearchOnRawMap(search_Pt, kdtreeForRawMap); // Distance to the nearest point in the raw map
+        double min_dis = radiusSearchOnRawMap(search_Pt, kdtreeForRawMap, min_wall_distance); // Distance to the nearest point in the raw map
         int min_dis_node_index = -1;
 
         if (min_dis < search_margin) { // If the nearest point is within the search margin
@@ -207,7 +210,7 @@ namespace libcore
     ) {
         // Point cloud map
         if (config.map_representation == 0) {
-            double dis = radiusSearchOnRawMap(search_pt, vars.kdtreeForRawMap);
+            double dis = radiusSearchOnRawMap(search_pt, vars.kdtreeForRawMap, 0.0);
             if (dis < threshold)
                 return true;
             else

@@ -15,7 +15,7 @@ namespace libcore {
             int>(Eigen::Vector3d::Zero(), 0);
         }
 
-        double clearance = radiusSearchOnRawMap(ray_source, vars.kdtreeForRawMap) - config.min_wall_distance; // Distance to the nearest point minus the minimum wall distance
+        double clearance = radiusSearchOnRawMap(ray_source, vars.kdtreeForRawMap, config.min_wall_distance); // Distance to the nearest point minus the minimum wall distance
         if (clearance > cut_off_length) { // If the nearest point is farther than the cut-off length
             return std::pair<Eigen::Vector3d, int>(ray_source, -2);
         }
@@ -24,7 +24,7 @@ namespace libcore {
         double length = clearance; // total length of the ray
 
         while (length <= cut_off_length) { // While the ray length is within the cut-off length
-            double radius = radiusSearchOnRawMap(current_pos, vars.kdtreeForRawMap) - config.min_wall_distance; // Distance to the nearest point minus the minimum wall distance
+            double radius = radiusSearchOnRawMap(current_pos, vars.kdtreeForRawMap, config.min_wall_distance);
 
             if (radius < config.search_margin) { // If the distance to the nearest point is less than the search margin return the current position with the flag -1 meaning a point was found
                 return std::pair<Eigen::Vector3d, int>(current_pos, -1);
@@ -37,6 +37,22 @@ namespace libcore {
         return std::pair<Eigen::Vector3d, int>(ray_source, -2); // If no point was found within the cut-off length, return the original ray source with the flag -2 meaning no point was found
     }
 
+    std::pair<double, int> getClearance(
+        Eigen::Vector3d ray_source,
+        const Config& config,
+        SharedVars& vars
+    ) {
+        return radiusSearch(
+            ray_source,
+            config.search_margin,
+            config.max_ray_length,
+            vars.NodeList,
+            vars.kdtreeForRawMap,
+            vars.kdtreesForPolys,
+            config.min_wall_distance
+        );
+    }
+
     std::pair<Eigen::Vector3d, int> raycast(
         Eigen::Vector3d ray_source,
         Eigen::Vector3d direction,
@@ -44,23 +60,11 @@ namespace libcore {
         const Config& config,
         SharedVars& vars)
     {
-        double clearance = radiusSearch(
+        double clearance = getClearance(
             ray_source,
-            config.search_margin,
-            config.max_ray_length,
-            vars.NodeList,
-            vars.kdtreeForRawMap,
-            vars.kdtreesForPolys
-        ).first; // Distance to the nearest point plus the minimum wall distance
-        
-        if (clearance > cut_off_length) {
-            std::pair<Eigen::Vector3d, int> return_pair(ray_source, -2);
-            return return_pair;
-        }
-
-        if (clearance < 0.0) {
-            return std::make_pair(ray_source, -2); // If the clearance is negative, return the ray source with the flag -2 meaning no point was found
-        }
+            config,
+            vars
+        ).first;
 
         if (config.max_floor_height > 0.0 && direction.z() > 0.0) {
             // If the ray is pointing upward, check the max floor height
@@ -80,19 +84,25 @@ namespace libcore {
             }
         }
 
+        if (clearance > cut_off_length) {
+            std::pair<Eigen::Vector3d, int> return_pair(ray_source, -2);
+            return return_pair;
+        }
+
+        if (clearance < 0.0) {
+            return std::make_pair(ray_source, -2); // If the clearance is negative, return the ray source with the flag -2 meaning no point was found
+        }
+
         Eigen::Vector3d current_pos = ray_source + clearance * direction;
         double length = clearance;
 
         while (length <= cut_off_length) {
-            std::pair<double, int> rs = radiusSearch(
+            std::pair<double, int> rs = getClearance(
                 current_pos,
-                config.search_margin,
-                config.max_ray_length,
-                vars.NodeList,
-                vars.kdtreeForRawMap,
-                vars.kdtreesForPolys
+                config,
+                vars
             );
-            clearance = rs.first - config.min_wall_distance; // Distance to the nearest point plus the minimum wall distance
+            clearance = rs.first;
 
             if (config.max_floor_height > 0.0) {
                 // If the ray is pointing upward, check the max floor height

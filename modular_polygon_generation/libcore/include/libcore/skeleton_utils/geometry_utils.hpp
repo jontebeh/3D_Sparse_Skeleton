@@ -39,19 +39,22 @@ namespace libcore
      * 
      * @param search_Pt The point to search around.
      * @param kdtreeForRawMap The k-d tree for the raw map.
+     * @param min_wall_distance The minimum distance to walls to consider (default is 0).
      * 
      * @return The distance to the nearest point in the raw map.
      */
     double radiusSearchOnRawMap(const Eigen::Vector3d& search_Pt,
-                                const pcl::search::KdTree<pcl::PointXYZ>& kdtreeForRawMap);
-    
+                                const pcl::search::KdTree<pcl::PointXYZ>& kdtreeForRawMap,
+                                const float min_wall_distance = 0);
+
     std::pair<double, int> radiusSearch(
         const Eigen::Vector3d& search_Pt,
         double search_margin,
         double max_ray_length,
         const std::vector<NodePtr>& NodeList,
         const pcl::search::KdTree<pcl::PointXYZ>& kdtreeForRawMap,
-        const std::vector<std::shared_ptr<pcl::search::KdTree<pcl::PointXYZ>>>& kdtreesForPolys
+        const std::vector<std::shared_ptr<pcl::search::KdTree<pcl::PointXYZ>>>& kdtreesForPolys,
+        const float min_wall_distance = 0
     );
 
     double getDis(const NodePtr& node1, const NodePtr& node2);
