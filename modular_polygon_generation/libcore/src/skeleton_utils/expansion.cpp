@@ -9,22 +9,22 @@ namespace libcore
 {
     void skeletonExpansion(const Config& config, SharedVars& vars) {
         Eigen::Vector3d startPt = vars.startPt;
-        libcore::info << "Skeleton expansion started at: " << startPt.transpose() << std::endl;
+        logger::info << "Skeleton expansion started at: " << startPt.transpose() << std::endl;
 
-        libcore::info << "Generating samples on unit sphere." << std::endl;
+        logger::info << "Generating samples on unit sphere." << std::endl;
         genSamplesOnShape(config, vars);
-        libcore::info << "Generated " << vars.sample_directions.size() << " sample directions." << std::endl;
+        logger::info << "Generated " << vars.sample_directions.size() << " sample directions." << std::endl;
 
-        libcore::info << "Identifying first black and white facets." << std::endl;
+        logger::info << "Identifying first black and white facets." << std::endl;
         identifyBwFacets(vars.sample_directions, vars.bw_facets_directions); // Identify black and white facets based on sample directions (triangle mesh)
-        libcore::info << "Identified " << vars.bw_facets_directions.size() << " black and white facets." << std::endl;
+        logger::info << "Identified " << vars.bw_facets_directions.size() << " black and white facets." << std::endl;
 
         setStartPt(startPt, config, vars);
 
         FrontierPtr cur_frontier;
 
         if (vars.pending_frontiers.empty()) {
-            libcore::warning << "No pending frontiers to process." << std::endl;
+            logger::warning << "No pending frontiers to process." << std::endl;
         }
 
         while (!vars.pending_frontiers.empty()) {
@@ -70,7 +70,7 @@ namespace libcore
             
             if (cur_frontier->valid) {
                 if (!processFrontier(cur_frontier, config, vars)) {
-                    libcore::warning << "Failed to process frontier for node "
+                    logger::warning << "Failed to process frontier for node "
                                      << cur_frontier->master_node->debug_id << std::endl;
                 }
             }
@@ -78,29 +78,31 @@ namespace libcore
     }
 
     void setStartPt(Eigen::Vector3d& startPt, const Config config, SharedVars& vars) {
-        libcore::info << "Setting start point: " << startPt.transpose() << std::endl;
+        logger::info << "Setting start point: " << startPt.transpose() << std::endl;
         NodePtr start_node = std::make_shared<Node>(startPt, nullptr);
         initNode(start_node, config, vars);
     }
 
     bool initNode(NodePtr curNodePtr, const Config& config, SharedVars& vars) {
         // wait for input
-        std::cin.get();
+        if (config.debugging) {
+            std::cin.get();
+        }
         // give the node an unique id
         curNodePtr->debug_id = vars.node_index++;
-        libcore::debug << "Initializing node " << curNodePtr->debug_id << std::endl;
+        logger::debug << "Initializing node " << curNodePtr->debug_id << std::endl;
 
         if (!checkWithinBbx(curNodePtr->coord,vars.bbx_min,vars.bbx_max)) { // check if the point is within the bounding box
-            libcore::warning << "Node " << curNodePtr->debug_id << " is outside the bounding box." << std::endl;
+            logger::warning << "Node " << curNodePtr->debug_id << " is outside the bounding box." << std::endl;
             return false;
         }
-        libcore::debug << "Check within bounding box passed for node " << curNodePtr->debug_id << std::endl;
+        logger::debug << "Check within bounding box passed for node " << curNodePtr->debug_id << std::endl;
 
         if (!checkFloor(curNodePtr, config.max_ray_length, config.max_height_diff, config, vars)) { // check if the point is on the floor ToDO: check height
-            libcore::warning << "Node " << curNodePtr->debug_id << " is not on the floor." << std::endl;
+            logger::warning << "Node " << curNodePtr->debug_id << " is not on the floor." << std::endl;
             return false;
         }
-        libcore::debug << "Check floor passed for node " << curNodePtr->debug_id << std::endl;
+        logger::debug << "Check floor passed for node " << curNodePtr->debug_id << std::endl;
 
         if (!curNodePtr->isGate) {
             genBlackAndWhiteVertices(
@@ -108,26 +110,26 @@ namespace libcore
                 config,
                 vars
             ); // Generate black and white vertices for the node
-            libcore::debug << "Generated black and white vertices for node " << curNodePtr->debug_id << std::endl;
+            logger::debug << "Generated black and white vertices for node " << curNodePtr->debug_id << std::endl;
 
             if (curNodePtr->black_vertices.size() < 4) return false;
 
             centralizeNodePos(curNodePtr); // Centralize the node position according to the black vertices
-            libcore::debug << "Centralized position for node " << curNodePtr->debug_id << std::endl;
+            logger::debug << "Centralized position for node " << curNodePtr->debug_id << std::endl;
 
             double radius = getNodeRadius(curNodePtr); // avg distance to all vertices
             if (radius < config.min_node_radius) {
-                libcore::warning << "Node " << curNodePtr->debug_id 
+                logger::warning << "Node " << curNodePtr->debug_id 
                                  << " has too small radius: " << radius << std::endl;
                 return false;
             }
 
             if (curNodePtr->white_vertices.empty()) { // TODO: check if this is needed
-                libcore::warning << "Node " << curNodePtr->debug_id 
+                logger::warning << "Node " << curNodePtr->debug_id 
                                  << " has no white vertices." << std::endl;
                 return false;
             }
-            libcore::debug << "Node " << curNodePtr->debug_id << " has white vertices." << std::endl;
+            logger::debug << "Node " << curNodePtr->debug_id << " has white vertices." << std::endl;
 
             if (curNodePtr->seed_frontier != NULL) {
                 bool diff_index = false;
@@ -139,22 +141,22 @@ namespace libcore
                     }
                 }
                 if (!diff_index) {
-                    libcore::warning << "Node " << curNodePtr->debug_id 
+                    logger::warning << "Node " << curNodePtr->debug_id 
                                      << " has no collision vertices." << std::endl;
                     return false;
                 }
             }
-            libcore::debug << "Node " << curNodePtr->debug_id << " has seed frontiers." << std::endl;
+            logger::debug << "Node " << curNodePtr->debug_id << " has seed frontiers." << std::endl;
 
             findFlowBack(curNodePtr, config, vars);
-            libcore::debug << "Flow back completed for node " << curNodePtr->debug_id << std::endl;
+            logger::debug << "Flow back completed for node " << curNodePtr->debug_id << std::endl;
 
             identifyFacets(curNodePtr, vars.bw_facets_directions);
-            libcore::debug << "Facets identified for node " << curNodePtr->debug_id << std::endl;
+            logger::debug << "Facets identified for node " << curNodePtr->debug_id << std::endl;
 
             identifyFrontiers(curNodePtr, config, vars);
-            libcore::debug << "Frontiers identified for node " << curNodePtr->debug_id << std::endl;
-            if (curNodePtr->frontiers.empty()) libcore::warning << "Node " << curNodePtr->debug_id << " has no frontiers." << std::endl;
+            logger::debug << "Frontiers identified for node " << curNodePtr->debug_id << std::endl;
+            if (curNodePtr->frontiers.empty()) logger::warning << "Node " << curNodePtr->debug_id << " has no frontiers." << std::endl;
 
             addFacetsToPcl(curNodePtr,config.resolution, vars.kdtreesForPolys); // add the facets as points to the kdtrees so collision detection can be done on them
         }
@@ -300,7 +302,7 @@ namespace libcore
     }
 
     void recordNode(NodePtr new_node, SharedVars& vars) {
-        libcore::info << "Recording node "   << new_node->debug_id 
+        logger::info << "Recording node "   << new_node->debug_id 
                       << " at coordinates: " << new_node->coord.transpose() << std::endl;
 
         new_node->id = vars.NodeList.size();
@@ -316,11 +318,7 @@ namespace libcore
         }
 
         // Visualize the node
-        if (vars.vis.isInitialized()) {
-            vars.vis.EnqueueNode(new_node);
-            // wait for input for debugging
-            //std::cin.get();
-        }
+        vars.vis.EnqueueNode(new_node);
     }
 
     bool processFrontier(FrontierPtr curFtrPtr, const Config& config, SharedVars& vars) {
@@ -340,7 +338,7 @@ namespace libcore
 
         if (!floor || !bbx) {
             gate->rollbacked = true;
-            libcore::warning << "Gate for node " << curFtrPtr->master_node->debug_id << " is not on the floor or outside bounding box." << std::endl;
+            logger::warning << "Gate for node " << curFtrPtr->master_node->debug_id << " is not on the floor or outside bounding box." << std::endl;
             return false;
         }
 
@@ -364,9 +362,9 @@ namespace libcore
                     f->valid = false;
                 }
             }
-            libcore::warning << "Failed to initialize node for frontier " << curFtrPtr->index << std::endl;
-            vars.vis.EnqueueDebugNode(new_node->coord, /* color */ Eigen::Vector3d(1.0, 0.0, 0.0)); // Visualize the node even if initialization failed
-            vars.vis.EnqueueDebugNode(gate->coord, /* color */ Eigen::Vector3d(0.0, 1.0, 0.0)); // Visualize the gate node
+            logger::warning << "Failed to initialize node for frontier " << curFtrPtr->index << std::endl;
+            vars.vis.EnqueueDebugNode(new_node->coord, /* color */ Eigen::Vector3d(1.0, 0.2, 0.2)); // Visualize the node even if initialization failed
+            vars.vis.EnqueueDebugNode(gate->coord, /* color */ Eigen::Vector3d(0.2, 1.0, 0.2)); // Visualize the gate node
         }
 
         return init_success;

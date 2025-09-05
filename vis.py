@@ -1,6 +1,6 @@
 # Visualizer for a point cloud dataset
 import open3d as o3d
-
+from pathlib import Path
 
 def load_point_cloud(file_path):
     """Loads a point cloud from a file."""
@@ -43,13 +43,54 @@ def visualize_point_cloud(pcd, nodes, edges):
         height=900
     )
 
+def getRunPath(output_dir: Path, run: str) -> Path:
+    if run == "latest":
+        # get all directories in output_dir
+        runs = [d for d in output_dir.iterdir() if d.is_dir()]
+        # sort by time in run_time name
+        runs = sorted(runs, key=lambda x: x.stat().st_mtime, reverse=True)
+        if len(runs) == 0:
+            raise ValueError("No runs found in output directory.")
+        return runs[0]
+    else:
+        run_path = output_dir / run
+        if not run_path.exists():
+            raise ValueError(f"Run {run} does not exist in output directory.")
+        return run_path
+
+def getMapPath(run_path: Path) -> Path:
+    # read the ini file in the run_path
+    ini_files = list(run_path.glob("*.ini"))
+    if len(ini_files) == 0:
+        raise ValueError(f"No ini file found in run path {run_path}.")
+    ini_file = ini_files[0]
+    # read the map line
+    map_file = None
+    vis_map_file = None
+    with open(ini_file, 'r') as f:
+        for line in f:
+            if line.startswith("map_name ="):
+                map_file = line.split('=')[1].strip()
+            if line.startswith("vis_map_name ="):
+                vis_map_file = line.split('=')[1].strip()
+    if vis_map_file:
+        return Path("./modular_polygon_generation/libcore/data/maps/") / vis_map_file
+    elif map_file:
+        return Path("./modular_polygon_generation/libcore/data/maps/") / map_file
+    else:
+        raise ValueError(f"No map_name or vis_map_name found in ini file {ini_file}.")
 
 def main():
-    # Replace with your point cloud file path
-    file_path = "./modular_polygon_generation/libcore/data/maps/area_1.pcd"
+    output_dir = Path("./output/")
+    run = "latest"
 
-    node_path = "./build/node_list.txt"
-    edge_path = "./build/edge_list.txt"
+    run_path = getRunPath(output_dir, run)
+    node_path = run_path / "node_list.txt"
+    edge_path = run_path / "edge_list.txt"
+    map_path = getMapPath(run_path)
+
+    print(f"Using run path: {run_path}")
+    print(f"Map: {map_path}")
 
     # read the node list with , separators
     nodes = []
@@ -71,7 +112,7 @@ def main():
 
 
     # Load the point cloud
-    pcd = load_point_cloud(file_path)
+    pcd = load_point_cloud(map_path)
 
     # Visualize the point cloud
     visualize_point_cloud(pcd, nodes, edges)

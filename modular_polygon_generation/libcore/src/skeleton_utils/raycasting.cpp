@@ -66,21 +66,19 @@ namespace libcore {
             vars
         ).first;
 
-        if (config.max_floor_height > 0.0 && direction.z() > 0.0) {
-            // If the ray is pointing upward, check the max floor height
+        if (config.max_floor_height > 0.0) {
             double floor_height = getFloorHeight(ray_source, config, vars);
-            // if ray_source + clearance * direction.z() > max_floor_heigt, compute new clearance
-            if (ray_source.z() + clearance * direction.z() > config.max_floor_height) {
-                clearance = (config.max_floor_height - ray_source.z()) / direction.z();
+            if (floor_height > config.max_floor_height) return std::make_pair(ray_source, -2);
+            if (floor_height + clearance * direction.z() > config.max_floor_height) {
+                clearance = (config.max_floor_height - floor_height) / direction.z();
             }
         }
 
-        if (config.min_floor_height > 0.0 && direction.z() < 0.0) {
-            // If the ray is pointing downward, check the min floor height
+        if (config.min_floor_height > 0.0) {
             double floor_height = getFloorHeight(ray_source, config, vars);
-            // if ray_source + clearance * direction.z() < min_floor_heigt, compute new clearance
-            if (ray_source.z() + clearance * direction.z() < config.min_floor_height) {
-                clearance = (config.min_floor_height - ray_source.z()) / direction.z();
+            if (floor_height < config.min_floor_height) return std::make_pair(ray_source, -2);
+            if (floor_height + clearance * direction.z() < config.min_floor_height) {
+                clearance = (floor_height - config.min_floor_height) / direction.z();
             }
         }
 
@@ -105,24 +103,18 @@ namespace libcore {
             clearance = rs.first;
 
             if (config.max_floor_height > 0.0) {
-                // If the ray is pointing upward, check the max floor height
                 double floor_height = getFloorHeight(current_pos, config, vars);
-                // if the floor height is less than the maximum floor height, return the current position with the flag -2
-                if (floor_height < config.min_floor_height) return std::make_pair(current_pos, rs.second);
-                // if ray_source + clearance * direction.z() > max_floor_heigt, compute new clearance
-                if (current_pos.z() + clearance * direction.z() > config.max_floor_height && direction.z() > 0.0) {
-                    clearance = (config.max_floor_height - current_pos.z()) / direction.z();
+                if (floor_height > config.max_floor_height) return std::make_pair(current_pos, rs.second);
+                if (floor_height + clearance * direction.z() > config.max_floor_height) {
+                    clearance = (config.max_floor_height - floor_height) / direction.z();
                 }
             }
 
             if (config.min_floor_height > 0.0) {
-                // If the ray is pointing downward, check the min floor height
                 double floor_height = getFloorHeight(current_pos, config, vars);
-                // if the floor height is less than the minimum floor height, return the current position with the flag -2
                 if (floor_height < config.min_floor_height) return std::make_pair(current_pos, rs.second);
-                // if ray_source + clearance * direction.z() < min_floor_heigt, compute new clearance
-                if (current_pos.z() + clearance * direction.z() < config.min_floor_height && direction.z() < 0.0) {
-                    clearance = (config.min_floor_height - current_pos.z()) / direction.z();
+                if (floor_height + clearance * direction.z() < config.min_floor_height) {
+                    clearance = (floor_height - config.min_floor_height) / direction.z();
                 }
             }
 
