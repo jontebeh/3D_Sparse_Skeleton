@@ -13,15 +13,34 @@ namespace libcore {
     SkeletonFinder::~SkeletonFinder() {}
 
     void SkeletonFinder::init(std::string config_file) {
-        libcore::info << "Initializing SkeletonFinder with parameters." << std::endl;
+        // create log and output folder
+        std::filesystem::path output_path = "../output";
+        // create output directory if it doesn't exist
+        if (!std::filesystem::exists(output_path)) {
+            std::filesystem::create_directories(output_path);
+        }
+
+        // set run name
+        std::string run_name = "run_" +
+                               std::to_string(static_cast<int>(std::time(nullptr)));
+        std::filesystem::path run_path = output_path / run_name;
+        if (!std::filesystem::exists(run_path)) {
+            std::filesystem::create_directories(run_path);
+        }
+
+        logger::setLogFolder(run_path);
+        // copy config file to output folder
+        std::string config_path = "../modular_polygon_generation/libcore/data/configs/" + config_file;
+        std::filesystem::copy_file(config_path, run_path / config_file);
+
         Config config = readConfigFile(config_file);
         SharedVars vars(config);
 
-        libcore::info << "Setting up maps for skeleton finding." << std::endl;
+        logger::info << "Setting up maps for skeleton finding." << std::endl;
         pcl::PointCloud<pcl::PointXYZ> map_pcl = getMap(config);
         pcl::PointCloud<pcl::PointXYZ> raw_map_pcl;
 
-        libcore::info << "Pre-processing maps for visualization and search." << std::endl;
+        logger::info << "Pre-processing maps for visualization and search." << std::endl;
         preProcessMaps(map_pcl, raw_map_pcl, config);
 
         pcl::PointCloud<pcl::PointXYZRGB> map_pcl_rgb = getRGBMap(config);
@@ -30,31 +49,42 @@ namespace libcore {
             vars.kdtreeForRawMap.setInputCloud(raw_map_pcl.makeShared());
         }
 
-        vars.vis.InitWindow(map_pcl_rgb);
+        if (config.visualize) {
+            vars.vis.InitWindow(map_pcl_rgb);
+            vars.vis.setSettings(config.vis_nodes, config.vis_edges,
+                                 config.vis_black_vertices, config.vis_white_vertices,
+                                 config.vis_facets, config.vis_frontiers,
+                                 config.vis_debug_nodes);
+        }
 
-        libcore::info << "Generating skeleton..." << std::endl;
+        logger::info << "Generating skeleton..." << std::endl;
 
         vars.startPt << config.start_x, config.start_y, config.start_z;
         std::thread compute_thread(
             [&vars, &config]() {
-                libcore::info << "Starting skeleton expansion..." << std::endl;
+                logger::info << "Starting skeleton expansion..." << std::endl;
                 skeletonExpansion(config, vars);
-                libcore::info << "Skeleton expansion completed." << std::endl;
-                std::cin.get(); // Wait for user input to keep the visualizer open
-                libcore::info << "Closing visualizer." << std::endl;
-                vars.vis.Close();
-                libcore::info << "Visualizer closed." << std::endl;
+                logger::info << "Skeleton expansion completed." << std::endl;
+                if (vars.vis.isInitialized()) {
+                    std::cin.get(); // Wait for user input to keep the visualizer open
+                    logger::info << "Closing visualizer." << std::endl;
+                    vars.vis.Close();
+                    logger::info << "Visualizer closed." << std::endl;
+                }
             }
         );
 
-        vars.vis.Run(); // This will block until the visualizer is closed
+        if (vars.vis.isInitialized()) {
+            vars.vis.Run(); // This will block until the visualizer is closed
+        }
         compute_thread.join(); // Wait for the skeleton expansion to finish
 
-        libcore::info << "Created " << vars.NodeList.size() << " nodes." << std::endl;
-        libcore::info << "Created " << vars.center_NodeList.size() << " center nodes." << std::endl;
+        logger::info << "Created " << vars.NodeList.size() << " nodes." << std::endl;
+        logger::info << "Created " << vars.center_NodeList.size() << " center nodes." << std::endl;
 
         // save node list to file
-        std::ofstream node_file("node_list.txt");
+        std::filesystem::path node_list_path = run_path / "node_list.txt";
+        std::ofstream node_file(node_list_path);
         if (node_file.is_open()) {
             for (const auto& node : vars.NodeList) {
                 node_file << node->id << ","
@@ -63,13 +93,14 @@ namespace libcore {
                           << node->coord.z() << "\n";
             }
             node_file.close();
-            libcore::info << "Node list saved to node_list.txt." << std::endl;
+            logger::info << "Node list saved to node_list.txt." << std::endl;
         } else {
-            libcore::error << "Unable to open node_list.txt for writing." << std::endl;
+            logger::error << "Unable to open node_list.txt for writing." << std::endl;
         }
 
         // save edge list to file
-        std::ofstream edge_file("edge_list.txt");
+        std::filesystem::path edge_list_path = run_path / "edge_list.txt";
+        std::ofstream edge_file(edge_list_path);
         if (edge_file.is_open()) {
             for (const auto& node : vars.NodeList) {
                 for (const auto& connected_node : node->connected_nodes) {
@@ -78,9 +109,9 @@ namespace libcore {
                 }
             }
             edge_file.close();
-            libcore::info << "Edge list saved to edge_list.txt." << std::endl;
+            logger::info << "Edge list saved to edge_list.txt." << std::endl;
         } else {
-            libcore::error << "Unable to open edge_list.txt for writing." << std::endl;
+            logger::error << "Unable to open edge_list.txt for writing." << std::endl;
         }
 
     }
@@ -91,7 +122,7 @@ namespace libcore {
         std::string config_path = "../modular_polygon_generation/libcore/data/configs/" + config_file;
         if (ini.LoadFile(config_path.c_str()) < 0) {
             // throw an exception and terminate if the file cannot be loaded
-            libcore::error << "Error loading configuration file: " << config_path << std::endl;
+            logger::error << "Error loading configuration file: " << config_path << std::endl;
             throw std::runtime_error("Failed to load configuration file.");
         }
         CSimpleIniA::TNamesDepend sections;
@@ -101,7 +132,7 @@ namespace libcore {
             CSimpleIniA::TNamesDepend keys;
             ini.GetAllKeys(section.pItem, keys);
             for (const auto& key : keys) {
-                libcore::info << "[" << section.pItem << "] "
+                logger::info << "[" << section.pItem << "] "
                         << key.pItem << " = "
                         << ini.GetValue(section.pItem, key.pItem, "<not found>") << "\n";
             }
@@ -129,6 +160,8 @@ namespace libcore {
         cfg.frontier_split_threshold = ini.GetDoubleValue("Raycasting", "frontier_split_threshold", cfg.frontier_split_threshold);
         cfg.max_height_diff = ini.GetDoubleValue("Raycasting", "max_height_diff", cfg.max_height_diff);
         cfg.min_node_radius = ini.GetDoubleValue("Raycasting", "min_node_radius", cfg.min_node_radius);
+        cfg.min_floor_height = ini.GetDoubleValue("Raycasting", "min_floor_height", cfg.min_floor_height);
+        cfg.max_floor_height = ini.GetDoubleValue("Raycasting", "max_floor_height", cfg.max_floor_height);
         cfg.min_wall_distance = ini.GetDoubleValue("Raycasting", "min_wall_distance", cfg.min_wall_distance);
         cfg.min_flowback_creation_threshold = ini.GetLongValue("Raycasting", "min_flowback_creation_threshold", cfg.min_flowback_creation_threshold);
         cfg.min_flowback_creation_radius_threshold = ini.GetDoubleValue("Raycasting", "min_flowback_creation_radius_threshold", cfg.min_flowback_creation_radius_threshold);
@@ -146,6 +179,16 @@ namespace libcore {
         cfg.sampling_depth = ini.GetDoubleValue("Sampling", "sampling_depth", cfg.sampling_depth);
         cfg.sampling_sharpness_eps1 = ini.GetDoubleValue("Sampling", "sampling_sharpness_eps1", cfg.sampling_sharpness_eps1);
         cfg.sampling_sharpness_eps2 = ini.GetDoubleValue("Sampling", "sampling_sharpness_eps2", cfg.sampling_sharpness_eps2);
+
+        cfg.debugging = ini.GetBoolValue("Misc", "debugging", cfg.debugging);
+        cfg.visualize = ini.GetBoolValue("Misc", "visualize", cfg.visualize);
+        cfg.vis_nodes = ini.GetBoolValue("Misc", "vis_nodes", cfg.vis_nodes);
+        cfg.vis_edges = ini.GetBoolValue("Misc", "vis_edges", cfg.vis_edges);
+        cfg.vis_black_vertices = ini.GetBoolValue("Misc", "vis_black_vertices", cfg.vis_black_vertices);
+        cfg.vis_white_vertices = ini.GetBoolValue("Misc", "vis_white_vertices", cfg.vis_white_vertices);
+        cfg.vis_facets = ini.GetBoolValue("Misc", "vis_facets", cfg.vis_facets);
+        cfg.vis_frontiers = ini.GetBoolValue("Misc", "vis_frontiers", cfg.vis_frontiers);
+        cfg.vis_debug_nodes = ini.GetBoolValue("Misc", "vis_debug_nodes", cfg.vis_debug_nodes);
 
         std::cout << "Config loaded from " << config_file << "\n";
         return cfg;

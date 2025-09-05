@@ -60,6 +60,18 @@ namespace libcore
         double start_y = -16.0; // Starting y-coordinate for the skeleton expansion.
         double start_z = 7.0; // Starting z-coordinate for the skeleton expansion
 
+        /*****************Debugging*****************/
+        bool debugging = false; // Flag to enable or disable debugging mode.
+        bool visualize = true; // Flag to enable or disable visualization.
+        bool vis_nodes = true; // Flag to enable or disable point visualization.
+        bool vis_edges = true; // Flag to enable or disable edge visualization.
+        bool vis_black_vertices = false; // Flag to enable or disable black vertex visualization.
+        bool vis_white_vertices = false; // Flag to enable or disable white vertex visualization.
+        bool vis_facets = false; // Flag to enable or disable facet visualization.
+        bool vis_frontiers = false; // Flag to enable or disable frontier visualization.
+        bool vis_debug_nodes = true; // Flag to enable or disable debug node visualization.
+
+
         // default constructor
         Config() = default;
     };

@@ -27,6 +27,9 @@ public:
     void EnqueueDebugNode(const Eigen::Vector3d& position, const Eigen::Vector3d& color);
     void Run();  // blocking: starts GUI loop
     void Close();
+    void setSettings(bool nodes, bool edges, bool black_vertices,
+                     bool white_vertices, bool facets, bool frontiers,
+                     bool debug_nodes);
 
 private:
     // --- GUI / rendering ---
@@ -55,6 +58,14 @@ private:
 
     // --- Lifecycle ---
     std::atomic<bool> running_{false};
+
+    bool vis_nodes = true; // Flag to enable/disable node visualization
+    bool vis_edges = true; // Flag to enable/disable edge visualization
+    bool vis_black_vertices = false; // Flag to enable/disable black vertex visualization
+    bool vis_white_vertices = false; // Flag to enable/disable white vertex visualization
+    bool vis_facets = false; // Flag to enable/disable facet visualization
+    bool vis_frontiers = false; // Flag to enable/disable frontier visualization
+    bool vis_debug_nodes = false; // Flag to enable/disable debug node visualization
 
     // --- Helpers (GUI thread only) ---
     void DrainQueuesOnGuiThread_();
