@@ -2,6 +2,8 @@
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
+from skimage import io, morphology, measure
+
 
 def getRunPath(output_dir: Path, run: str) -> Path:
     if run == "latest":
@@ -65,18 +67,9 @@ def getMapPath(run_path: Path) -> tuple[Path, Path]:
 
     return non_meta_file, meta_file
 
-def main():
-    output_dir = Path("./output/")
-    run = "1756996692"
-
-    run_path = getRunPath(output_dir, run)
+def getNodesAndEdges(run_path: Path) -> tuple[np.ndarray, np.ndarray]:
     node_path = run_path / "node_list.txt"
     edge_path = run_path / "edge_list.txt"
-    map_path, meta_path = getMapPath(run_path)
-
-    print(f"Using run path: {run_path}")
-    print(f"Map: {map_path}")
-    print(f"Meta: {meta_path}")
 
     # read the node list with , separators
     nodes = []
@@ -100,8 +93,62 @@ def main():
     # convert to int array
     edges = [[int(edge[0]), int(edge[1])] for edge in edges]
 
+    # convert edge ids to corresponding indices in nodes
+    for i, edge in enumerate(edges):
+        # get id 1 and id 2
+        id1 = edge[0]
+        id2 = edge[1]
+
+        # get the id from node_ids
+        id1_index = np.where(node_ids == id1)[0]
+        id2_index = np.where(node_ids == id2)[0]
+
+        if len(id1_index) == 0 or len(id2_index) == 0:
+            print(f"Edge with non-existing node id: {id1}, {id2}")
+            continue
+        if id1_index[0] == id2_index[0]:
+            print(f"Edge with same node id: {id1}, {id2}")
+            continue
+
+        # update edges to use indices
+        edges[i][0] = id1_index[0]
+        edges[i][1] = id2_index[0]
+
+    return nodes, edges
+
+
+def main():
+    output_dir = Path("./output/")
+    run = "1756996692"
+
+    run_path = getRunPath(output_dir, run)
+    map_path, meta_path = getMapPath(run_path)
+
+    print(f"Using run path: {run_path}")
+    print(f"Map: {map_path}")
+    print(f"Meta: {meta_path}")
+
+    nodes, edges = getNodesAndEdges(run_path)
+    print(f"Loaded {len(nodes)} nodes and {len(edges)} edges.")
+
     # load the map image as np array
     map_img = plt.imread(map_path)
+
+    # print the shape of the map
+    print(f"Map shape: {map_img.shape}")
+
+    map_binary = map_img[:, :, 0]  # assume grayscale or use red channel
+
+    occ = map_binary < 0.5  # assume white=obstacle
+    free = ~occ
+
+    # Compute medial axis skeleton
+    vorn = morphology.medial_axis(free)
+
+    skeleton = morphology.skeletonize(free)
+
+    map_img[vorn] = [0, 1, 0, 1]  # green for voronoi
+    map_img[skeleton] = [1, 0, 0, 1]  # red for skeleton
 
     # load the transformation matrix from meta ply file
     M = np.load(meta_path)
@@ -126,26 +173,10 @@ def main():
     plt.scatter(nodes_transformed[:, 0], nodes_transformed[:, 1], c='red')
 
     for edge in edges:
-        # get id 1 and id 2
-        id1 = edge[0]
-        id2 = edge[1]
-
-        # get the id from node_ids
-        id1_index = np.where(node_ids == id1)[0]
-        id2_index = np.where(node_ids == id2)[0]
-
-        if len(id1_index) == 0 or len(id2_index) == 0:
-            print(f"Edge with non-existing node id: {id1}, {id2}")
-            continue
-        if id1_index[0] == id2_index[0]:
-            print(f"Edge with same node id: {id1}, {id2}")
-            continue
-
-        node1 = nodes_transformed[id1_index][0]
-        node2 = nodes_transformed[id2_index][0]
+        node1 = nodes_transformed[edge[0]]
+        node2 = nodes_transformed[edge[1]]
         plt.plot([node1[0], node2[0]], [node1[1], node2[1]], c='blue')
     plt.show()
-
 
 
 
