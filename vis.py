@@ -51,11 +51,15 @@ def getRunPath(output_dir: Path, run: str) -> Path:
         runs = sorted(runs, key=lambda x: x.stat().st_mtime, reverse=True)
         if len(runs) == 0:
             raise ValueError("No runs found in output directory.")
+        print(f"Using latest run: {runs[0]}")
         return runs[0]
     else:
+        if "run_" not in run:
+            run = "run_" + run
         run_path = output_dir / run
         if not run_path.exists():
             raise ValueError(f"Run {run} does not exist in output directory.")
+        print(f"Using specified run: {run_path}")
         return run_path
 
 def getMapPath(run_path: Path) -> Path:
@@ -69,9 +73,12 @@ def getMapPath(run_path: Path) -> Path:
     vis_map_file = None
     with open(ini_file, 'r') as f:
         for line in f:
-            if line.startswith("map_name ="):
+            line = line.strip()
+            # remove tabs and spaces
+            line = ''.join(line.split())
+            if line.startswith("map_name="):
                 map_file = line.split('=')[1].strip()
-            if line.startswith("vis_map_name ="):
+            if line.startswith("vis_map_name="):
                 vis_map_file = line.split('=')[1].strip()
     if vis_map_file:
         return Path("./modular_polygon_generation/libcore/data/maps/") / vis_map_file
@@ -82,7 +89,7 @@ def getMapPath(run_path: Path) -> Path:
 
 def main():
     output_dir = Path("./output/")
-    run = "latest"
+    run = "1756996692"
 
     run_path = getRunPath(output_dir, run)
     node_path = run_path / "node_list.txt"
