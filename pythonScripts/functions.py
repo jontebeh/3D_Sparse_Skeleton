@@ -37,18 +37,38 @@ class VisObjGraph:
         self.graph = graph
     
     def get_speheres_and_lines(self, sphere_radius: float = 0.1):
-        spheres = []
-        node_positions = [data['coords'] for _, data in self.graph.nodes(data=True)]
+        nodes = []
+        for node, data in self.graph.nodes.data():
+            nodes.append((node, data['coords']))
 
-        for pos in node_positions:
+        # sort nodes by node id and check if they are continuous
+        remapped_nodes = {}
+        nodes.sort(key=lambda x: x[0])
+
+        for i, (node_id, coords) in enumerate(nodes):
+            if node_id != i:
+                print(f"Warning: Node IDs are not continuous. Remapping node {node_id} to {i}.")
+                remapped_nodes[node_id] = i
+        
+        # get edges
+        edges = list(self.graph.edges())
+        # remap edges if necessary
+        for i, (u, v) in enumerate(edges):
+            if u in remapped_nodes:
+                u = remapped_nodes[u]
+            if v in remapped_nodes:
+                v = remapped_nodes[v]
+            edges[i] = (u, v)
+
+        spheres = []
+        for node in nodes:
             sphere = o3d.geometry.TriangleMesh.create_sphere(radius=sphere_radius)
             sphere.paint_uniform_color([1.0, 0.0, 0.0])  # Red
-            sphere.translate(pos)
+            sphere.translate(node[1])
             spheres.append(sphere)
 
-        edges = list(self.graph.edges())
         line_set = o3d.geometry.LineSet()
-        line_set.points = o3d.utility.Vector3dVector(node_positions)  # Points for indexing
+        line_set.points = o3d.utility.Vector3dVector([node[1] for node in nodes])  # Points for indexing
         line_set.lines = o3d.utility.Vector2iVector(edges)  # Edges as index pairs
         line_set.paint_uniform_color([0.0, 1.0, 0.0])  # Green lines
 
@@ -338,4 +358,4 @@ if __name__ == "__main__":
         #visualize([VisObjVoxel(skeleton, transformation_matrix), VisObjVoxel(voxel_grid_flooded, transformation_matrix), VisObjPCD(pcd)])
 
         skeleton_graph = get_graph_from_voxel(skeleton, transformation_matrix, neighborhood="N26")
-        visualize(skeleton_graph)
+        visualize(VisObjGraph(skeleton_graph))
