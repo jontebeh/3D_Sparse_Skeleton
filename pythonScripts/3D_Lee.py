@@ -55,7 +55,7 @@ def rasterize_point_cloud(pcd: o3d.geometry.PointCloud, voxel_size: float = 0.1,
 
 def visualize_voxel_grid(voxel_grid: np.ndarray, voxel_size: float, min_bound: np.ndarray):
     # visualize the voxel grid
-    occupied_indices = np.argwhere(voxel_grid == 1)
+    occupied_indices = np.argwhere(voxel_grid == 0)
     voxel_centers = occupied_indices * voxel_size + min_bound + voxel_size / 2
     pcd_voxels = o3d.geometry.PointCloud()
     pcd_voxels.points = o3d.utility.Vector3dVector(voxel_centers)

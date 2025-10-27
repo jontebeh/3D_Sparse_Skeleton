@@ -116,6 +116,26 @@ def getNodesAndEdges(run_path: Path) -> tuple[np.ndarray, np.ndarray]:
 
     return nodes, edges
 
+def plotAll(img: np.ndarray, nodes: np.ndarray, edges: np.ndarray):
+    # flip the img horizontally
+    img_cp = img.copy()
+    img_cp = np.flipud(img_cp)
+
+    # flip nodes and edges horizontally
+    nodes_flipped = nodes.copy()
+    # flip y coordinate
+    nodes_flipped[:, 1] = img_cp.shape[0] - nodes_flipped[:, 1]
+
+
+    plt.imshow(img_cp)
+    plt.scatter(nodes_flipped[:, 0], nodes_flipped[:, 1], c='red')
+
+    for edge in edges:
+        node1 = nodes_flipped[edge[0]]
+        node2 = nodes_flipped[edge[1]]
+        plt.plot([node1[0], node2[0]], [node1[1], node2[1]], c='blue')
+    plt.show()
+
 
 def main():
     output_dir = Path("./output/")
@@ -168,15 +188,10 @@ def main():
     # apply transformation matrix
     nodes_transformed = (M @ nodes_homogeneous.T).T
 
-    # plot the map and the nodes and edges
-    plt.imshow(map_img)
-    plt.scatter(nodes_transformed[:, 0], nodes_transformed[:, 1], c='red')
+    # before 
 
-    for edge in edges:
-        node1 = nodes_transformed[edge[0]]
-        node2 = nodes_transformed[edge[1]]
-        plt.plot([node1[0], node2[0]], [node1[1], node2[1]], c='blue')
-    plt.show()
+    # plot the map and the nodes and edges
+    plotAll(map_img, nodes_transformed[:, :2], edges)
 
 
 

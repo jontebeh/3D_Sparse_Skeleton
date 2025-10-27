@@ -58,6 +58,8 @@ def getRunPath(output_dir: Path, run: str) -> Path:
             run = "run_" + run
         run_path = output_dir / run
         if not run_path.exists():
+            runs = [d for d in output_dir.iterdir() if d.is_dir()]
+            print(f"found the other runs: {runs}")
             raise ValueError(f"Run {run} does not exist in output directory.")
         print(f"Using specified run: {run_path}")
         return run_path
