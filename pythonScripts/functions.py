@@ -36,7 +36,7 @@ class VisObjGraph:
     def __init__(self, graph: nx.Graph):
         self.graph = graph
     
-    def get_speheres_and_lines(self, sphere_radius: float = 0.05):
+    def get_speheres_and_lines(self, sphere_radius: float = 0.1):
         spheres = []
         node_positions = [data['coords'] for _, data in self.graph.nodes(data=True)]
 
@@ -272,9 +272,9 @@ def get_graph_from_voxel(voxel_grid: np.ndarray, transformation_matrix: np.ndarr
     # transform the indices to the original point cloud coordinates using the transformation matrix
     # add a column of ones to the indices for homogeneous coordinates
     occupied_indices_h = np.hstack((occupied_indices, np.ones((occupied_indices.shape[0], 1))))
-    occupied_indices = (occupied_indices_h @ M.T).T[:, :3] # apply the transformation matrix
+    occupied_indices_t = (occupied_indices_h @ M.T)[:, :3] # apply the transformation matrix
     voxel_offset = M[:3, :3].diagonal() / 2 # voxel size / 2
-    voxel_centers = occupied_indices + voxel_offset # compute voxel centers
+    voxel_centers = occupied_indices_t + voxel_offset # compute voxel centers
 
     # generate node ids map for fast lookup of neighbors and prevention of rounding errors
     voxel_index_map = {}
@@ -283,7 +283,6 @@ def get_graph_from_voxel(voxel_grid: np.ndarray, transformation_matrix: np.ndarr
     for i, coords in enumerate(voxel_centers):
         voxel_index_map[tuple(occupied_indices[i])] = coords
         indices_id_map[tuple(occupied_indices[i])] = i
-
         voxel_id_map[i] = coords
         G.add_node(i, coords=coords)
 
@@ -303,8 +302,8 @@ def get_graph_from_voxel(voxel_grid: np.ndarray, transformation_matrix: np.ndarr
     for np_index, coords in voxel_index_map.items():
         for d in offsets:
             neighbor = tuple(np_index + d)
-            if neighbor in voxel_id_map:
-                weight = distance(coords, voxel_id_map[neighbor])
+            if neighbor in indices_id_map:
+                weight = distance(coords, voxel_index_map[neighbor])
                 G.add_edge(np_index, indices_id_map[neighbor], weight=weight)
 
 
@@ -322,7 +321,7 @@ if __name__ == "__main__":
         pcd = load_point_cloud(pcd_path)
 
         voxel_grid, transformation_matrix = rasterize_point_cloud(pcd, voxel_size=0.1)
-        visualize(VisObjVoxel(voxel_grid, transformation_matrix))
+        #visualize(VisObjVoxel(voxel_grid, transformation_matrix))
         # fill holes
         voxel_grid_flooded = flood_voxel_grid(voxel_grid, direction='up')
         #visualize_voxel_grid(voxel_grid_flooded, transformation_matrix, invert=False)
@@ -336,7 +335,7 @@ if __name__ == "__main__":
 
         # skeletonize
         skeleton = skeletonize_voxel_grid(voxel_grid_flooded, dilation_size=2)
-        visualize([VisObjVoxel(skeleton, transformation_matrix), VisObjVoxel(voxel_grid_flooded, transformation_matrix), VisObjPCD(pcd)])
+        #visualize([VisObjVoxel(skeleton, transformation_matrix), VisObjVoxel(voxel_grid_flooded, transformation_matrix), VisObjPCD(pcd)])
 
-        skeleton_graph = get_graph_from_voxel(skeleton, transformation_matrix, neighborhood="N6")
+        skeleton_graph = get_graph_from_voxel(skeleton, transformation_matrix, neighborhood="N26")
         visualize(skeleton_graph)
