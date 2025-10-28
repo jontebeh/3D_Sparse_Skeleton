@@ -4,6 +4,8 @@ from pathlib import Path
 from skimage.morphology import skeletonize
 from scipy.ndimage import binary_dilation
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import matplotlib.colors as colors
 import networkx as nx
 
 class VisObjVoxel:
@@ -13,20 +15,59 @@ class VisObjVoxel:
         self.noise = noise
         self.invert = invert
 
+        if voxel_grid.dtype != np.uint8 and voxel_grid.dtype != np.int32:
+            self.data_type = "distance_map"
+        elif np.array_equal(np.unique(voxel_grid), [0, 1]):
+            self.data_type = "binary_map"
+        else:
+            self.data_type = "id_map"
+        
+        # color map with voxel_grid shape x 3 for rgb colors
+        self.color_map = np.zeros((*voxel_grid.shape, 3), dtype=np.float32)
+        self.compute_color_map()
+
     def get_pcd_points(self) -> np.ndarray:
-        occupied_indices = np.argwhere(self.voxel_grid == (0 if self.invert else 1))
+        occupied_indices = np.argwhere(self.voxel_grid != (1 if self.invert else 0))
         occupied_indices_h = np.hstack((occupied_indices, np.ones((occupied_indices.shape[0], 1))))
-        occupied_indices = (occupied_indices_h @ self.transformation_matrix.T)[:, :3]
+        occupied_indices_t = (occupied_indices_h @ self.transformation_matrix.T)[:, :3]
         voxel_size_vec = self.transformation_matrix[:3, :3].diagonal()
-        voxel_centers = occupied_indices + voxel_size_vec / 2
+        voxel_centers = occupied_indices_t + voxel_size_vec / 2
 
         if self.noise:
             voxel_centers += np.random.uniform(-0.05, 0.05, size=voxel_centers.shape)
         
+
         pcd_voxels = o3d.geometry.PointCloud()
         pcd_voxels.points = o3d.utility.Vector3dVector(voxel_centers)
 
+        if self.data_type != "binary_map":
+            voxel_colors = []
+            for idx in occupied_indices:
+                color = self.color_map[tuple(idx)]
+                voxel_colors.append(color)
+            voxel_colors = np.array(voxel_colors)
+            pcd_voxels.colors = o3d.utility.Vector3dVector(voxel_colors)
+
         return pcd_voxels
+
+    def compute_color_map(self) -> np.ndarray:
+        if self.data_type == "binary_map":
+            return
+        elif self.data_type == "distance_map":
+            valid = self.voxel_grid > 0
+            vals = self.voxel_grid[valid]
+            vmin, vmax = np.percentile(vals, [2, 98])  # ignore extremes
+            norm = colors.Normalize(vmin=vmin, vmax=vmax, clip=True)
+            cmap = cm.get_cmap('Spectral')
+
+            self.color_map = np.zeros((*self.voxel_grid.shape, 3))
+            self.color_map[valid] = cmap(norm(self.voxel_grid[valid]))[:, :3] 
+        elif self.data_type == "id_map":
+            unique_ids = np.unique(self.voxel_grid)
+            id_to_color = {uid: np.random.rand(3) for uid in unique_ids if uid != 0}
+            for uid, color in id_to_color.items():
+                self.color_map[self.voxel_grid == uid] = color
+            self.color_map[self.voxel_grid == 0] = [0.0, 0.0, 0.0]  # Black for free
 
 class VisObjPCD:
     def __init__(self, pcd: o3d.geometry.PointCloud):
@@ -39,6 +80,8 @@ class VisObjGraph:
     def get_speheres_and_lines(self, sphere_radius: float = 0.1):
         nodes = []
         for node, data in self.graph.nodes.data():
+            if 'coords' not in data:
+                raise ValueError(f"Node {node} does not have 'coords' attribute. Other attributes: {data}")
             nodes.append((node, data['coords']))
 
         # sort nodes by node id and check if they are continuous
@@ -61,11 +104,11 @@ class VisObjGraph:
             edges[i] = (u, v)
 
         spheres = []
-        for node in nodes:
-            sphere = o3d.geometry.TriangleMesh.create_sphere(radius=sphere_radius)
-            sphere.paint_uniform_color([1.0, 0.0, 0.0])  # Red
-            sphere.translate(node[1])
-            spheres.append(sphere)
+        #for node in nodes:
+            #sphere = o3d.geometry.TriangleMesh.create_sphere(radius=sphere_radius)
+            #sphere.paint_uniform_color([1.0, 0.0, 0.0])  # Red
+            #sphere.translate(node[1])
+            #spheres.append(sphere)
 
         line_set = o3d.geometry.LineSet()
         line_set.points = o3d.utility.Vector3dVector([node[1] for node in nodes])  # Points for indexing
@@ -266,6 +309,9 @@ def skeletonize_voxel_grid(voxel_grid_result: np.ndarray, dilation_size: int = 0
 
     # skeletonize a second time to thin it out more
     skeleton = skeletonize(skeleton, method='lee')
+
+    # remove the padding
+    skeleton = skeleton[1:-1, 1:-1, 1:-1]
     print(f"Created skeleton with {np.sum(skeleton)} voxels.")
     return skeleton
 
@@ -297,14 +343,16 @@ def get_graph_from_voxel(voxel_grid: np.ndarray, transformation_matrix: np.ndarr
     voxel_centers = occupied_indices_t + voxel_offset # compute voxel centers
 
     # generate node ids map for fast lookup of neighbors and prevention of rounding errors
-    voxel_index_map = {}
-    voxel_id_map = {}
-    indices_id_map = {}
+    map_np_index_to_coords = {}
+    map_np_index_to_id = {}
+    map_id_to_coords = {}
     for i, coords in enumerate(voxel_centers):
-        voxel_index_map[tuple(occupied_indices[i])] = coords
-        indices_id_map[tuple(occupied_indices[i])] = i
-        voxel_id_map[i] = coords
+        map_np_index_to_coords[tuple(occupied_indices[i])] = coords
+        map_np_index_to_id[tuple(occupied_indices[i])] = i
+        map_id_to_coords[i] = coords
         G.add_node(i, coords=coords)
+    
+    print(f"Total nodes added: {G.number_of_nodes()}")
 
     n6_offsets = np.array([
         [-1, 0, 0], [1, 0, 0], [0, -1, 0], [0, 1, 0], [0, 0, -1], [0, 0, 1]
@@ -319,12 +367,23 @@ def get_graph_from_voxel(voxel_grid: np.ndarray, transformation_matrix: np.ndarr
     def distance(a, b):
         return np.linalg.norm(a - b) # euclidean distance
 
-    for np_index, coords in voxel_index_map.items():
+    print("Adding edges...")
+    print(f"Processing node {0}/{len(map_np_index_to_id)}")
+    for i, (np_index, id) in enumerate(map_np_index_to_id.items()):
+        # update progress every 1000 nodes
+        if i % 1000 == 0:
+            # flash progress bar
+            print("\033[F", end='')
+
+            #print progress bar
+            print(f"Processing node {i + 1}/{len(map_np_index_to_id)}")
+
         for d in offsets:
-            neighbor = tuple(np_index + d)
-            if neighbor in indices_id_map:
-                weight = distance(coords, voxel_index_map[neighbor])
-                G.add_edge(np_index, indices_id_map[neighbor], weight=weight)
+            neighbor_np_index = tuple(np_index + d)
+            neighbor_id = map_np_index_to_id.get(neighbor_np_index, None)
+            if neighbor_id in map_id_to_coords:
+                weight = distance(coords, map_id_to_coords[neighbor_id])
+                G.add_edge(id, neighbor_id, weight=weight)
 
 
     print(f"Created graph with {G.number_of_nodes()} nodes and {G.number_of_edges()} edges.")
@@ -337,11 +396,25 @@ if __name__ == "__main__":
     test_run = True
     if test_run:
         pcd_path = Path("./modular_polygon_generation/libcore/data/maps/area_1.pcd")
+        output_path = Path("./MSSP/input/")
+        mssp_output_path = Path("./MSSP/output/")
+
+        skeleton_ids = np.load(mssp_output_path / "ske_ids.npy")
+        skeleton_dist = np.load(mssp_output_path / "ske_dist.npy")
+        visSkelDist = VisObjVoxel(skeleton_dist, np.load(output_path / "M.npy"), noise=True)
+        visualize(visSkelDist)
+
+        visSkelIds = VisObjVoxel(skeleton_ids, np.load(output_path / "M.npy"), noise=True)
+        visualize(visSkelIds)
+        exit()
 
         pcd = load_point_cloud(pcd_path)
 
         voxel_grid, transformation_matrix = rasterize_point_cloud(pcd, voxel_size=0.1)
         #visualize(VisObjVoxel(voxel_grid, transformation_matrix))
+
+        np.save(output_path / "M.npy", transformation_matrix)
+
         # fill holes
         voxel_grid_flooded = flood_voxel_grid(voxel_grid, direction='up')
         #visualize_voxel_grid(voxel_grid_flooded, transformation_matrix, invert=False)
@@ -353,9 +426,12 @@ if __name__ == "__main__":
         voxel_grid_inverted = invert_voxel_grid(voxel_grid_flooded)
         #visualize_voxel_grid(voxel_grid_inverted, transformation_matrix, invert=False)
 
+        np.save(output_path / "voxel_grid.npy", voxel_grid_inverted.astype(np.uint8))
+
         # skeletonize
         skeleton = skeletonize_voxel_grid(voxel_grid_flooded, dilation_size=2)
         #visualize([VisObjVoxel(skeleton, transformation_matrix), VisObjVoxel(voxel_grid_flooded, transformation_matrix), VisObjPCD(pcd)])
 
+        np.save(output_path / "skeleton.npy", skeleton.astype(np.uint8))
         skeleton_graph = get_graph_from_voxel(skeleton, transformation_matrix, neighborhood="N26")
-        visualize(VisObjGraph(skeleton_graph))
+        #visualize([VisObjGraph(skeleton_graph),VisObjVoxel(voxel_grid_flooded, transformation_matrix), VisObjPCD(pcd)])
