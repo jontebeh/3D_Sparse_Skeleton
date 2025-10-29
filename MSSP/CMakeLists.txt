@@ -7,7 +7,21 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include(FetchContent)
 
-# xtensor (core)
+# --- xtl (required by xtensor) ---
+# xtensor 0.25.0 works with xtl 0.7.5
+find_package(xtl 0.7.5 QUIET)
+if(NOT xtl_FOUND)
+  FetchContent_Declare(
+    xtl
+    GIT_REPOSITORY https://github.com/xtensor-stack/xtl.git
+    GIT_TAG 0.7.5
+  )
+  FetchContent_MakeAvailable(xtl)
+  # Ensure downstream find_package can see it
+  list(APPEND CMAKE_PREFIX_PATH "${xtl_BINARY_DIR}")
+endif()
+
+# --- xtensor (core) ---
 FetchContent_Declare(
   xtensor
   GIT_REPOSITORY https://github.com/xtensor-stack/xtensor.git
@@ -15,7 +29,9 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(xtensor)
 
-# xtensor-io (for .npy, .npz, csv, etc.)
+# --- xtensor-io (NPY/NPZ/CSV) ---
+# NOTE: needs zlib and libzip at link time.
+# On Ubuntu: sudo apt-get install zlib1g-dev libzip-dev
 FetchContent_Declare(
   xtensor_io
   GIT_REPOSITORY https://github.com/xtensor-stack/xtensor-io.git

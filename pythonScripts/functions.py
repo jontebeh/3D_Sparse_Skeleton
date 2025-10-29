@@ -63,11 +63,13 @@ class VisObjVoxel:
             self.color_map = np.zeros((*self.voxel_grid.shape, 3))
             self.color_map[valid] = cmap(norm(self.voxel_grid[valid]))[:, :3] 
         elif self.data_type == "id_map":
+            rng = np.random.default_rng(42)
             unique_ids = np.unique(self.voxel_grid)
-            id_to_color = {uid: np.random.rand(3) for uid in unique_ids if uid != 0}
-            for uid, color in id_to_color.items():
-                self.color_map[self.voxel_grid == uid] = color
-            self.color_map[self.voxel_grid == 0] = [0.0, 0.0, 0.0]  # Black for free
+            unique_ids = unique_ids[unique_ids != 0]
+            rand_colors = rng.random((len(unique_ids), 3))
+            color_lut = np.zeros((self.voxel_grid.max() + 1, 3))
+            color_lut[unique_ids] = rand_colors
+            self.color_map = color_lut[self.voxel_grid]
 
 class VisObjPCD:
     def __init__(self, pcd: o3d.geometry.PointCloud):
@@ -88,11 +90,11 @@ class VisObjGraph:
         remapped_nodes = {}
         nodes.sort(key=lambda x: x[0])
 
-        for i, (node_id, coords) in enumerate(nodes):
+        for i, (node_id, coords) in enumerate(nodes, start=1):
             if node_id != i:
                 print(f"Warning: Node IDs are not continuous. Remapping node {node_id} to {i}.")
                 remapped_nodes[node_id] = i
-        
+
         # get edges
         edges = list(self.graph.edges())
         # remap edges if necessary
@@ -101,7 +103,7 @@ class VisObjGraph:
                 u = remapped_nodes[u]
             if v in remapped_nodes:
                 v = remapped_nodes[v]
-            edges[i] = (u, v)
+            edges[i] = (u-1, v-1)  # -1 for zero-based indexing
 
         spheres = []
         #for node in nodes:
@@ -116,7 +118,6 @@ class VisObjGraph:
         line_set.paint_uniform_color([0.0, 1.0, 0.0])  # Green lines
 
         return spheres, line_set
-
 
 def load_point_cloud(pcd_path: Path) -> o3d.geometry.PointCloud:
     """Load a point cloud from a given path.
@@ -141,6 +142,49 @@ def load_point_cloud(pcd_path: Path) -> o3d.geometry.PointCloud:
     
     print(f"Loaded point cloud from {pcd_path} with {len(pcd.points)} points.")
     return pcd
+
+def load_graph(node_path: Path, edge_path: Path) -> nx.Graph:
+    """Load a graph from given node and edge files.
+
+    Args:
+        node_path (Path): The path to the node file.
+        edge_path (Path): The path to the edge file.
+
+    Returns:
+        nx.Graph: The loaded graph.
+    """
+    print(f"Loading graph from {node_path} and {edge_path}...")
+    G = nx.Graph()
+
+    def distance(a, b):
+        return np.linalg.norm(a - b) # euclidean distance
+    
+    remap_node_ids = {}
+    next_id = 1
+
+    with open(node_path, 'r') as f:
+        for line in f:
+            parts = line.strip().split(',')
+            node_id = int(parts[0])
+            if node_id != next_id:
+                remap_node_ids[node_id] = next_id
+                node_id = next_id
+            coords = np.array([float(coord) for coord in parts[1:4]])
+            G.add_node(node_id, coords=coords)
+            next_id += 1
+    
+    with open(edge_path, 'r') as f:
+        for line in f:
+            # use , as separator
+            parts = line.strip().split(',')
+            u = int(parts[0]) if int(parts[0]) not in remap_node_ids else remap_node_ids[int(parts[0])]
+            v = int(parts[1]) if int(parts[1]) not in remap_node_ids else remap_node_ids[int(parts[1])]
+
+            weight = distance(G.nodes[u]['coords'], G.nodes[v]['coords'])
+            G.add_edge(u, v, weight=weight)
+    
+    print(f"Loaded graph with {G.number_of_nodes()} nodes and {G.number_of_edges()} edges.")
+    return G
 
 def rasterize_point_cloud(pcd: o3d.geometry.PointCloud, voxel_size: float = 0.1) -> tuple[np.ndarray, np.ndarray]:
     """ Rasterize the point cloud into a voxel grid.
@@ -315,7 +359,6 @@ def skeletonize_voxel_grid(voxel_grid_result: np.ndarray, dilation_size: int = 0
     print(f"Created skeleton with {np.sum(skeleton)} voxels.")
     return skeleton
 
-
 def get_graph_from_voxel(voxel_grid: np.ndarray, transformation_matrix: np.ndarray, neighborhood: str = "N6") -> nx.Graph:
     """Convert a voxel grid to a graph representation.
 
@@ -350,7 +393,7 @@ def get_graph_from_voxel(voxel_grid: np.ndarray, transformation_matrix: np.ndarr
         map_np_index_to_coords[tuple(occupied_indices[i])] = coords
         map_np_index_to_id[tuple(occupied_indices[i])] = i
         map_id_to_coords[i] = coords
-        G.add_node(i, coords=coords)
+        G.add_node(i+1, coords=coords) # +1 to start node ids from 1
     
     print(f"Total nodes added: {G.number_of_nodes()}")
 
@@ -383,11 +426,40 @@ def get_graph_from_voxel(voxel_grid: np.ndarray, transformation_matrix: np.ndarr
             neighbor_id = map_np_index_to_id.get(neighbor_np_index, None)
             if neighbor_id in map_id_to_coords:
                 weight = distance(coords, map_id_to_coords[neighbor_id])
-                G.add_edge(id, neighbor_id, weight=weight)
+                G.add_edge(id + 1, neighbor_id + 1, weight=weight) # +1 to start node ids from 1
 
 
     print(f"Created graph with {G.number_of_nodes()} nodes and {G.number_of_edges()} edges.")
     return G
+
+def get_voxel_from_graph(graph: nx.Graph, transformation_matrix: np.ndarray, grid_shape: tuple[int, int, int]) -> tuple[np.ndarray, np.ndarray]:
+    """Convert a graph representation back to a voxel grid.
+
+    Args:
+        graph (nx.Graph): The input graph.
+        transformation_matrix (np.ndarray): The transformation matrix used to create the graph.
+        grid_shape (tuple[int, int, int]): The shape of the voxel grid.
+
+    Returns:
+        np.ndarray: The voxel grid representation of the graph.
+        np.ndarray: The id map of the graph in voxel grid form.
+    """
+    print("Converting graph to voxel grid...")
+    voxel_grid = np.zeros(grid_shape, dtype=np.uint8)
+    id_map = np.full(grid_shape, 0, dtype=np.int32)
+    M_inv = np.linalg.inv(transformation_matrix)
+
+    for node, data in graph.nodes.data():
+        coords = data['coords']
+        # convert coords back to voxel indices
+        coords_h = np.hstack((coords, 1))
+        voxel_index_t = (coords_h @ M_inv.T)[:3]
+        voxel_index = np.floor(voxel_index_t).astype(int)
+        voxel_grid[voxel_index[0], voxel_index[1], voxel_index[2]] = 1
+        id_map[voxel_index[0], voxel_index[1], voxel_index[2]] = node
+
+    print("Graph converted to voxel grid.")
+    return voxel_grid, id_map
 
 
 if __name__ == "__main__":
@@ -396,17 +468,15 @@ if __name__ == "__main__":
     test_run = True
     if test_run:
         pcd_path = Path("./modular_polygon_generation/libcore/data/maps/area_1.pcd")
+        chen_graph_path_input = Path("./output/run_1756996692")
         output_path = Path("./MSSP/input/")
         mssp_output_path = Path("./MSSP/output/")
 
         skeleton_ids = np.load(mssp_output_path / "ske_ids.npy")
         skeleton_dist = np.load(mssp_output_path / "ske_dist.npy")
-        visSkelDist = VisObjVoxel(skeleton_dist, np.load(output_path / "M.npy"), noise=True)
-        visualize(visSkelDist)
 
-        visSkelIds = VisObjVoxel(skeleton_ids, np.load(output_path / "M.npy"), noise=True)
-        visualize(visSkelIds)
-        exit()
+        chen_skeleton_ids = np.load(mssp_output_path / "chen_ske_ids.npy")
+        chen_skeleton_dist = np.load(mssp_output_path / "chen_ske_dist.npy")
 
         pcd = load_point_cloud(pcd_path)
 
@@ -432,6 +502,28 @@ if __name__ == "__main__":
         skeleton = skeletonize_voxel_grid(voxel_grid_flooded, dilation_size=2)
         #visualize([VisObjVoxel(skeleton, transformation_matrix), VisObjVoxel(voxel_grid_flooded, transformation_matrix), VisObjPCD(pcd)])
 
+        chen_skeleton_graph = load_graph(chen_graph_path_input / "node_list.txt", chen_graph_path_input / "edge_list.txt")
+
+        visualize([VisObjGraph(chen_skeleton_graph), VisObjVoxel(voxel_grid_flooded, transformation_matrix), VisObjPCD(pcd)])
+
+        chen_skeleton_voxel, chen_skeleton_id_map = get_voxel_from_graph(chen_skeleton_graph, transformation_matrix, skeleton.shape)
+        visualize([VisObjVoxel(chen_skeleton_voxel, transformation_matrix), VisObjPCD(pcd)])
+
+        np.save(output_path / "chen_skeleton.npy", chen_skeleton_voxel.astype(np.uint8))
+        np.save(output_path / "chen_skeleton_id_map.npy", chen_skeleton_id_map.astype(np.int32))
+
         np.save(output_path / "skeleton.npy", skeleton.astype(np.uint8))
         skeleton_graph = get_graph_from_voxel(skeleton, transformation_matrix, neighborhood="N26")
-        #visualize([VisObjGraph(skeleton_graph),VisObjVoxel(voxel_grid_flooded, transformation_matrix), VisObjPCD(pcd)])
+        visualize([VisObjGraph(skeleton_graph),VisObjVoxel(voxel_grid_flooded, transformation_matrix), VisObjPCD(pcd)])
+
+        visSkelDist = VisObjVoxel(skeleton_dist, np.load(output_path / "M.npy"), noise=True)
+        visualize(visSkelDist)
+
+        chen_visSkelDist = VisObjVoxel(chen_skeleton_dist, np.load(output_path / "M.npy"), noise=True)
+        visualize(chen_visSkelDist)
+
+        visSkelIds = VisObjVoxel(skeleton_ids, np.load(output_path / "M.npy"), noise=True)
+        visualize(visSkelIds)
+
+        chen_visSkelIds = VisObjVoxel(chen_skeleton_ids, np.load(output_path / "M.npy"), noise=True)
+        visualize(chen_visSkelIds)
