@@ -76,9 +76,11 @@ class VisObjPCD:
         self.pcd = pcd
 
 class VisObjGraph:
-    def __init__(self, graph: nx.Graph):
+    def __init__(self, graph: nx.Graph, outlaiers: set = set(), collisions: set = set()):
         self.graph = graph
-    
+        self.outlaiers = outlaiers
+        self.collisions = collisions
+
     def get_speheres_and_lines(self, sphere_radius: float = 0.1):
         nodes = []
         for node, data in self.graph.nodes.data():
@@ -106,11 +108,13 @@ class VisObjGraph:
             edges[i] = (u-1, v-1)  # -1 for zero-based indexing
 
         spheres = []
-        #for node in nodes:
-            #sphere = o3d.geometry.TriangleMesh.create_sphere(radius=sphere_radius)
-            #sphere.paint_uniform_color([1.0, 0.0, 0.0])  # Red
-            #sphere.translate(node[1])
-            #spheres.append(sphere)
+        if len(self.outlaiers) > 0:
+            for outl in self.outlaiers:
+                node_coords = self.graph.nodes[outl]['coords']
+                sphere = o3d.geometry.TriangleMesh.create_sphere(radius=sphere_radius)
+                sphere.paint_uniform_color([1.0, 0.0, 0.0])  # Red
+                sphere.translate(node_coords)
+                spheres.append(sphere)
 
         line_set = o3d.geometry.LineSet()
         line_set.points = o3d.utility.Vector3dVector([node[1] for node in nodes])  # Points for indexing
