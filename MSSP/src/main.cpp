@@ -109,11 +109,7 @@ int main() {
     bool changed = true;
     int iteration = 0;
 
-    std::vector<std::vector<int>> n6 = {
-        {1, 0, 0}, {-1, 0, 0},
-        {0, 1, 0}, {0, -1, 0},
-        {0, 0, 1}, {0, 0, -1}
-    };
+    std::vector<float> n26_dist;
 
     std::vector<std::vector<int>> n26;
 
@@ -121,8 +117,8 @@ int main() {
         for (int j = -1; j <= 1; j++) {
             for (int k = -1; k <= 1; k++) {
                 if (i == 0 && j == 0 && k == 0) continue;
-                if (std::abs(i) + std::abs(j) + std::abs(k) == 1) continue; // skip N6 neighbors
                 n26.push_back(std::vector<int>{i, j, k});
+                n26_dist.push_back(std::sqrt(i*i + j*j + k*k));
             }
         }
     }
@@ -147,26 +143,16 @@ int main() {
                 for (int k = 1; k < ske.shape()[2] - 1; k++) {
                     if (vox(i,j,k) == 1) {
                         float min_dist = ske_dist(i, j, k);
-                        // itearte over N6 neighbors
-                        for (const auto& offset : n6) {
-                            int ni = i + offset[0];
-                            int nj = j + offset[1];
-                            int nk = k + offset[2];
-                            if (ske_dist(ni, nj, nk) + 1.0f < min_dist) {
-                                min_dist = ske_dist(ni, nj, nk) + 1.0f;
-                                ske_ids(i, j, k) = ske_ids(ni, nj, nk);
-                                ske_dist(i, j, k) = min_dist;
-                                changed = true;
-                            }
-                        }
 
                         // iterate over N26 neighbors
-                        for (const auto& offset : n26) {
+                        for (int n = 0; n < n26.size(); n++) {
+                            auto offset = n26[n];
+                            float dist = n26_dist[n];
                             int ni = i + offset[0];
                             int nj = j + offset[1];
                             int nk = k + offset[2];
-                            if (ske_dist(ni, nj, nk) + 1.732f < min_dist) {
-                                min_dist = ske_dist(ni, nj, nk) + 1.732f; // TODO update distance
+                            if (ske_dist(ni, nj, nk) + dist < min_dist) {
+                                min_dist = ske_dist(ni, nj, nk) + dist;
                                 ske_ids(i, j, k) = ske_ids(ni, nj, nk);
                                 ske_dist(i, j, k) = min_dist;
                                 changed = true;
