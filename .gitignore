@@ -4,3 +4,6 @@
 /build/
 /modular_polygon_generation/libcore/data/maps/
 /.venv/
+/S3DIS/
+*.zip
+S3DIS.zip
