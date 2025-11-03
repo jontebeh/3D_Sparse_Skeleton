@@ -4,8 +4,11 @@ import timeit
 
 def main():
     pcds_path = Path("modular_polygon_generation/libcore/data/maps/")
+    output_path = Path("./data/voxel_maps/")
+    # create output directory if it doesn't exist
+    output_path.mkdir(parents=True, exist_ok=True)
     map_list = [
-        ("area_1.pcd", 0.01),
+        #("area_1.pcd", 0.01),
         ("area_1.pcd", 0.05),
         ("area_1.pcd", 0.1),
         ("area_1.pcd", 0.15),
@@ -45,7 +48,6 @@ def main():
         stats['skeleton_dilations'] = int(0.1 * 2.0 / voxel_size)
 
         # save np files
-        output_path = Path("./data/voxel_maps/")
         file_start =  f"{map_name[:-4]}_size_{voxel_size}_"
         np.save(output_path / f"{file_start}voxel_grid.npy", voxel_grid)
         np.save(output_path / f"{file_start}voxel_grid_flooded.npy", voxel_grid_flooded)

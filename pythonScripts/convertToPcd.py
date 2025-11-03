@@ -4,6 +4,7 @@ import numpy as np
 import os
 import glob
 from tqdm import tqdm
+from pathlib import Path
 
 def load_all_area_points(base_folder, area_list, filters):
     """Loads and merges all XYZRGB points from areas specified in the config."""
@@ -48,18 +49,21 @@ def create_open3d_pcd(data):
 
 if __name__ == "__main__":
     # Replace with your S3DIS dataset root
-    dataset_root = "./S3DIS/"
+    dataset_root = Path("../datasets/datasets/S3DIS/")
+    outpath = Path("./modular_polygon_generation/libcore/data/maps/")
 
     area_list = [
         "Area_5",
     ]
 
-    filters = ["ceiling"]
+    filters = []
 
-    data = load_all_area_points(dataset_root, area_list, filters)
-    pcd = create_open3d_pcd(data)
+    for area in area_list:
+        print(f"Processing {area}...")
+        data = load_all_area_points(dataset_root, [area], filters)
+        pcd = create_open3d_pcd(data)
 
-    o3d.io.write_point_cloud(f"{area_list[0]}_without_ceiling.pcd", pcd, write_ascii=False)
+        o3d.io.write_point_cloud(outpath / f"{area}.pcd", pcd, write_ascii=False)
 
-    o3d.visualization.draw_geometries([pcd], window_name=f"S3DIS Areas: {', '.join(area_list)}", width=1600, height=900)
+        #o3d.visualization.draw_geometries([pcd], window_name=f"S3DIS Area: {area}", width=1600, height=900)
 
