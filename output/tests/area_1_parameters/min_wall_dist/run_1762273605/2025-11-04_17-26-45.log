@@ -1,0 +1,197 @@
+[17:26:45] [Info] [Map] is_simulation = false
+[Map] map_name = area_1.pcd
+[Map] map_representation = 0
+[Map] vis_map_name = area_1_without_ceiling.pcd
+[Map] x_max = 8.0
+[Map] x_min = -26.0
+[Map] y_max = 50.0
+[Map] y_min = -8.0
+[Map] z_max = 3.3
+[Map] z_min = -1.0
+[Misc] debugging = false
+[Misc] official_run = true
+[Misc] vis_black_vertices = true
+[Misc] vis_debug_nodes = false
+[Misc] vis_edges = true
+[Misc] vis_facets = false
+[Misc] vis_frontiers = false
+[Misc] vis_nodes = true
+[Misc] vis_white_vertices = false
+[Misc] visualize = false
+[Raycasting] bad_loop_setting = true
+[Raycasting] frontier_creation_threshold = 0.1
+[Raycasting] frontier_jump_threshold = 2.0
+[Raycasting] frontier_split_threshold = 0.8
+[Raycasting] max_expansion_ray_length = 2.5
+[Raycasting] max_facets_grouped = 5
+[Raycasting] max_floor_height = 0.0
+[Raycasting] max_height_diff = 1.0
+[Raycasting] max_ray_length = 2.5
+[Raycasting] min_floor_height = 0.0
+[Raycasting] min_flowback_creation_radius_threshold = 0.5
+[Raycasting] min_flowback_creation_threshold = 5
+[Raycasting] min_node_radius = 0.05
+[Raycasting] min_wall_distance = 0.5
+[Raycasting] resolution = 0.1
+[Raycasting] search_margin = 0.05
+[Raycasting] start_x = -5.0
+[Raycasting] start_y = 9.0
+[Raycasting] start_z = 1.1
+[Sampling] sampling_density = 200
+[Sampling] sampling_depth = 1.5
+[Sampling] sampling_height = 3.0
+[Sampling] sampling_sharpness_eps1 = 0.1
+[Sampling] sampling_sharpness_eps2 = 1.0
+[Sampling] sampling_width = 1.5
+Setting up maps for skeleton finding.
+[17:26:48] [Info] Pre-processing maps for visualization and search.
+[17:27:03] [Info] Generating skeleton...
+[17:27:03] [Info] Starting skeleton expansion...
+[17:27:03] [Info] Skeleton expansion started at:  -5   9 1.1
+[17:27:03] [Info] Generating samples on unit sphere.
+[17:27:03] [Info] Generated 200 sample directions.
+[17:27:03] [Info] Identifying first black and white facets.
+[17:27:03] [Info] Identified 396 black and white facets.
+[17:27:03] [Info] Setting start point:  -5   9 1.1
+[17:27:03] [Debug] Initializing node 0
+[17:27:03] [Debug] Check within bounding box passed for node 0
+[17:27:03] [Debug] Check floor passed for node 0
+[17:27:03] [Debug] Generated black and white vertices for node 0
+[17:27:03] [Debug] Centralized position for node 0
+[17:27:03] [Debug] Node 0 has white vertices.
+[17:27:03] [Debug] Node 0 has seed frontiers.
+[17:27:03] [Debug] Flow back completed for node 0
+[17:27:03] [Debug] Facets identified for node 0
+[17:27:03] [Debug] Frontiers identified for node 0
+[17:27:03] [Info] Recording node 0 at coordinates: -4.85797  8.98134  1.20071
+[17:27:03] [Debug] Initializing node 1
+[17:27:03] [Debug] Check within bounding box passed for node 1
+[17:27:03] [Debug] Check floor passed for node 1
+[17:27:03] [Debug] Generated black and white vertices for node 1
+[17:27:03] [Debug] Centralized position for node 1
+[17:27:03] [Warning] Node 1 has too small radius: 1.96406e-14
+[17:27:03] [Warning] Failed to initialize node for frontier 0
+[17:27:03] [Warning] Failed to process frontier for node 0
+[17:27:03] [Debug] Initializing node 2
+[17:27:03] [Debug] Check within bounding box passed for node 2
+[17:27:03] [Debug] Check floor passed for node 2
+[17:27:03] [Debug] Generated black and white vertices for node 2
+[17:27:03] [Debug] Centralized position for node 2
+[17:27:03] [Warning] Node 2 has too small radius: 0.0495707
+[17:27:03] [Warning] Failed to initialize node for frontier 1
+[17:27:03] [Warning] Failed to process frontier for node 0
+[17:27:03] [Debug] Initializing node 3
+[17:27:03] [Debug] Check within bounding box passed for node 3
+[17:27:03] [Debug] Check floor passed for node 3
+[17:27:03] [Debug] Generated black and white vertices for node 3
+[17:27:03] [Debug] Centralized position for node 3
+[17:27:03] [Debug] Node 3 has white vertices.
+[17:27:03] [Debug] Node 3 has seed frontiers.
+[17:27:03] [Debug] Flow back completed for node 3
+[17:27:04] [Debug] Facets identified for node 3
+[17:27:04] [Debug] Frontiers identified for node 3
+[17:27:04] [Info] Recording node 3 at coordinates: -5.13645  10.3507  1.04051
+[17:27:04] [Debug] Initializing node 4
+[17:27:04] [Debug] Check within bounding box passed for node 4
+[17:27:04] [Debug] Check floor passed for node 4
+[17:27:04] [Info] Recording node 4 at coordinates: -4.77248  9.87587   1.2579
+[17:27:04] [Debug] Initializing node 5
+[17:27:04] [Debug] Check within bounding box passed for node 5
+[17:27:04] [Debug] Check floor passed for node 5
+[17:27:04] [Debug] Generated black and white vertices for node 5
+[17:27:04] [Debug] Centralized position for node 5
+[17:27:04] [Warning] Node 5 has no white vertices.
+[17:27:04] [Warning] Failed to initialize node for frontier 3
+[17:27:04] [Warning] Failed to process frontier for node 0
+[17:27:04] [Debug] Initializing node 6
+[17:27:04] [Debug] Check within bounding box passed for node 6
+[17:27:04] [Debug] Check floor passed for node 6
+[17:27:04] [Debug] Generated black and white vertices for node 6
+[17:27:04] [Debug] Centralized position for node 6
+[17:27:04] [Debug] Node 6 has white vertices.
+[17:27:04] [Debug] Node 6 has seed frontiers.
+[17:27:04] [Debug] Flow back completed for node 6
+[17:27:04] [Debug] Facets identified for node 6
+[17:27:04] [Debug] Frontiers identified for node 6
+[17:27:04] [Info] Recording node 6 at coordinates: -4.79446  7.36856  1.54951
+[17:27:04] [Debug] Initializing node 7
+[17:27:04] [Debug] Check within bounding box passed for node 7
+[17:27:04] [Debug] Check floor passed for node 7
+[17:27:04] [Info] Recording node 7 at coordinates: -4.86315  7.91028  1.67858
+[17:27:04] [Debug] Initializing node 8
+[17:27:04] [Debug] Check within bounding box passed for node 8
+[17:27:04] [Debug] Check floor passed for node 8
+[17:27:04] [Debug] Generated black and white vertices for node 8
+[17:27:04] [Debug] Centralized position for node 8
+[17:27:04] [Warning] Node 8 has no white vertices.
+[17:27:04] [Warning] Failed to initialize node for frontier 5
+[17:27:04] [Warning] Failed to process frontier for node 0
+[17:27:04] [Debug] Initializing node 9
+[17:27:04] [Debug] Check within bounding box passed for node 9
+[17:27:04] [Debug] Check floor passed for node 9
+[17:27:04] [Debug] Generated black and white vertices for node 9
+[17:27:04] [Debug] Centralized position for node 9
+[17:27:04] [Warning] Node 9 has no white vertices.
+[17:27:04] [Warning] Failed to initialize node for frontier 6
+[17:27:04] [Warning] Failed to process frontier for node 0
+[17:27:04] [Debug] Initializing node 10
+[17:27:04] [Debug] Check within bounding box passed for node 10
+[17:27:04] [Debug] Check floor passed for node 10
+[17:27:04] [Debug] Generated black and white vertices for node 10
+[17:27:04] [Debug] Centralized position for node 10
+[17:27:04] [Warning] Node 10 has too small radius: 1.43214e-14
+[17:27:04] [Warning] Failed to initialize node for frontier 7
+[17:27:04] [Warning] Failed to process frontier for node 0
+[17:27:04] [Debug] Initializing node 11
+[17:27:04] [Debug] Check within bounding box passed for node 11
+[17:27:04] [Debug] Check floor passed for node 11
+[17:27:04] [Debug] Generated black and white vertices for node 11
+[17:27:04] [Debug] Centralized position for node 11
+[17:27:04] [Warning] Node 11 has no white vertices.
+[17:27:04] [Warning] Failed to initialize node for frontier 10
+[17:27:04] [Warning] Failed to process frontier for node 3
+[17:27:04] [Debug] Initializing node 12
+[17:27:04] [Debug] Check within bounding box passed for node 12
+[17:27:04] [Debug] Check floor passed for node 12
+[17:27:04] [Debug] Generated black and white vertices for node 12
+[17:27:04] [Debug] Centralized position for node 12
+[17:27:04] [Warning] Node 12 has no white vertices.
+[17:27:04] [Warning] Failed to initialize node for frontier 11
+[17:27:04] [Warning] Failed to process frontier for node 3
+[17:27:04] [Debug] Initializing node 13
+[17:27:04] [Debug] Check within bounding box passed for node 13
+[17:27:04] [Debug] Check floor passed for node 13
+[17:27:04] [Debug] Generated black and white vertices for node 13
+[17:27:04] [Debug] Centralized position for node 13
+[17:27:04] [Warning] Node 13 has no white vertices.
+[17:27:04] [Warning] Failed to initialize node for frontier 13
+[17:27:04] [Warning] Failed to process frontier for node 6
+[17:27:04] [Debug] Initializing node 14
+[17:27:04] [Debug] Check within bounding box passed for node 14
+[17:27:04] [Debug] Check floor passed for node 14
+[17:27:04] [Debug] Generated black and white vertices for node 14
+[17:27:04] [Debug] Centralized position for node 14
+[17:27:04] [Warning] Node 14 has no white vertices.
+[17:27:04] [Warning] Failed to initialize node for frontier 14
+[17:27:04] [Warning] Failed to process frontier for node 6
+[17:27:04] [Debug] Initializing node 15
+[17:27:04] [Debug] Check within bounding box passed for node 15
+[17:27:04] [Debug] Check floor passed for node 15
+[17:27:04] [Debug] Generated black and white vertices for node 15
+[17:27:04] [Debug] Centralized position for node 15
+[17:27:04] [Warning] Node 15 has too small radius: 1.05932e-14
+[17:27:04] [Warning] Failed to initialize node for frontier 15
+[17:27:04] [Warning] Failed to process frontier for node 6
+[17:27:04] [Debug] Initializing node 16
+[17:27:04] [Debug] Check within bounding box passed for node 16
+[17:27:04] [Debug] Check floor passed for node 16
+[17:27:04] [Debug] Generated black and white vertices for node 16
+[17:27:04] [Debug] Centralized position for node 16
+[17:27:04] [Warning] Node 16 has too small radius: 1.76578e-14
+[17:27:04] [Warning] Failed to initialize node for frontier 16
+[17:27:04] [Warning] Failed to process frontier for node 6
+[17:27:04] [Info] Skeleton expansion completed.
+[17:27:04] [Info] Created 5 nodes.
+[17:27:04] [Info] Created 3 center nodes.
+[17:27:04] [Info] Node list saved to node_list.txt.
+[17:27:04] [Info] Edge list saved to edge_list.txt.

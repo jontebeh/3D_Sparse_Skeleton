@@ -14,7 +14,7 @@ namespace libcore {
 
     void SkeletonFinder::init(std::string config_file) {
         // create log and output folder
-        std::filesystem::path output_path = "../output";
+        std::filesystem::path output_path = "../output/tests/area_1_parameters/height/";
         // create output directory if it doesn't exist
         if (!std::filesystem::exists(output_path)) {
             std::filesystem::create_directories(output_path);
@@ -25,12 +25,17 @@ namespace libcore {
                                std::to_string(static_cast<int>(std::time(nullptr)));
         std::filesystem::path run_path = output_path / run_name;
         if (!std::filesystem::exists(run_path)) {
+            std::cout << "Creating output directory: " << run_path << std::endl;
             std::filesystem::create_directories(run_path);
         }
 
         logger::setLogFolder(run_path);
         // copy config file to output folder
-        std::string config_path = "../modular_polygon_generation/libcore/data/configs/" + config_file;
+        std::string config_path = "../modular_polygon_generation/libcore/data/configs/tests/area_1_parameters/height/" + config_file;
+        if (!std::filesystem::exists(config_path)) {
+            logger::error << "Configuration file does not exist: " << config_path << std::endl;
+            throw std::runtime_error("Configuration file not found.");
+        }
         std::filesystem::copy_file(config_path, run_path / config_file);
 
         Config config = readConfigFile(config_file);
@@ -119,7 +124,7 @@ namespace libcore {
     Config SkeletonFinder::readConfigFile(const std::string& config_file) {
         CSimpleIniA ini;
         ini.SetUnicode();
-        std::string config_path = "../modular_polygon_generation/libcore/data/configs/" + config_file;
+        std::string config_path = "../modular_polygon_generation/libcore/data/configs/tests/area_1_parameters/height/" + config_file;
         if (ini.LoadFile(config_path.c_str()) < 0) {
             // throw an exception and terminate if the file cannot be loaded
             logger::error << "Error loading configuration file: " << config_path << std::endl;

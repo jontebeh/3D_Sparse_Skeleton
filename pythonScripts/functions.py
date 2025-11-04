@@ -72,8 +72,46 @@ class VisObjVoxel:
             self.color_map = color_lut[self.voxel_grid]
 
 class VisObjPCD:
-    def __init__(self, pcd: o3d.geometry.PointCloud):
+    def __init__(self, pcd: o3d.geometry.PointCloud, bounding_box: np.ndarray = None, start_pt: np.ndarray = None):
         self.pcd = pcd
+        self.bounding_box = bounding_box
+        self.start_pt = start_pt
+    
+    def get_vis(self):
+        vis_list = [self.pcd]
+        if self.bounding_box is not None:
+            print("Adding bounding box to visualization...")
+            line_set = o3d.geometry.LineSet()
+            coords = np.zeros((8, 3))
+            x_min, y_min, z_min = self.bounding_box[0]
+            x_max, y_max, z_max = self.bounding_box[1]
+            print(f"Bounding box min: {self.bounding_box[0]}, max: {self.bounding_box[1]}")
+            coords[0] = [x_min, y_min, z_min]
+            coords[1] = [x_max, y_min, z_min]
+            coords[2] = [x_min, y_max, z_min]
+            coords[3] = [x_max, y_max, z_min]
+            coords[4] = [x_min, y_min, z_max]
+            coords[5] = [x_max, y_min, z_max]
+            coords[6] = [x_min, y_max, z_max]
+            coords[7] = [x_max, y_max, z_max]
+            line_set.points = o3d.utility.Vector3dVector(coords)
+            lines = []
+            for i, coord_1 in enumerate(coords):
+                for j, coord_2 in enumerate(coords):
+                    # check if any coord_1 is in coord_2
+                    if i < j and np.sum(np.abs(coord_1 - coord_2) == 0) != 0:
+                        lines.append([i, j])
+            line_set.lines = o3d.utility.Vector2iVector(lines)
+            vis_list.append(line_set)
+        speheres = []
+        if self.start_pt is not None:
+            print("Adding start point to visualization...")
+            sphere = o3d.geometry.TriangleMesh.create_sphere(radius=0.1)
+            sphere.paint_uniform_color([0.0, 1.0, 0.0])  # Green
+            sphere.translate(self.start_pt)
+            speheres.append(sphere)
+            vis_list.extend(speheres)
+        return vis_list
 
 class VisObjGraph:
     def __init__(self, graph: nx.Graph, outlaiers: set = set(), collisions: set = set()):
@@ -306,10 +344,11 @@ def visualize(vis_objs: list[VisObjPCD | VisObjVoxel | VisObjGraph] | VisObjPCD 
         vis_objs = [vis_objs]
     for vis_obj in vis_objs:
         if isinstance(vis_obj, VisObjPCD):
-            vis_list.append(vis_obj.pcd)
+            vis_pcd_list = vis_obj.get_vis()
+            vis_list.extend(vis_pcd_list)
         elif isinstance(vis_obj, VisObjVoxel):
-            pcd_voxels = vis_obj.get_pcd_points()
-            vis_list.append(pcd_voxels)
+            pcd = vis_obj.get_pcd_points()
+            vis_list.append(pcd)
         elif isinstance(vis_obj, VisObjGraph):
             spheres, line_set = vis_obj.get_speheres_and_lines()
             vis_list.extend(spheres)
