@@ -1,0 +1,65 @@
+[14:03:57] [Info] [Map] is_simulation = false
+[Map] map_name = area_1.pcd
+[Map] map_representation = 0
+[Map] vis_map_name = area_1_without_ceiling.pcd
+[Map] x_max = 8.0
+[Map] x_min = -26.0
+[Map] y_max = 50.0
+[Map] y_min = -8.0
+[Map] z_max = 3.3
+[Map] z_min = -4.0
+[Misc] debugging = false
+[Misc] official_run = true
+[Misc] vis_black_vertices = true
+[Misc] vis_debug_nodes = false
+[Misc] vis_edges = true
+[Misc] vis_facets = false
+[Misc] vis_frontiers = false
+[Misc] vis_nodes = true
+[Misc] vis_white_vertices = false
+[Misc] visualize = false
+[Raycasting] bad_loop_setting = true
+[Raycasting] frontier_creation_threshold = 0.1
+[Raycasting] frontier_jump_threshold = 2.0
+[Raycasting] frontier_split_threshold = 0.8
+[Raycasting] max_expansion_ray_length = 2.5
+[Raycasting] max_facets_grouped = 5
+[Raycasting] max_floor_height = 1.0
+[Raycasting] max_height_diff = 1.0
+[Raycasting] max_ray_length = 2.5
+[Raycasting] min_floor_height = 0.5
+[Raycasting] min_flowback_creation_radius_threshold = 0.5
+[Raycasting] min_flowback_creation_threshold = 5
+[Raycasting] min_node_radius = 0.05
+[Raycasting] min_wall_distance = 0.0
+[Raycasting] resolution = 0.1
+[Raycasting] search_margin = 0.05
+[Raycasting] start_x = -5.0
+[Raycasting] start_y = 9.0
+[Raycasting] start_z = 0.5
+[Sampling] sampling_density = 200
+[Sampling] sampling_depth = 1.5
+[Sampling] sampling_height = 3.0
+[Sampling] sampling_sharpness_eps1 = 0.1
+[Sampling] sampling_sharpness_eps2 = 1.0
+[Sampling] sampling_width = 1.5
+Setting up maps for skeleton finding.
+[14:04:00] [Info] Pre-processing maps for visualization and search.
+[14:04:16] [Info] Generating skeleton...
+[14:04:16] [Info] Starting skeleton expansion...
+[14:04:16] [Info] Skeleton expansion started at:  -5   9 0.5
+[14:04:16] [Info] Generating samples on unit sphere.
+[14:04:16] [Info] Generated 200 sample directions.
+[14:04:16] [Info] Identifying first black and white facets.
+[14:04:16] [Info] Identified 396 black and white facets.
+[14:04:16] [Info] Setting start point:  -5   9 0.5
+[14:04:16] [Debug] Initializing node 0
+[14:04:16] [Debug] Check within bounding box passed for node 0
+[14:04:16] [Debug] Check floor passed for node 0
+[14:04:16] [Debug] Generated black and white vertices for node 0
+[14:04:16] [Warning] No pending frontiers to process.
+[14:04:16] [Info] Skeleton expansion completed.
+[14:04:16] [Info] Created 0 nodes.
+[14:04:16] [Info] Created 0 center nodes.
+[14:04:16] [Info] Node list saved to node_list.txt.
+[14:04:16] [Info] Edge list saved to edge_list.txt.
