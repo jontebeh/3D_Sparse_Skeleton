@@ -257,6 +257,7 @@ void dist_transform(xt::xarray<int32_t>& id_map, xt::xarray<float>& dist_map, co
 }
 
 bool process_run(std::filesystem::path run_path, xt::xarray<int64_t>& vox_map) {
+    std::cout << "Processing run directory: " << run_path << std::endl;
     std::filesystem::path id_map_path = run_path / "chen_voxel_id_map.npy";
 
     xt::xarray<int32_t> id_map = xt::load_npy<int32_t>(id_map_path);
@@ -284,9 +285,16 @@ bool process_run(std::filesystem::path run_path, xt::xarray<int64_t>& vox_map) {
     dist_transform(id_map, dist_map, vox_map);
 
     // save the ske_ids array and ske_dist array
-    xt::dump_npy(run_path / "chen_id_map_full.npy", id_map);
-    xt::dump_npy(run_path / "chen_dist_map.npy", dist_map);
-    std::cout << "Saved ske_ids and ske_dist arrays." << std::endl;
+    // check if the file already exists
+    if (!std::filesystem::exists(run_path / "chen_id_map_full.npy")) {
+        xt::dump_npy(run_path / "chen_id_map_full.npy", id_map);
+        std::cout << "Saved full ske_ids array." << std::endl;
+    }
+
+    if (!std::filesystem::exists(run_path / "chen_dist_map.npy")) {
+        xt::dump_npy(run_path / "chen_dist_map.npy", dist_map);
+        std::cout << "Saved ske_dist array." << std::endl;
+    }
     return true;
 }
 
@@ -299,7 +307,14 @@ bool recursive_process(std::filesystem::path base_path, xt::xarray<int64_t>& vox
 
     // check if base_path contains run_
     if (base_path.filename().string().find("run_") != std::string::npos) {
-        return process_run(base_path, vox_map);
+        try
+        {
+            process_run(base_path, vox_map);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
     }
 
     // get subdirectories
