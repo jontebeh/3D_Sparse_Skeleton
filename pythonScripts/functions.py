@@ -185,7 +185,7 @@ def load_point_cloud(pcd_path: Path) -> o3d.geometry.PointCloud:
     print(f"Loaded point cloud from {pcd_path} with {len(pcd.points)} points.")
     return pcd
 
-def load_graph(node_path: Path, edge_path: Path) -> nx.Graph:
+def load_graph(node_path: Path, edge_path: Path) -> tuple[nx.Graph, dict]:
     """Load a graph from given node and edge files.
 
     Args:
@@ -194,6 +194,7 @@ def load_graph(node_path: Path, edge_path: Path) -> nx.Graph:
 
     Returns:
         nx.Graph: The loaded graph.
+        dict: A mapping from old node IDs to new node IDs.
     """
     print(f"Loading graph from {node_path} and {edge_path}...")
     G = nx.Graph()
@@ -226,7 +227,7 @@ def load_graph(node_path: Path, edge_path: Path) -> nx.Graph:
             G.add_edge(u, v, weight=weight)
     
     print(f"Loaded graph with {G.number_of_nodes()} nodes and {G.number_of_edges()} edges.")
-    return G
+    return G, remap_node_ids
 
 def rasterize_point_cloud(pcd: o3d.geometry.PointCloud, voxel_size: float = 0.1) -> tuple[np.ndarray, np.ndarray]:
     """ Rasterize the point cloud into a voxel grid.
@@ -402,14 +403,14 @@ def skeletonize_voxel_grid(voxel_grid_result: np.ndarray, dilation_size: int = 0
     print(f"Created skeleton with {np.sum(skeleton)} voxels.")
     return skeleton
 
-def get_graph_from_voxel(voxel_grid: np.ndarray, transformation_matrix: np.ndarray, neighborhood: str = "N6") -> nx.Graph:
+def get_graph_from_voxel(voxel_grid: np.ndarray, transformation_matrix: np.ndarray, neighborhood: str = "N26") -> nx.Graph:
     """Convert a voxel grid to a graph representation.
 
     Args:
         voxel_grid (np.ndarray): The input voxel grid.
         transformation_matrix (np.ndarray): The transformation matrix to apply to the voxel grid.
         neighborhood (str, optional): The type of neighborhood to consider for connectivity.
-                                      Options are "N6" (6-connectivity) or "N26" (26-connectivity). Defaults to "N6".
+                                      Options are "N6" (6-connectivity) or "N26" (26-connectivity). Defaults to "N26".
 
     Returns:
         nx.Graph: The graph representation of the voxel grid.
@@ -498,8 +499,19 @@ def get_voxel_from_graph(graph: nx.Graph, transformation_matrix: np.ndarray, gri
         coords_h = np.hstack((coords, 1))
         voxel_index_t = (coords_h @ M_inv.T)[:3]
         voxel_index = np.floor(voxel_index_t).astype(int)
-        voxel_grid[voxel_index[0], voxel_index[1], voxel_index[2]] = 1
-        id_map[voxel_index[0], voxel_index[1], voxel_index[2]] = node
+        x, y, z = voxel_index
+        if x < 0 or x >= grid_shape[0]:
+            print(f"Warning: Node {node} x index {x} out of bounds.")
+            x = np.clip(x, 0, grid_shape[0] - 1)
+        if y < 0 or y >= grid_shape[1]:
+            print(f"Warning: Node {node} y index {y} out of bounds.")
+            y = np.clip(y, 0, grid_shape[1] - 1)
+        if z < 0 or z >= grid_shape[2]:
+            print(f"Warning: Node {node} z index {z} out of bounds.")
+            z = np.clip(z, 0, grid_shape[2] - 1)
+
+        voxel_grid[x, y, z] = 1
+        id_map[x, y, z] = node
 
     print("Graph converted to voxel grid.")
     return voxel_grid, id_map
