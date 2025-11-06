@@ -255,14 +255,10 @@ void dist_transform(xt::xarray<int32_t>& id_map, xt::xarray<float>& dist_map, co
 
     std::cout << "Distance transform completed." << std::endl;
 }
-    
 
-int main() {
-    std::filesystem::path vox_map_path = std::filesystem::path("../../data/voxel_maps/area_1/area_1_size_0_1_voxel_grid_inverted.npy");
-    std::filesystem::path run_path = std::filesystem::path("../../output/tests/area_1_parameters/sampling_shape/run_1762356356/");
+bool process_run(std::filesystem::path run_path, xt::xarray<int64_t>& vox_map) {
     std::filesystem::path id_map_path = run_path / "chen_voxel_id_map.npy";
 
-    xt::xarray<int64_t> vox_map = xt::load_npy<int64_t>(vox_map_path);
     xt::xarray<int32_t> id_map = xt::load_npy<int32_t>(id_map_path);
 
     std::cout << "Shape Voxel: ";
@@ -275,7 +271,7 @@ int main() {
 
     if (vox_map.shape() != id_map.shape()) {
         std::cerr << "Error: Voxel map and skeleton map have different shapes!" << std::endl;
-        return -1;
+        return false;
     }
 
     xt::xarray<float> dist_map = xt::ones<float>(vox_map.shape()) * std::numeric_limits<float>::max();
@@ -291,5 +287,34 @@ int main() {
     xt::dump_npy(run_path / "chen_id_map_full.npy", id_map);
     xt::dump_npy(run_path / "chen_dist_map.npy", dist_map);
     std::cout << "Saved ske_ids and ske_dist arrays." << std::endl;
+    return true;
+}
 
+bool recursive_process(std::filesystem::path base_path, xt::xarray<int64_t>& vox_map) {
+    // check if base_path is a directory
+    if (!std::filesystem::is_directory(base_path)) {
+        std::cerr << "Error: " << base_path << " is not a directory!" << std::endl;
+        return false;
+    }
+
+    // check if base_path contains run_
+    if (base_path.filename().string().find("run_") != std::string::npos) {
+        return process_run(base_path, vox_map);
+    }
+
+    // get subdirectories
+    for (const auto& entry : std::filesystem::directory_iterator(base_path)) {
+        if (entry.is_directory()) {
+            recursive_process(entry.path(), vox_map);
+        }
+    }
+    return true;
+}
+
+int main() {
+    std::filesystem::path test_path = std::filesystem::path("../../output/tests/");
+    std::filesystem::path vox_map_path = std::filesystem::path("../../data/voxel_maps/area_1/area_1_size_0_1_voxel_grid_inverted.npy");
+    xt::xarray<int64_t> vox_map = xt::load_npy<int64_t>(vox_map_path);
+
+    recursive_process(test_path, vox_map);
 }
