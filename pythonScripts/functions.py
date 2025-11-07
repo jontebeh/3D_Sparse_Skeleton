@@ -72,10 +72,11 @@ class VisObjVoxel:
             self.color_map = color_lut[self.voxel_grid]
 
 class VisObjPCD:
-    def __init__(self, pcd: o3d.geometry.PointCloud, bounding_box: np.ndarray = None, start_pt: np.ndarray = None):
+    def __init__(self, pcd: o3d.geometry.PointCloud, bounding_box: np.ndarray = None, start_pt: np.ndarray = None, end_pt: np.ndarray = None):
         self.pcd = pcd
         self.bounding_box = bounding_box
         self.start_pt = start_pt
+        self.end_pt = end_pt
     
     def get_vis(self):
         vis_list = [self.pcd]
@@ -109,6 +110,13 @@ class VisObjPCD:
             sphere = o3d.geometry.TriangleMesh.create_sphere(radius=0.1)
             sphere.paint_uniform_color([0.0, 1.0, 0.0])  # Green
             sphere.translate(self.start_pt)
+            speheres.append(sphere)
+            vis_list.extend(speheres)
+        if self.end_pt is not None:
+            print("Adding end point to visualization...")
+            sphere = o3d.geometry.TriangleMesh.create_sphere(radius=0.1)
+            sphere.paint_uniform_color([1.0, 0.0, 0.0])  # Red
+            sphere.translate(self.end_pt)
             speheres.append(sphere)
             vis_list.extend(speheres)
         return vis_list
