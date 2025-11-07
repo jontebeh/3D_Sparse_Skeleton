@@ -31,7 +31,7 @@ def progress_bar(progress, total, length=50):
 
 def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
     if graph_path.exists(): # load graph
-        print("Loading existing graph from file...")
+        print(f"Loading existing graph from file {graph_path}")
         G = Graph()
         G.load(str(graph_path))
 
@@ -43,6 +43,12 @@ def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
             id_vertex_map[node_id] = v
         progress_bar(1, 1)
         print()
+
+        print(f"Graph loaded with vertex property: {list(G.vp.keys())} and edge property: {list(G.ep.keys())}")
+
+        # print a few ids for debugging
+        sample_ids = list(id_vertex_map.keys())[:5]
+        print(f"Sample node IDs in the graph: {sample_ids}")
     else: # build graph
         print("Building graph from voxel grid...")
         id_vertex_map = {}
@@ -80,8 +86,10 @@ def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
                     0 <= neighbor_idx[2] < voxel_grid.shape[2] and
                     voxel_grid[neighbor_id] == 1):
                     v2 = id_vertex_map[neighbor_id]
-                    e = G.add_edge(v1, v2)
-                    weights[e] = weight
+                    # check if edge already exists
+                    if not G.edge(v1, v2):
+                        e = G.add_edge(v1, v2)
+                        weights[e] = weight
         G.ep['weight'] = weights
         progress_bar(1, 1)
         print()
@@ -90,27 +98,20 @@ def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
         G.save(str(graph_path))
         print(f"Graph saved to {graph_path}.")
 
-    return
-
     # check if the shortest path already exists
-    shortest_paths = shortest_path_output / "results.json"
+    shortest_paths = area_path / "area_1_size_0_1_shortest_paths.json"
     if shortest_paths.exists(): #skip computation
         print("Shortest path results already exist, skipping computation.")
     else: #compute shortest paths
         results = []
         for i in range(point_pairs.shape[0]):
             result = {}
-            start_index = point_pairs[i, :3]
-            end_index = point_pairs[i, 3:]
-            result['start_index'] = tuple(map(int, start_index))
-            result['end_index'] = tuple(map(int, end_index))
+            start_id = tuple(map(int, point_pairs[i, :3]))
+            end_id = tuple(map(int, point_pairs[i, 3:]))
+            result['start_id'] = start_id
+            result['end_id'] = end_id
 
-            print(f"Computing shortest path {i+1}/{point_pairs.shape[0]}: Start index: {start_index}, End index: {end_index}")
-
-            start_id = id_map_full[tuple(map(int, start_index))]
-            end_id = id_map_full[tuple(map(int, end_index))]
-            result['start_id'] = int(start_id)
-            result['end_id'] = int(end_id)
+            print(f"Computing shortest path {i+1}/{point_pairs.shape[0]}: Start index: {start_id}, End index: {end_id}")
 
             start_vertex = id_vertex_map[start_id]
             end_vertex = id_vertex_map[end_id]
@@ -120,10 +121,9 @@ def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
             end_time = timeit.default_timer()
             print(f"Shortest path computed in {end_time - start_time:.4f} seconds.")
             result['computation_time'] = end_time - start_time
-            
-            result['path'] = [G.vp['node_id'][v] for v in path]
-            result['length'] = sum([G.ep['weight'][e] for e in edges])
-            result['total_length'] = result['length'] + dist_map[tuple(start_index)] * voxel_size + dist_map[tuple(end_index)] * voxel_size
+
+            result['path'] = [tuple(G.vp['node_id'][v]) for v in path]
+            result['total_length'] = sum([G.ep['weight'][e] for e in edges])
             results.append(result)
 
         # save results
@@ -132,26 +132,20 @@ def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
         print(f"Shortest path results saved to {shortest_paths}.")
     
     # check if graph_stats.json exists
-    graph_stats_path = run / "graph_stats.json"
+    graph_stats_path = area_path / "area_1_size_0_1_graph_stats.json"
     if graph_stats_path.exists():
         print("Graph stats already exist, skipping computation.")
     else: # compute graph stats
+        print("Computing graph statistics...")
         num_vertices = G.num_vertices()
         num_edges = G.num_edges()
-        degrees = [v.out_degree() for v in G.vertices()]
-        avg_degree = sum(degrees) / num_vertices
-        avg_edge_length = sum(G.ep['weight'][e] for e in G.edges()) / num_edges
-        num_vertices_deg_greater_2 = sum(1 for v in G.vertices() if v.out_degree() > 2)
-        dead_ends = sum(1 for v in G.vertices() if v.out_degree() == 1)
+        avg_degree = 2 * num_edges / num_vertices
 
 
         graph_stats = {
             'num_vertices': num_vertices,
             'num_edges': num_edges,
-            'avg_degree': avg_degree,
-            'avg_edge_length': avg_edge_length,
-            'num_vertices_deg_greater_2': num_vertices_deg_greater_2,
-            'num_dead_ends': dead_ends
+            'avg_degree': avg_degree
         }
         with open(graph_stats_path, 'w') as f:
             json.dump(graph_stats, f, indent=4, sort_keys=True)
