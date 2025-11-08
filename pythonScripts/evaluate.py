@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 from datetime import datetime
 import matplotlib.pyplot as plt
+from matplotlib.tri import Triangulation
 
 tests_path = Path("./output/tests/area_1_parameters")
 
@@ -128,6 +129,15 @@ def load_node_stats(path: Path) -> dict:
 
     return result
 
+def check_is_valid(run_path: Path) -> bool:
+    if not (run_path / "graph_stats.json").exists():
+        return False
+    if not (run_path / "node_list.txt").exists():
+        return False
+    if load_graph_stats(run_path)['num_vertices'] == 0:
+        return False
+    return True
+
 def process_run(run_path: Path) -> dict:
     result = {}
     # load ini (first ini file in the run folder)
@@ -141,6 +151,13 @@ def process_run(run_path: Path) -> dict:
     print(f"Processing run: {run_id} - {run_name}")
 
     result.update(load_config(config_path))
+
+    if not check_is_valid(run_path):
+        print(f"Run {run_id} is not valid.")
+        result['valid'] = False
+        return result
+    result['valid'] = True
+
 
     shortest_paths_path = run_path / "shortest_path"
     result.update(load_shortest_paths(shortest_paths_path))
@@ -167,6 +184,24 @@ for parameter_folder in tests_path.iterdir():
         page_name = parameter_folder.name
         pages[page_name] = df
 
+height_df = pages.get("height")
+if height_df is not None:
+    xs = height_df['min_floor_height'].astype(float).to_numpy()
+    ys = height_df['max_floor_height'].astype(float).to_numpy()
+    zs = height_df['mean_coverage_distance'].astype(float).to_numpy()
+
+    tri = Triangulation(xs, ys)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot_trisurf(tri, zs, cmap='viridis')
+
+    ax.set_xlabel('Min Floor Height (m)')
+    ax.set_ylabel('Max Floor Height (m)')
+    ax.set_zlabel('Mean Path Length (m)')
+    ax.set_title('Mean Path Length vs Min/Max Floor Height')
+    plt.show()
+    exit()
 
 
 # save to excel with multiple sheets
