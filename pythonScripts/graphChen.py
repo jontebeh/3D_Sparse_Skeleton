@@ -81,9 +81,10 @@ def process_run(run: Path, point_pairs: np.ndarray):
                 v1 = id_vertex_map[node_id_1]
                 v2 = id_vertex_map[node_id_2]
 
-                weight = np.linalg.norm(np.array(vertex_coords[v1]) - np.array(vertex_coords[v2]))
-                e = G.add_edge(v1, v2)
-                weights[e] = weight
+                if not G.edge(v1,v2):
+                    weight = np.linalg.norm(np.array(vertex_coords[v1]) - np.array(vertex_coords[v2]))
+                    e = G.add_edge(v1, v2)
+                    weights[e] = weight
         G.ep['weight'] = weights
 
         # save graph
