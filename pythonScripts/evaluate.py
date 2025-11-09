@@ -5,6 +5,7 @@ import numpy as np
 from datetime import datetime
 import matplotlib.pyplot as plt
 from matplotlib.tri import Triangulation
+from skimage.draw import line_nd
 
 tests_path = Path("./output/tests/area_1_parameters")
 
@@ -14,7 +15,14 @@ evaluation_path = Path("./evaluation")
 evaluation_path.mkdir(parents=True, exist_ok=True)
 
 M = np.load(area_path / "area_1_size_0_1_M.npy")
+M_inv = np.linalg.inv(M)
+voxel_grid = np.load(area_path / "area_1_size_0_1_voxel_grid.npy")
 voxel_size = M[0,0]
+
+M_05 = np.load(area_path / "area_1_size_0_05_M.npy")
+M_05_inv = np.linalg.inv(M_05)
+voxel_grid_05 = np.load(area_path / "area_1_size_0_05_voxel_grid.npy")
+voxel_size_05 = M_05[0,0]
 
 def load_shortest_paths(path: Path) -> dict:
     # load path lengths
@@ -125,9 +133,59 @@ def load_node_stats(path: Path) -> dict:
         hist = np.floor(np_nodes[:, 2] / 0.2) * 0.2
         unique, counts = np.unique(hist, return_counts=True)
         for u, c in zip(unique, counts):
-            result[f'node_height_{u:.1f}_count'] = int(c) / len(np_nodes)
+            result[f'node_height_{u:.1f}'] = int(c) / len(np_nodes)
 
     return result
+
+def compute_violations(path: Path) -> int:
+    nodes = {}
+    node_path = path / "node_list.txt"
+    edge_path = path / "edge_list.txt"
+    graph_stats_path = path / "graph_stats.json"
+
+    if not node_path.exists() or not graph_stats_path.exists():
+        return None
+    
+    # load nodes
+    nodes_coords = []
+    with open(node_path, "r") as f:
+        c = 0
+        for line in f:
+            parts = line.strip().split(",")
+            node_id = int(parts[0])
+            coords = list(map(float, parts[1:]))
+            nodes_coords.append(coords)
+            nodes[node_id] = c
+            c += 1
+    np_coords = np.array(nodes_coords)
+    coords_h = np.hstack((np_coords, np.ones((np_coords.shape[0], 1))))
+    voxel_index_t = (coords_h @ M_05_inv.T)[:, :3]
+    voxel_index = np.floor(voxel_index_t).astype(int)
+
+    # clip indices to voxel grid size
+    voxel_index = np.clip(voxel_index, [0,0,0], np.array(voxel_grid_05.shape) - 1)
+    edges = set()
+    with open(edge_path, "r") as f:
+        for line in f:
+            v1, v2 = tuple(map(int, line.strip().split(",")))
+            v1_idx = nodes[v1]
+            v2_idx = nodes[v2]
+            if (v2_idx, v1_idx) not in edges:
+                edges.add((v1_idx, v2_idx))
+
+    violations = set()
+    for v1,v2 in edges:
+        coords_1 = voxel_index[v1]
+        coords_2 = voxel_index[v2]
+        # compute line voxels between coords_1 and coords_2
+        line_voxels = np.array(line_nd(tuple(map(int, coords_1)), tuple(map(int, coords_2)))).T[1:] # skip the first entry, hence its the node itself
+        for voxel in line_voxels:
+            if voxel_grid_05[tuple(voxel)] == 1:
+                violations.add((v1, v2))
+                break
+
+    print(f"Total violations: {len(violations)}")
+    return len(violations)
 
 def check_is_valid(run_path: Path) -> bool:
     if not (run_path / "graph_stats.json").exists():
@@ -166,6 +224,7 @@ def process_run(run_path: Path) -> dict:
     result.update(load_time_logs(run_path))
     result.update(load_coverage_stats(run_path))
     result.update(load_node_stats(run_path))
+    result['num_violations'] = compute_violations(run_path)
 
     return result
 
@@ -184,7 +243,26 @@ for parameter_folder in tests_path.iterdir():
         page_name = parameter_folder.name
         pages[page_name] = df
 
+
 height_df = pages.get("height")
+if height_df is None:
+    xs = height_df['min_floor_height'].astype(float).to_numpy()
+    ys = height_df['max_floor_height'].astype(float).to_numpy()
+    zs = height_df['mean_coverage_distance'].astype(float).to_numpy()
+
+    tri = Triangulation(xs, ys)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot_trisurf(tri, zs, cmap='viridis')
+
+    ax.set_xlabel('Min Floor Height (m)')
+    ax.set_ylabel('Max Floor Height (m)')
+    ax.set_zlabel('Mean Path Length (m)')
+    ax.set_title('Mean Path Length vs Min/Max Floor Height')
+    plt.show()
+    exit()
+
 if height_df is not None:
     xs = height_df['min_floor_height'].astype(float).to_numpy()
     ys = height_df['max_floor_height'].astype(float).to_numpy()
@@ -202,6 +280,7 @@ if height_df is not None:
     ax.set_title('Mean Path Length vs Min/Max Floor Height')
     plt.show()
     exit()
+
 
 
 # save to excel with multiple sheets
