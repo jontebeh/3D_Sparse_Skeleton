@@ -13,6 +13,7 @@ area_path = Path("./data/voxel_maps/area_1")
 
 evaluation_path = Path("./evaluation")
 evaluation_path.mkdir(parents=True, exist_ok=True)
+evaluation_file_path = evaluation_path / "evaluation_area_1_parameters.xlsx"
 
 M = np.load(area_path / "area_1_size_0_1_M.npy")
 M_inv = np.linalg.inv(M)
@@ -243,49 +244,10 @@ for parameter_folder in tests_path.iterdir():
         page_name = parameter_folder.name
         pages[page_name] = df
 
-
-height_df = pages.get("height")
-if height_df is None:
-    xs = height_df['min_floor_height'].astype(float).to_numpy()
-    ys = height_df['max_floor_height'].astype(float).to_numpy()
-    zs = height_df['mean_coverage_distance'].astype(float).to_numpy()
-
-    tri = Triangulation(xs, ys)
-
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_trisurf(tri, zs, cmap='viridis')
-
-    ax.set_xlabel('Min Floor Height (m)')
-    ax.set_ylabel('Max Floor Height (m)')
-    ax.set_zlabel('Mean Path Length (m)')
-    ax.set_title('Mean Path Length vs Min/Max Floor Height')
-    plt.show()
-    exit()
-
-if height_df is not None:
-    xs = height_df['min_floor_height'].astype(float).to_numpy()
-    ys = height_df['max_floor_height'].astype(float).to_numpy()
-    zs = height_df['mean_coverage_distance'].astype(float).to_numpy()
-
-    tri = Triangulation(xs, ys)
-
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_trisurf(tri, zs, cmap='viridis')
-
-    ax.set_xlabel('Min Floor Height (m)')
-    ax.set_ylabel('Max Floor Height (m)')
-    ax.set_zlabel('Mean Path Length (m)')
-    ax.set_title('Mean Path Length vs Min/Max Floor Height')
-    plt.show()
-    exit()
-
-
-
 # save to excel with multiple sheets
-with pd.ExcelWriter(evaluation_path / "evaluation_area_1_parameters.xlsx") as writer:
+with pd.ExcelWriter(evaluation_file_path) as writer:
     for page_name, df in pages.items():
         # truncate page name to 31 characters (excel limit)
         sheet_name = page_name[:31]
         df.to_excel(writer, sheet_name=sheet_name, index=False)
+    print(f"Evaluation saved to {evaluation_file_path}")

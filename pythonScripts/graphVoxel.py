@@ -1,6 +1,4 @@
 from graph_tool import Graph
-from graph_tool.draw import graph_draw
-from graph_tool.search import astar_search
 from graph_tool.topology import shortest_path
 from pathlib import Path
 import sys
@@ -12,11 +10,11 @@ import json
 # load point pairs
 area_path = Path("./data/voxel_maps/area_1/")
 point_pairs = np.load(area_path / "area_1_size_0_1_point_pairs_voxel_indices.npy")
-graph_path = area_path / "area_1_size_0_1_graph.gt"
+graph_path = area_path / "area_1_size_0_2_graph.gt"
 
-M = np.load(area_path / "area_1_size_0_1_M.npy")
+M = np.load(area_path / "area_1_size_0_2_M.npy")
 
-voxel_grid = np.load(area_path / "area_1_size_0_1_voxel_grid_inverted.npy")
+voxel_grid = np.load(area_path / "area_1_size_0_2_voxel_grid_inverted.npy")
 
 voxel_size = M[0,0]
 
@@ -31,6 +29,7 @@ def progress_bar(progress, total, length=50):
 
 def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
     if graph_path.exists(): # load graph
+        exit()
         print(f"Loading existing graph from file {graph_path}")
         G = Graph()
         G.load(str(graph_path))
@@ -97,6 +96,7 @@ def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
         # save graph
         G.save(str(graph_path))
         print(f"Graph saved to {graph_path}.")
+        exit()
 
     # check if the shortest path already exists
     shortest_paths = area_path / "area_1_size_0_1_shortest_paths.json"

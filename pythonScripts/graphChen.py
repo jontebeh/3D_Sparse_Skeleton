@@ -1,6 +1,4 @@
 from graph_tool import Graph
-from graph_tool.draw import graph_draw
-from graph_tool.search import astar_search
 from graph_tool.topology import shortest_path
 from pathlib import Path
 import numpy as np
