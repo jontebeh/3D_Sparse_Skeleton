@@ -18,6 +18,8 @@ voxel_grid = np.load(area_path / "area_1_size_0_1_voxel_grid.npy")
 
 voxel_size = M[0,0]
 
+replace_files = True
+
 def process_run(run: Path, point_pairs: np.ndarray):
     # load dependencies
     node_list_path = run / "node_list.txt"
@@ -37,7 +39,7 @@ def process_run(run: Path, point_pairs: np.ndarray):
     dist_map = np.load(dist_map_path)
 
     # check if the graph already exists
-    if graph_path.exists(): # load graph
+    if graph_path.exists() and not replace_files: # load graph
         G = Graph()
         G.load(str(graph_path))
 
@@ -92,7 +94,7 @@ def process_run(run: Path, point_pairs: np.ndarray):
 
     # check if the shortest path already exists
     shortest_paths = shortest_path_output / "results.json"
-    if shortest_paths.exists(): #skip computation
+    if shortest_paths.exists() and not replace_files: #skip computation
         print("Shortest path results already exist, skipping computation.")
     else: #compute shortest paths
         results = []
@@ -131,7 +133,7 @@ def process_run(run: Path, point_pairs: np.ndarray):
     
     # check if graph_stats.json exists
     graph_stats_path = run / "graph_stats.json"
-    if graph_stats_path.exists():
+    if graph_stats_path.exists() and not replace_files: # skip computation
         print("Graph stats already exist, skipping computation.")
     else: # compute graph stats
         num_vertices = G.num_vertices()

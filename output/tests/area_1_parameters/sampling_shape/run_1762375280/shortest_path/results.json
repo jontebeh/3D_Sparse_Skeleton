@@ -1,6 +1,6 @@
 [
     {
-        "computation_time": 0.0010857668239623308,
+        "computation_time": 0.0008685151115059853,
         "end_id": 731,
         "end_index": [
             98,
@@ -54,7 +54,7 @@
         "total_length": 33.59619532102063
     },
     {
-        "computation_time": 0.0007094729226082563,
+        "computation_time": 0.0006070928648114204,
         "end_id": 602,
         "end_index": [
             84,
@@ -95,7 +95,7 @@
         "total_length": 20.71576303771997
     },
     {
-        "computation_time": 0.0007480380591005087,
+        "computation_time": 0.0007098880596458912,
         "end_id": 591,
         "end_index": [
             128,
@@ -139,7 +139,7 @@
         "total_length": 24.229253769980737
     },
     {
-        "computation_time": 0.0009928829967975616,
+        "computation_time": 0.0008500879630446434,
         "end_id": 812,
         "end_index": [
             114,
@@ -194,7 +194,7 @@
         "total_length": 32.39914890225476
     },
     {
-        "computation_time": 0.001183986896649003,
+        "computation_time": 0.0006528790108859539,
         "end_id": 774,
         "end_index": [
             79,
@@ -241,7 +241,7 @@
         "total_length": 26.447581053286253
     },
     {
-        "computation_time": 0.0023428848944604397,
+        "computation_time": 0.0010721338912844658,
         "end_id": 552,
         "end_index": [
             220,
@@ -311,7 +311,7 @@
         "total_length": 50.490506396845724
     },
     {
-        "computation_time": 0.0012661791406571865,
+        "computation_time": 0.0009561576880514622,
         "end_id": 271,
         "end_index": [
             127,
@@ -374,7 +374,7 @@
         "total_length": 44.57423219266558
     },
     {
-        "computation_time": 0.0010748240165412426,
+        "computation_time": 0.0008073598146438599,
         "end_id": 42,
         "end_index": [
             154,
@@ -428,7 +428,7 @@
         "total_length": 35.93868339702054
     },
     {
-        "computation_time": 0.0007384468335658312,
+        "computation_time": 0.0004796283319592476,
         "end_id": 656,
         "end_index": [
             141,
@@ -465,7 +465,7 @@
         "total_length": 19.015579269216957
     },
     {
-        "computation_time": 0.0006298061925917864,
+        "computation_time": 0.0005028923042118549,
         "end_id": 534,
         "end_index": [
             225,
@@ -501,7 +501,7 @@
         "total_length": 17.16543140677259
     },
     {
-        "computation_time": 0.0007174829952418804,
+        "computation_time": 0.0006281877867877483,
         "end_id": 303,
         "end_index": [
             206,
@@ -545,7 +545,7 @@
         "total_length": 26.30009601945065
     },
     {
-        "computation_time": 0.0008282570634037256,
+        "computation_time": 0.0006964760832488537,
         "end_id": 730,
         "end_index": [
             107,
@@ -595,7 +595,7 @@
         "total_length": 31.83472136682115
     },
     {
-        "computation_time": 0.0007776529528200626,
+        "computation_time": 0.0006257928907871246,
         "end_id": 650,
         "end_index": [
             148,
@@ -641,7 +641,7 @@
         "total_length": 27.79115076750408
     },
     {
-        "computation_time": 0.0003138030879199505,
+        "computation_time": 0.00029165856540203094,
         "end_id": 171,
         "end_index": [
             189,
@@ -667,7 +667,7 @@
         "total_length": 8.108841767755617
     },
     {
-        "computation_time": 0.0007370379753410816,
+        "computation_time": 0.0005829809233546257,
         "end_id": 242,
         "end_index": [
             133,
@@ -711,7 +711,7 @@
         "total_length": 25.99768149981106
     },
     {
-        "computation_time": 0.0010614688508212566,
+        "computation_time": 0.000828293152153492,
         "end_id": 1090,
         "end_index": [
             90,
@@ -767,7 +767,7 @@
         "total_length": 35.67918556464142
     },
     {
-        "computation_time": 0.0007669441401958466,
+        "computation_time": 0.0006559891626238823,
         "end_id": 195,
         "end_index": [
             139,
@@ -813,7 +813,7 @@
         "total_length": 26.717836290331338
     },
     {
-        "computation_time": 0.0008127139881253242,
+        "computation_time": 0.0006987648084759712,
         "end_id": 1113,
         "end_index": [
             217,
@@ -862,7 +862,7 @@
         "total_length": 28.188682146070015
     },
     {
-        "computation_time": 0.0005994420498609543,
+        "computation_time": 0.0005022920668125153,
         "end_id": 244,
         "end_index": [
             132,
@@ -898,7 +898,7 @@
         "total_length": 15.369563719676636
     },
     {
-        "computation_time": 0.0014163448940962553,
+        "computation_time": 0.0011706738732755184,
         "end_id": 1131,
         "end_index": [
             211,
@@ -969,7 +969,7 @@
         "total_length": 51.03125871293088
     },
     {
-        "computation_time": 0.0007875510491430759,
+        "computation_time": 0.000770211685448885,
         "end_id": 42,
         "end_index": [
             158,
@@ -1016,7 +1016,7 @@
         "total_length": 29.34323156458055
     },
     {
-        "computation_time": 0.0013408190570771694,
+        "computation_time": 0.00114518404006958,
         "end_id": 484,
         "end_index": [
             153,
@@ -1085,7 +1085,7 @@
         "total_length": 49.017130626868564
     },
     {
-        "computation_time": 0.002142047043889761,
+        "computation_time": 0.0010177460499107838,
         "end_id": 1175,
         "end_index": [
             52,
@@ -1149,7 +1149,7 @@
         "total_length": 42.224215771862966
     },
     {
-        "computation_time": 0.0013612990733236074,
+        "computation_time": 0.0008337660692632198,
         "end_id": 1418,
         "end_index": [
             29,
@@ -1203,7 +1203,7 @@
         "total_length": 33.02811193244406
     },
     {
-        "computation_time": 0.0011618579737842083,
+        "computation_time": 0.000917322002351284,
         "end_id": 1227,
         "end_index": [
             78,
@@ -1264,7 +1264,7 @@
         "total_length": 45.13245447284377
     },
     {
-        "computation_time": 0.0006028020288795233,
+        "computation_time": 0.0004904298111796379,
         "end_id": 547,
         "end_index": [
             162,
@@ -1301,7 +1301,7 @@
         "total_length": 19.74875019654085
     },
     {
-        "computation_time": 0.0012628859840333462,
+        "computation_time": 0.0009914706461131573,
         "end_id": 531,
         "end_index": [
             240,
@@ -1368,7 +1368,7 @@
         "total_length": 49.21054213819891
     },
     {
-        "computation_time": 0.000499487854540348,
+        "computation_time": 0.0004277392290532589,
         "end_id": 471,
         "end_index": [
             131,
@@ -1402,7 +1402,7 @@
         "total_length": 15.54835583779758
     },
     {
-        "computation_time": 0.0008691160473972559,
+        "computation_time": 0.000642858911305666,
         "end_id": 831,
         "end_index": [
             112,
@@ -1449,7 +1449,7 @@
         "total_length": 29.941674502687125
     },
     {
-        "computation_time": 0.0006313021294772625,
+        "computation_time": 0.0005689910613000393,
         "end_id": 937,
         "end_index": [
             173,
@@ -1489,7 +1489,7 @@
         "total_length": 22.105111395314424
     },
     {
-        "computation_time": 0.0016715340316295624,
+        "computation_time": 0.0014129499904811382,
         "end_id": 1539,
         "end_index": [
             227,
@@ -1575,7 +1575,7 @@
         "total_length": 63.214951513573254
     },
     {
-        "computation_time": 0.001064492855221033,
+        "computation_time": 0.0007960330694913864,
         "end_id": 1115,
         "end_index": [
             186,
@@ -1626,7 +1626,7 @@
         "total_length": 31.1440698600641
     },
     {
-        "computation_time": 0.00022422103211283684,
+        "computation_time": 0.00023585325106978416,
         "end_id": 1243,
         "end_index": [
             234,
@@ -1649,7 +1649,7 @@
         "total_length": 4.421799039541651
     },
     {
-        "computation_time": 0.000985155114904046,
+        "computation_time": 0.0007921028882265091,
         "end_id": 1288,
         "end_index": [
             68,
@@ -1702,7 +1702,7 @@
         "total_length": 33.634599506550806
     },
     {
-        "computation_time": 0.0009683230891823769,
+        "computation_time": 0.0008894959464669228,
         "end_id": 768,
         "end_index": [
             51,
@@ -1757,7 +1757,7 @@
         "total_length": 35.86010412397968
     },
     {
-        "computation_time": 0.0007896539755165577,
+        "computation_time": 0.0006573088467121124,
         "end_id": 753,
         "end_index": [
             185,
@@ -1801,7 +1801,7 @@
         "total_length": 24.0590567624473
     },
     {
-        "computation_time": 0.0008898330852389336,
+        "computation_time": 0.0004931879229843616,
         "end_id": 686,
         "end_index": [
             112,
@@ -1835,7 +1835,7 @@
         "total_length": 14.621140109178839
     },
     {
-        "computation_time": 0.002304880181327462,
+        "computation_time": 0.001164678018540144,
         "end_id": 1317,
         "end_index": [
             161,
@@ -1903,7 +1903,7 @@
         "total_length": 44.06525542398922
     },
     {
-        "computation_time": 0.0008469340391457081,
+        "computation_time": 0.0007281987927854061,
         "end_id": 687,
         "end_index": [
             142,
@@ -1953,7 +1953,7 @@
         "total_length": 31.94483174869873
     },
     {
-        "computation_time": 0.0012578640598803759,
+        "computation_time": 0.0010282997973263264,
         "end_id": 1415,
         "end_index": [
             71,
@@ -2018,7 +2018,7 @@
         "total_length": 44.28172083819958
     },
     {
-        "computation_time": 0.0007379089947789907,
+        "computation_time": 0.0006946478970348835,
         "end_id": 1143,
         "end_index": [
             240,
@@ -2060,7 +2060,7 @@
         "total_length": 21.76841786843076
     },
     {
-        "computation_time": 0.00044655706733465195,
+        "computation_time": 0.00045153405517339706,
         "end_id": 107,
         "end_index": [
             189,
@@ -2092,7 +2092,7 @@
         "total_length": 13.898271420610783
     },
     {
-        "computation_time": 0.0015047029592096806,
+        "computation_time": 0.001084979623556137,
         "end_id": 1444,
         "end_index": [
             224,
@@ -2162,7 +2162,7 @@
         "total_length": 49.61237576973699
     },
     {
-        "computation_time": 0.0007031520362943411,
+        "computation_time": 0.0006279200315475464,
         "end_id": 1111,
         "end_index": [
             185,
@@ -2205,7 +2205,7 @@
         "total_length": 23.173159139033647
     },
     {
-        "computation_time": 0.0011084710713475943,
+        "computation_time": 0.0008943723514676094,
         "end_id": 1320,
         "end_index": [
             138,
@@ -2264,7 +2264,7 @@
         "total_length": 37.654427941721586
     },
     {
-        "computation_time": 0.0016600689850747585,
+        "computation_time": 0.0013604839332401752,
         "end_id": 816,
         "end_index": [
             32,
@@ -2345,7 +2345,7 @@
         "total_length": 56.78675369356756
     },
     {
-        "computation_time": 0.0004279268905520439,
+        "computation_time": 0.00039649102836847305,
         "end_id": 614,
         "end_index": [
             57,
@@ -2377,7 +2377,7 @@
         "total_length": 13.617482717052821
     },
     {
-        "computation_time": 0.0011350119020789862,
+        "computation_time": 0.000939477700740099,
         "end_id": 218,
         "end_index": [
             236,
@@ -2440,7 +2440,7 @@
         "total_length": 42.558665579712816
     },
     {
-        "computation_time": 0.0018290260341018438,
+        "computation_time": 0.0010908590629696846,
         "end_id": 124,
         "end_index": [
             214,
@@ -2511,7 +2511,7 @@
         "total_length": 52.20088940225312
     },
     {
-        "computation_time": 0.0009155988227576017,
+        "computation_time": 0.0004742369055747986,
         "end_id": 1189,
         "end_index": [
             217,
@@ -2548,7 +2548,7 @@
         "total_length": 19.07270656487643
     },
     {
-        "computation_time": 0.0012177450116723776,
+        "computation_time": 0.0007173190824687481,
         "end_id": 686,
         "end_index": [
             116,
@@ -2594,7 +2594,7 @@
         "total_length": 27.585027955794654
     },
     {
-        "computation_time": 0.0014221440069377422,
+        "computation_time": 0.001251795794814825,
         "end_id": 1113,
         "end_index": [
             213,
@@ -2667,7 +2667,7 @@
         "total_length": 52.70984766889772
     },
     {
-        "computation_time": 0.0014596020337194204,
+        "computation_time": 0.0011455509811639786,
         "end_id": 1414,
         "end_index": [
             63,
@@ -2739,7 +2739,7 @@
         "total_length": 51.25777336527296
     },
     {
-        "computation_time": 0.0012236519251018763,
+        "computation_time": 0.0009838328696787357,
         "end_id": 1247,
         "end_index": [
             156,
@@ -2801,7 +2801,7 @@
         "total_length": 42.71320060510109
     },
     {
-        "computation_time": 0.0014003159012645483,
+        "computation_time": 0.0012374999932944775,
         "end_id": 1466,
         "end_index": [
             57,
@@ -2873,7 +2873,7 @@
         "total_length": 53.46423224064092
     },
     {
-        "computation_time": 0.0005690960679203272,
+        "computation_time": 0.0008413931354880333,
         "end_id": 105,
         "end_index": [
             175,
@@ -2911,7 +2911,7 @@
         "total_length": 18.48347396694821
     },
     {
-        "computation_time": 0.0007543819956481457,
+        "computation_time": 0.0010967678390443325,
         "end_id": 178,
         "end_index": [
             143,
@@ -2956,7 +2956,7 @@
         "total_length": 25.083192668304438
     },
     {
-        "computation_time": 0.0017850659787654877,
+        "computation_time": 0.0024138279259204865,
         "end_id": 512,
         "end_index": [
             223,
@@ -3045,7 +3045,7 @@
         "total_length": 67.20438196309873
     },
     {
-        "computation_time": 0.001370938029140234,
+        "computation_time": 0.0019094180315732956,
         "end_id": 75,
         "end_index": [
             191,
@@ -3117,7 +3117,7 @@
         "total_length": 53.652286748059275
     },
     {
-        "computation_time": 0.000545973889529705,
+        "computation_time": 0.0008103484287858009,
         "end_id": 1184,
         "end_index": [
             217,
@@ -3154,7 +3154,7 @@
         "total_length": 18.578329164703124
     },
     {
-        "computation_time": 0.000425226055085659,
+        "computation_time": 0.0006112931296229362,
         "end_id": 810,
         "end_index": [
             56,
@@ -3186,7 +3186,7 @@
         "total_length": 12.982638720912895
     },
     {
-        "computation_time": 0.002544002141803503,
+        "computation_time": 0.001998253632336855,
         "end_id": 51,
         "end_index": [
             235,
@@ -3264,7 +3264,7 @@
         "total_length": 59.70585725272039
     },
     {
-        "computation_time": 0.002344192937016487,
+        "computation_time": 0.0019322610460221767,
         "end_id": 268,
         "end_index": [
             119,
@@ -3338,7 +3338,7 @@
         "total_length": 55.15564901113492
     },
     {
-        "computation_time": 0.0016392359975725412,
+        "computation_time": 0.0013788151554763317,
         "end_id": 122,
         "end_index": [
             227,
@@ -3392,7 +3392,7 @@
         "total_length": 34.50341531855389
     },
     {
-        "computation_time": 0.0007288260385394096,
+        "computation_time": 0.0008183610625565052,
         "end_id": 909,
         "end_index": [
             31,
@@ -3430,7 +3430,7 @@
         "total_length": 16.189760905416925
     },
     {
-        "computation_time": 0.0009195178281515837,
+        "computation_time": 0.0012096939608454704,
         "end_id": 1162,
         "end_index": [
             28,
@@ -3480,7 +3480,7 @@
         "total_length": 28.11428667357821
     },
     {
-        "computation_time": 0.0014352668076753616,
+        "computation_time": 0.0018559359014034271,
         "end_id": 1269,
         "end_index": [
             229,
@@ -3551,7 +3551,7 @@
         "total_length": 44.94593972275438
     },
     {
-        "computation_time": 0.0008520230185240507,
+        "computation_time": 0.0007541477680206299,
         "end_id": 529,
         "end_index": [
             220,
@@ -3602,7 +3602,7 @@
         "total_length": 30.855898326856416
     },
     {
-        "computation_time": 0.0014446228742599487,
+        "computation_time": 0.001029008999466896,
         "end_id": 711,
         "end_index": [
             28,
@@ -3669,7 +3669,7 @@
         "total_length": 44.557963686800726
     },
     {
-        "computation_time": 0.0009876149706542492,
+        "computation_time": 0.0007637962698936462,
         "end_id": 1006,
         "end_index": [
             211,
@@ -3721,7 +3721,7 @@
         "total_length": 29.728404186214384
     },
     {
-        "computation_time": 0.0013698481488972902,
+        "computation_time": 0.0009570452384650707,
         "end_id": 305,
         "end_index": [
             183,
@@ -3786,7 +3786,7 @@
         "total_length": 46.456891103703406
     },
     {
-        "computation_time": 0.0013253521174192429,
+        "computation_time": 0.0009727445431053638,
         "end_id": 552,
         "end_index": [
             233,
@@ -3832,7 +3832,7 @@
         "total_length": 27.614546355890308
     },
     {
-        "computation_time": 0.0016471599228680134,
+        "computation_time": 0.0014728568494319916,
         "end_id": 552,
         "end_index": [
             220,
@@ -3893,7 +3893,7 @@
         "total_length": 41.37799751643975
     },
     {
-        "computation_time": 0.00153768016025424,
+        "computation_time": 0.001846702303737402,
         "end_id": 1487,
         "end_index": [
             223,
@@ -3963,7 +3963,7 @@
         "total_length": 46.63827503674389
     },
     {
-        "computation_time": 0.001169688068330288,
+        "computation_time": 0.0013946820981800556,
         "end_id": 234,
         "end_index": [
             238,
@@ -4024,7 +4024,7 @@
         "total_length": 43.03316139355266
     },
     {
-        "computation_time": 0.0015623678918927908,
+        "computation_time": 0.0012050429359078407,
         "end_id": 1109,
         "end_index": [
             197,
@@ -4103,7 +4103,7 @@
         "total_length": 57.737628506999556
     },
     {
-        "computation_time": 0.0010735350660979748,
+        "computation_time": 0.0008582570590078831,
         "end_id": 941,
         "end_index": [
             195,
@@ -4161,7 +4161,7 @@
         "total_length": 34.875972099724514
     },
     {
-        "computation_time": 0.0012283590622246265,
+        "computation_time": 0.0008890517055988312,
         "end_id": 621,
         "end_index": [
             53,
@@ -4219,7 +4219,7 @@
         "total_length": 40.43823934932052
     },
     {
-        "computation_time": 0.0007185849826782942,
+        "computation_time": 0.0006011589430272579,
         "end_id": 715,
         "end_index": [
             27,
@@ -4263,7 +4263,7 @@
         "total_length": 26.611224999813405
     },
     {
-        "computation_time": 0.001285481033846736,
+        "computation_time": 0.0010273992083966732,
         "end_id": 1175,
         "end_index": [
             50,
@@ -4332,7 +4332,7 @@
         "total_length": 47.13218727556919
     },
     {
-        "computation_time": 0.0005511639174073935,
+        "computation_time": 0.00047061918303370476,
         "end_id": 230,
         "end_index": [
             217,
@@ -4370,7 +4370,7 @@
         "total_length": 19.172360883622108
     },
     {
-        "computation_time": 0.0012440939899533987,
+        "computation_time": 0.000911009032279253,
         "end_id": 35,
         "end_index": [
             155,
@@ -4432,7 +4432,7 @@
         "total_length": 46.59446909800443
     },
     {
-        "computation_time": 0.000559662003070116,
+        "computation_time": 0.0004684608429670334,
         "end_id": 799,
         "end_index": [
             83,
@@ -4470,7 +4470,7 @@
         "total_length": 20.39175542504371
     },
     {
-        "computation_time": 0.0021796640940010548,
+        "computation_time": 0.001015444751828909,
         "end_id": 1397,
         "end_index": [
             232,
@@ -4538,7 +4538,7 @@
         "total_length": 46.676423160584186
     },
     {
-        "computation_time": 0.0008374741300940514,
+        "computation_time": 0.0006426167674362659,
         "end_id": 1079,
         "end_index": [
             31,
@@ -4586,7 +4586,7 @@
         "total_length": 24.769954609624712
     },
     {
-        "computation_time": 0.0016325120814144611,
+        "computation_time": 0.0012216386385262012,
         "end_id": 1368,
         "end_index": [
             135,
@@ -4666,7 +4666,7 @@
         "total_length": 60.7966828799132
     },
     {
-        "computation_time": 0.0008276158478111029,
+        "computation_time": 0.0007073492743074894,
         "end_id": 200,
         "end_index": [
             208,
@@ -4713,7 +4713,7 @@
         "total_length": 28.269828818688595
     },
     {
-        "computation_time": 0.001596743008121848,
+        "computation_time": 0.001226919237524271,
         "end_id": 1337,
         "end_index": [
             53,
@@ -4792,7 +4792,7 @@
         "total_length": 57.00215981358985
     },
     {
-        "computation_time": 0.0013535800389945507,
+        "computation_time": 0.0010462119244039059,
         "end_id": 998,
         "end_index": [
             178,
@@ -4860,7 +4860,7 @@
         "total_length": 50.07224178099324
     },
     {
-        "computation_time": 0.0006415918469429016,
+        "computation_time": 0.0005395389162003994,
         "end_id": 29,
         "end_index": [
             195,
@@ -4900,7 +4900,7 @@
         "total_length": 20.92808038654409
     },
     {
-        "computation_time": 0.0015985700301826,
+        "computation_time": 0.001263916026800871,
         "end_id": 1394,
         "end_index": [
             169,
@@ -4982,7 +4982,7 @@
         "total_length": 58.49104493308904
     },
     {
-        "computation_time": 0.00028888205997645855,
+        "computation_time": 0.00026574404910206795,
         "end_id": 1054,
         "end_index": [
             169,
@@ -5008,7 +5008,7 @@
         "total_length": 7.0161801780182556
     },
     {
-        "computation_time": 0.0008899730164557695,
+        "computation_time": 0.0007390319369733334,
         "end_id": 142,
         "end_index": [
             176,
@@ -5062,7 +5062,7 @@
         "total_length": 33.66064998027571
     },
     {
-        "computation_time": 0.0003874870017170906,
+        "computation_time": 0.0003101527690887451,
         "end_id": 595,
         "end_index": [
             118,
@@ -5090,7 +5090,7 @@
         "total_length": 9.291729688765042
     },
     {
-        "computation_time": 0.0013932220172137022,
+        "computation_time": 0.0009978879243135452,
         "end_id": 1202,
         "end_index": [
             108,
@@ -5156,7 +5156,7 @@
         "total_length": 47.00273231215282
     },
     {
-        "computation_time": 0.0011180741712450981,
+        "computation_time": 0.0006170361302793026,
         "end_id": 591,
         "end_index": [
             130,
@@ -5202,7 +5202,7 @@
         "total_length": 25.68143654285993
     },
     {
-        "computation_time": 0.0016172649338841438,
+        "computation_time": 0.0007111239247024059,
         "end_id": 1287,
         "end_index": [
             66,
@@ -5251,7 +5251,7 @@
         "total_length": 30.092471205844216
     },
     {
-        "computation_time": 0.001129070995375514,
+        "computation_time": 0.0006252620369195938,
         "end_id": 1242,
         "end_index": [
             226,
@@ -5296,7 +5296,7 @@
         "total_length": 25.509376638926746
     },
     {
-        "computation_time": 0.0015708629507571459,
+        "computation_time": 0.0012531587854027748,
         "end_id": 1548,
         "end_index": [
             218,
@@ -5378,7 +5378,7 @@
         "total_length": 61.66909786450752
     },
     {
-        "computation_time": 0.001402694033458829,
+        "computation_time": 0.0011069029569625854,
         "end_id": 1343,
         "end_index": [
             24,

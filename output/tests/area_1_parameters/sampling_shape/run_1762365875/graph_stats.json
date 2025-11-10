@@ -1,8 +1,8 @@
 {
-    "avg_degree": 4.986784140969163,
-    "avg_edge_length": 0.8716200391841032,
-    "num_dead_ends": 0,
-    "num_edges": 4528,
+    "avg_degree": 2.390969162995595,
+    "avg_edge_length": 0.8588211309206798,
+    "num_dead_ends": 148,
+    "num_edges": 2171,
     "num_vertices": 1816,
-    "num_vertices_deg_greater_2": 1645
+    "num_vertices_deg_greater_2": 415
 }
