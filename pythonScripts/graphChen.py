@@ -13,6 +13,7 @@ M = np.load(area_path / "area_1_size_0_1_M.npy")
 voxel_grid = np.load(area_path / "area_1_size_0_1_voxel_grid.npy")
 
 #run_path = Path("./output/tests/area_1_parameters/height/run_1762345333")
+results_path = Path("./output/tests/area_1_down_sampling/")
 
 voxel_size = M[0,0]
 
@@ -154,8 +155,6 @@ def process_run(run: Path, point_pairs: np.ndarray):
         with open(graph_stats_path, 'w') as f:
             json.dump(graph_stats, f, indent=4, sort_keys=True)
         print(f"Graph stats saved to {graph_stats_path}.")
-
-results_path = Path("./output/tests/")
 
 def recursive_process_runs(base_path: Path) -> bool:
     if "run_" in base_path.name:

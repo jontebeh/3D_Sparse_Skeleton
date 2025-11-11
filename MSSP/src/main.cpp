@@ -327,7 +327,7 @@ bool recursive_process(std::filesystem::path base_path, xt::xarray<int64_t>& vox
 }
 
 int main() {
-    std::filesystem::path test_path = std::filesystem::path("../../output/tests/");
+    std::filesystem::path test_path = std::filesystem::path("../../output/tests/area_1_down_sampling/");
     std::filesystem::path vox_map_path = std::filesystem::path("../../data/voxel_maps/area_1/area_1_size_0_1_voxel_grid_inverted.npy");
     xt::xarray<int64_t> vox_map = xt::load_npy<int64_t>(vox_map_path);
 

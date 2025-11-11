@@ -8,7 +8,7 @@ voxel_grid = np.load(data_path / "area_1_size_0_1_voxel_grid.npy")
 voxel_grid_flooded = np.load(data_path / "area_1_size_0_1_voxel_grid_flooded.npy")
 M = np.load(data_path / "area_1_size_0_1_M.npy")
 
-results_path = Path("./output/tests/")
+results_path = Path("./output/tests/area_1_down_sampling/")
 
 def recursive_process_runs(base_path: Path) -> bool:
     if "run_" in base_path.name:

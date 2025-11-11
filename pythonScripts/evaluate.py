@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 from matplotlib.tri import Triangulation
 from skimage.draw import line_nd
 
-tests_path = Path("./output/tests/area_1_parameters")
+tests_path = Path("./output/tests/area_1_down_sampling/")
 
 area_path = Path("./data/voxel_maps/area_1")
 
 evaluation_path = Path("./evaluation")
 evaluation_path.mkdir(parents=True, exist_ok=True)
-evaluation_file_path = evaluation_path / "evaluation_area_1_parameters.xlsx"
+evaluation_file_path = evaluation_path / "evaluation_area_1_down_sampling.xlsx"
 
 M = np.load(area_path / "area_1_size_0_1_M.npy")
 M_inv = np.linalg.inv(M)
@@ -232,7 +232,7 @@ def process_run(run_path: Path) -> dict:
 
 pages = {}
 for parameter_folder in tests_path.iterdir():
-    if parameter_folder.is_dir():
+    if parameter_folder.is_dir() and not parameter_folder.name.startswith("run_"):
         all_results = []
         for run_folder in parameter_folder.iterdir():
             if run_folder.is_dir() and run_folder.name.startswith("run_"):
@@ -243,6 +243,15 @@ for parameter_folder in tests_path.iterdir():
         # save name for excel page
         page_name = parameter_folder.name
         pages[page_name] = df
+    elif parameter_folder.is_dir() and parameter_folder.name.startswith("run_"):
+        results = []
+        for run_folder in tests_path.iterdir():
+            if run_folder.is_dir() and run_folder.name.startswith("run_"):
+                res = process_run(run_folder)
+                results.append(res)
+        df = pd.DataFrame(results)
+        pages[tests_path.name] = df
+        break
 
 # save to excel with multiple sheets
 with pd.ExcelWriter(evaluation_file_path) as writer:
