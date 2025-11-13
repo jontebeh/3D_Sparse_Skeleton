@@ -7,7 +7,7 @@ import numpy as np
 
 evaluation_path = Path("./evaluation")
 evaluation_path.mkdir(parents=True, exist_ok=True)
-evaluation_file_path = evaluation_path / f"evaluation_area_safasdfasdfasdf.xlsx"
+evaluation_file_path = evaluation_path / f"evaluation_voxel.xlsx"
 
 
 
@@ -108,11 +108,11 @@ paths = [
     "./data/voxel_maps/area_1/area_1_size_0_1_skeleton_",
     "./data/voxel_maps/area_1/area_1_size_0_15_skeleton_",
     "./data/voxel_maps/area_1/area_1_size_0_2_skeleton_",
-    "./data/voxel_maps/area_2/Area_2_size_0_2_skeleton_",
-    "./data/voxel_maps/area_3/area_3_size_0_2_skeleton_",
-    "./data/voxel_maps/area_4/area_4_size_0_2_skeleton_",
-    "./data/voxel_maps/area_5/area_5_size_0_2_skeleton_",
-    "./data/voxel_maps/area_6/area_6_size_0_2_skeleton_",
+    "./data/voxel_maps/area_2/Area_2_size_0_1_skeleton_",
+    "./data/voxel_maps/area_3/Area_3_size_0_1_skeleton_",
+    "./data/voxel_maps/area_4/Area_4_size_0_1_skeleton_",
+    "./data/voxel_maps/area_5/Area_5_size_0_1_skeleton_",
+    "./data/voxel_maps/area_6/Area_6_size_0_1_skeleton_",
     "./data/voxel_maps/area_1/area_1_size_0_05_",
     "./data/voxel_maps/area_1/area_1_size_0_1_",
     "./data/voxel_maps/area_1/area_1_size_0_15_",
@@ -124,6 +124,12 @@ paths = [
     "./data/voxel_maps/area_6/Area_6_size_0_1_"
 ]
 
+res = []
 for base in paths:
     eval_result = process_base(base)
-    print(eval_result)
+    res.append(eval_result)
+
+df = pd.DataFrame(res)
+df = df.sort_values(by=['area', 'voxel_size', 'skeleton'])
+df.to_excel(evaluation_file_path, index=False)
+print(f"Evaluation results saved to {evaluation_file_path}.")
