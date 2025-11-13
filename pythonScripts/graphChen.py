@@ -5,15 +5,15 @@ import numpy as np
 import timeit
 import json
 
+area_nr = 6
 # load point pairs
-area_path = Path("./data/voxel_maps/area_1/")
-point_pairs = np.load(area_path / "area_1_size_0_1_point_pairs_voxel_indices.npy")
-M = np.load(area_path / "area_1_size_0_1_M.npy")
-
-voxel_grid = np.load(area_path / "area_1_size_0_1_voxel_grid.npy")
+area_path = Path(f"./data/voxel_maps/area_{area_nr}/")
+point_pairs = np.load(area_path / f"Area_{area_nr}_size_0_1_point_pairs_voxel_indices.npy")
+M = np.load(area_path / f"Area_{area_nr}_size_0_1_M.npy")
+voxel_grid = np.load(area_path / f"Area_{area_nr}_size_0_1_voxel_grid.npy")
 
 #run_path = Path("./output/tests/area_1_parameters/height/run_1762345333")
-results_path = Path("./output/tests/area_1_down_sampling/")
+results_path = Path("./output/tests/areas/run_1763047891")
 
 voxel_size = M[0,0]
 
@@ -111,6 +111,9 @@ def process_run(run: Path, point_pairs: np.ndarray):
             result['start_id'] = int(start_id)
             result['end_id'] = int(end_id)
 
+            if start_id == 0 or end_id == 0:
+                print("One of the points is not connected to the graph, skipping.")
+                continue
             start_vertex = id_vertex_map[start_id]
             end_vertex = id_vertex_map[end_id]
 

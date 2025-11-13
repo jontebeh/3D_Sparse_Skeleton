@@ -7,16 +7,35 @@ import numpy as np
 import timeit
 import json
 
+area_nr = 1
+size = "0_2"
+
 # load point pairs
-area_path = Path("./data/voxel_maps/area_1/")
-point_pairs = np.load(area_path / "area_1_size_0_1_point_pairs_voxel_indices.npy")
-graph_path = area_path / "area_1_size_0_2_graph.gt"
+area_path = Path(f"./data/voxel_maps/area_{area_nr}/")
+point_pairs_world = np.load(area_path / f"area_{area_nr}_size_0_1_point_pairs_world_coords.npy")
 
-M = np.load(area_path / "area_1_size_0_2_M.npy")
+graph_path = area_path / f"area_{area_nr}_size_{size}_graph.gt"
 
-voxel_grid = np.load(area_path / "area_1_size_0_2_voxel_grid_inverted.npy")
+M = np.load(area_path / f"area_{area_nr}_size_{size}_M.npy")
 
+voxel_grid = np.load(area_path / f"area_{area_nr}_size_{size}_voxel_grid_inverted.npy")
 voxel_size = M[0,0]
+
+# compute point_pairs based on M
+# split into start and end points
+start_points_world = point_pairs_world[:, :3]
+end_points_world = point_pairs_world[:, 3:]
+# convert to voxel coordinates
+start_points_world_h = np.hstack((start_points_world, np.ones((start_points_world.shape[0], 1))))
+end_points_world_h = np.hstack((end_points_world, np.ones((end_points_world.shape[0], 1))))
+M_inv = np.linalg.inv(M)
+start_points_voxel_h = (M_inv @ start_points_world_h.T)[:3, :].T
+end_points_voxel_h = (M_inv @ end_points_world_h.T)[:3, :].T
+# floor to get voxel indices
+start_points_voxel = np.floor(start_points_voxel_h).astype(int)
+end_points_voxel = np.floor(end_points_voxel_h).astype(int)
+# combine back to point pairs
+point_pairs = np.hstack((start_points_voxel, end_points_voxel))
 
 
 def progress_bar(progress, total, length=50):
@@ -29,7 +48,6 @@ def progress_bar(progress, total, length=50):
 
 def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
     if graph_path.exists(): # load graph
-        exit()
         print(f"Loading existing graph from file {graph_path}")
         G = Graph()
         G.load(str(graph_path))
@@ -38,7 +56,7 @@ def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
         for i, v in enumerate(G.vertices()):
             if i % 100 == 0:
                 progress_bar(i, G.num_vertices())
-            node_id = G.vp['node_id'][v]
+            node_id = tuple(map(int, G.vp['node_id'][v]))
             id_vertex_map[node_id] = v
         progress_bar(1, 1)
         print()
@@ -96,13 +114,13 @@ def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
         # save graph
         G.save(str(graph_path))
         print(f"Graph saved to {graph_path}.")
-        exit()
 
     # check if the shortest path already exists
-    shortest_paths = area_path / "area_1_size_0_1_shortest_paths.json"
+    shortest_paths = area_path / f"Area_{area_nr}_size_{size}_shortest_paths.json"
     if shortest_paths.exists(): #skip computation
         print("Shortest path results already exist, skipping computation.")
     else: #compute shortest paths
+        print("Computing shortest paths...")
         results = []
         for i in range(point_pairs.shape[0]):
             result = {}
@@ -110,6 +128,10 @@ def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
             end_id = tuple(map(int, point_pairs[i, 3:]))
             result['start_id'] = start_id
             result['end_id'] = end_id
+
+            if start_id not in id_vertex_map or end_id not in id_vertex_map:
+                print(f"Warning: Start ID {start_id} or End ID {end_id} not found in graph vertices. Skipping this pair.")
+                continue
 
             print(f"Computing shortest path {i+1}/{point_pairs.shape[0]}: Start index: {start_id}, End index: {end_id}")
 
@@ -132,7 +154,7 @@ def process_voxel(voxel_grid: np.ndarray, point_pairs: np.ndarray):
         print(f"Shortest path results saved to {shortest_paths}.")
     
     # check if graph_stats.json exists
-    graph_stats_path = area_path / "area_1_size_0_1_graph_stats.json"
+    graph_stats_path = area_path / f"Area_{area_nr}_size_{size}_graph_stats.json"
     if graph_stats_path.exists():
         print("Graph stats already exist, skipping computation.")
     else: # compute graph stats

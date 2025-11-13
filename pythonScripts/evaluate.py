@@ -7,23 +7,26 @@ import matplotlib.pyplot as plt
 from matplotlib.tri import Triangulation
 from skimage.draw import line_nd
 
-tests_path = Path("./output/tests/area_1_down_sampling/")
+tests_path = Path("./output/tests/areas/")
 
-area_path = Path("./data/voxel_maps/area_1")
+run_path = Path("./output/tests/areas/run_1763047891/")
+area_nr = 6
+
+area_path = Path(f"./data/voxel_maps/area_{area_nr}")
 
 evaluation_path = Path("./evaluation")
 evaluation_path.mkdir(parents=True, exist_ok=True)
-evaluation_file_path = evaluation_path / "evaluation_area_1_down_sampling.xlsx"
-
-M = np.load(area_path / "area_1_size_0_1_M.npy")
+evaluation_file_path = evaluation_path / f"evaluation_area_{area_nr}.xlsx"
+M = np.load(area_path / f"Area_{area_nr}_size_0_1_M.npy")
 M_inv = np.linalg.inv(M)
-voxel_grid = np.load(area_path / "area_1_size_0_1_voxel_grid.npy")
+voxel_grid = np.load(area_path / f"Area_{area_nr}_size_0_1_voxel_grid.npy")
 voxel_size = M[0,0]
 
-M_05 = np.load(area_path / "area_1_size_0_05_M.npy")
+M_05 = np.load(area_path / f"Area_{area_nr}_size_0_1_M.npy")
 M_05_inv = np.linalg.inv(M_05)
-voxel_grid_05 = np.load(area_path / "area_1_size_0_05_voxel_grid.npy")
+voxel_grid_05 = np.load(area_path / f"Area_{area_nr}_size_0_1_voxel_grid.npy")
 voxel_size_05 = M_05[0,0]
+
 
 def load_shortest_paths(path: Path) -> dict:
     # load path lengths
@@ -229,6 +232,11 @@ def process_run(run_path: Path) -> dict:
 
     return result
 
+df = pd.DataFrame([process_run(run_path)])
+# save to excel
+df.to_excel(evaluation_file_path, index=False)
+print(f"Evaluation saved to {evaluation_file_path}")
+exit()
 
 pages = {}
 for parameter_folder in tests_path.iterdir():

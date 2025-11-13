@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
     libcore::SkeletonFinder finder;
 
     // Step 4: Initialize (starts skeleton generation)
-    finder.init("area_1_downsampled_0_20.ini");
+    finder.init("area_6.ini");
 
     std::cout << "SkeletonFinder completed." << std::endl;
 
