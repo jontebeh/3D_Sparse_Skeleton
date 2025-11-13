@@ -124,7 +124,7 @@ namespace libcore
                 return false;
             }
 
-            if (curNodePtr->white_vertices.empty()) { // TODO: check if this is needed
+            if (curNodePtr->white_vertices.empty()) { 
                 logger::warning << "Node " << curNodePtr->debug_id 
                                  << " has no white vertices." << std::endl;
                 return false;

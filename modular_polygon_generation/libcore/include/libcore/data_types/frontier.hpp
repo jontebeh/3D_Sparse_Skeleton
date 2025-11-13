@@ -76,7 +76,8 @@ namespace libcore {
                 Eigen::Vector3d v1 = f->vertices[0]->coord;
                 Eigen::Vector3d v2 = f->vertices[1]->coord;
                 Eigen::Vector3d v3 = f->vertices[2]->coord;
-                float area = ((v2 - v1).cross(v3 - v1)).norm();
+                float area = ((v2 - v1).cross(v3 - v1)).norm(); // for area weighting
+                //area = 1.0f; // unweighted: remove if area weighting is desired
                 area_sum += area;
                 coord_sum += f->center * area;
                 normal_sum += f->outwards_unit_normal * area;
