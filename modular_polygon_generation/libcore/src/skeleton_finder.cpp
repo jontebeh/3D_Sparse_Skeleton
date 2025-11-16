@@ -14,7 +14,7 @@ namespace libcore {
 
     void SkeletonFinder::init(std::string config_file) {
         // create log and output folder
-        std::filesystem::path output_path = "../output/tests/chen_compare/";
+        std::filesystem::path output_path = "../output/";
         // create output directory if it doesn't exist
         if (!std::filesystem::exists(output_path)) {
             std::filesystem::create_directories(output_path);
@@ -31,7 +31,7 @@ namespace libcore {
 
         logger::setLogFolder(run_path);
         // copy config file to output folder
-        std::string config_path = "../modular_polygon_generation/libcore/data/configs/tests/chen_compare/" + config_file;
+        std::string config_path = "../modular_polygon_generation/libcore/data/configs/" + config_file;
         if (!std::filesystem::exists(config_path)) {
             logger::error << "Configuration file does not exist: " << config_path << std::endl;
             throw std::runtime_error("Configuration file not found.");
@@ -124,7 +124,7 @@ namespace libcore {
     Config SkeletonFinder::readConfigFile(const std::string& config_file) {
         CSimpleIniA ini;
         ini.SetUnicode();
-        std::string config_path = "../modular_polygon_generation/libcore/data/configs/tests/chen_compare/" + config_file;
+        std::string config_path = "../modular_polygon_generation/libcore/data/configs/" + config_file;
         if (ini.LoadFile(config_path.c_str()) < 0) {
             // throw an exception and terminate if the file cannot be loaded
             logger::error << "Error loading configuration file: " << config_path << std::endl;

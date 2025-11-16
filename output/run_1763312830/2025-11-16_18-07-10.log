@@ -1,0 +1,1847 @@
+[18:07:10] [Info] [Map] is_simulation = false
+[Map] map_name = area_1.pcd
+[Map] map_representation = 0
+[Map] vis_map_name = area_1_without_ceiling.pcd
+[Map] x_max = 8.0
+[Map] x_min = -26.0
+[Map] y_max = 50.0
+[Map] y_min = -8.0
+[Map] z_max = 3.3
+[Map] z_min = -1.0
+[Misc] debugging = true
+[Misc] official_run = false
+[Misc] vis_black_vertices = true
+[Misc] vis_debug_nodes = false
+[Misc] vis_edges = true
+[Misc] vis_facets = true
+[Misc] vis_frontiers = true
+[Misc] vis_nodes = true
+[Misc] vis_white_vertices = false
+[Misc] visualize = true
+[Raycasting] bad_loop_setting = true
+[Raycasting] frontier_creation_threshold = 0.1
+[Raycasting] frontier_jump_threshold = 2.0
+[Raycasting] frontier_split_threshold = 0.8
+[Raycasting] max_expansion_ray_length = 2.5
+[Raycasting] max_facets_grouped = 5
+[Raycasting] max_floor_height = 0.0
+[Raycasting] max_height_diff = 1.0
+[Raycasting] max_ray_length = 2.5
+[Raycasting] min_floor_height = 0.0
+[Raycasting] min_flowback_creation_radius_threshold = 0.5
+[Raycasting] min_flowback_creation_threshold = 5
+[Raycasting] min_node_radius = 0.05
+[Raycasting] min_wall_distance = 0.0
+[Raycasting] resolution = 0.1
+[Raycasting] search_margin = 0.05
+[Raycasting] start_x = -5.0
+[Raycasting] start_y = 9.0
+[Raycasting] start_z = 1.1
+[Sampling] sampling_density = 100
+[Sampling] sampling_depth = 1.5
+[Sampling] sampling_height = 3.0
+[Sampling] sampling_sharpness_eps1 = 1.0
+[Sampling] sampling_sharpness_eps2 = 1.0
+[Sampling] sampling_width = 1.5
+Setting up maps for skeleton finding.
+[18:07:13] [Info] Pre-processing maps for visualization and search.
+[18:07:35] [Info] Generating skeleton...
+[18:07:35] [Info] Starting skeleton expansion...
+[18:07:35] [Info] Skeleton expansion started at:  -5   9 1.1
+[18:07:35] [Info] Generating samples on unit sphere.
+[18:07:35] [Info] Generated 100 sample directions.
+[18:07:35] [Info] Identifying first black and white facets.
+[18:07:35] [Info] Identified 196 black and white facets.
+[18:07:35] [Info] Setting start point:  -5   9 1.1
+[18:07:43] [Debug] Initializing node 0
+[18:07:43] [Debug] Check within bounding box passed for node 0
+[18:07:43] [Debug] Check floor passed for node 0
+[18:07:43] [Debug] Generated black and white vertices for node 0
+[18:07:43] [Debug] Centralized position for node 0
+[18:07:43] [Debug] Node 0 has white vertices.
+[18:07:43] [Debug] Node 0 has seed frontiers.
+[18:07:43] [Debug] Flow back completed for node 0
+[18:07:43] [Debug] Facets identified for node 0
+[18:07:43] [Debug] Frontiers identified for node 0
+[18:07:43] [Info] Recording node 0 at coordinates: -5.07544  8.97758  1.16101
+[18:07:43] [Debug] Adding Vis sphere node_sphere_0
+[18:07:43] [Debug] Adding Vis lines for node_sphere_0
+[18:07:43] [Debug] Adding Vis black vertices for node_sphere_0
+[18:07:43] [Debug] Adding Vis black vertex at  -5.13716   10.0373 0.0415478
+[18:07:43] [Debug] Adding Vis black vertex at -5.07351  10.2449  2.68966
+[18:07:43] [Debug] Adding Vis black vertex at  -5.86384   10.0006 0.0648307
+[18:07:43] [Debug] Adding Vis black vertex at -4.01849   9.6974  1.23206
+[18:07:43] [Debug] Adding Vis black vertex at -5.95544   9.7777  1.76477
+[18:07:43] [Debug] Adding Vis black vertex at  -4.76055   9.69151 0.0356127
+[18:07:43] [Debug] Adding Vis black vertex at -5.97507  9.58299 0.788927
+[18:07:43] [Debug] Adding Vis black vertex at -4.02042  9.58207 0.647409
+[18:07:43] [Debug] Adding Vis black vertex at -5.45773  9.60505  2.19373
+[18:07:43] [Debug] Adding Vis black vertex at   -5.3747   9.53384 0.0582487
+[18:07:43] [Debug] Adding Vis black vertex at -4.01891  9.50429  1.61564
+[18:07:43] [Debug] Adding Vis black vertex at -5.78385  9.34743  1.30662
+[18:07:43] [Debug] Adding Vis black vertex at  -4.32499    9.5029 0.0502041
+[18:07:43] [Debug] Adding Vis black vertex at -4.72265  9.61888  2.71383
+[18:07:43] [Debug] Adding Vis black vertex at -5.79741  9.35659  0.48244
+[18:07:43] [Debug] Adding Vis black vertex at -4.02155  9.32371  1.01894
+[18:07:43] [Debug] Adding Vis black vertex at -5.80204  9.36184  1.96699
+[18:07:43] [Debug] Adding Vis black vertex at  -4.99482   9.30118 0.0375365
+[18:07:43] [Debug] Adding Vis black vertex at -4.02333  9.37937  2.17663
+[18:07:43] [Debug] Adding Vis black vertex at -5.81338  9.19511  1.02462
+[18:07:43] [Debug] Adding Vis black vertex at -4.02119  9.26672 0.357116
+[18:07:43] [Debug] Adding Vis black vertex at -5.2968 9.32428 2.73147
+[18:07:43] [Debug] Adding Vis black vertex at -5.52208  9.17086 0.270357
+[18:07:43] [Debug] Adding Vis black vertex at -4.02022  9.15572  1.36852
+[18:07:43] [Debug] Adding Vis black vertex at -5.78299  9.11657  1.50182
+[18:07:43] [Debug] Adding Vis black vertex at  -4.61342   9.12434 0.0572594
+[18:07:43] [Debug] Adding Vis black vertex at -4.34257  9.15917  2.71496
+[18:07:43] [Debug] Adding Vis black vertex at -5.52896  9.04149 0.849315
+[18:07:43] [Debug] Adding Vis black vertex at -4.01664  9.05204 0.796819
+[18:07:43] [Debug] Adding Vis black vertex at -5.63337  9.03798  2.18074
+[18:07:43] [Debug] Adding Vis black vertex at  -5.23214   9.01117 0.0189458
+[18:07:43] [Debug] Adding Vis black vertex at -4.01963  8.98785  1.79641
+[18:07:43] [Debug] Adding Vis black vertex at -5.81758  8.97502  1.20189
+[18:07:43] [Debug] Adding Vis black vertex at  -4.11391   8.93087 0.0589815
+[18:07:43] [Debug] Adding Vis black vertex at -4.9403 8.88389 2.73695
+[18:07:43] [Debug] Adding Vis black vertex at -5.47551  8.93816 0.617476
+[18:07:43] [Debug] Adding Vis black vertex at -4.00064  8.88812   1.1511
+[18:07:43] [Debug] Adding Vis black vertex at -5.80249  8.86211  1.76306
+[18:07:43] [Debug] Adding Vis black vertex at   -4.8508   8.83449 0.0306084
+[18:07:43] [Debug] Adding Vis black vertex at -4.09594  8.72213  2.41297
+[18:07:43] [Debug] Adding Vis black vertex at -5.81205  8.83705 0.913148
+[18:07:43] [Debug] Adding Vis black vertex at -5.44381  8.65646  2.46806
+[18:07:43] [Debug] Adding Vis black vertex at  -5.48794   8.69314 0.0302265
+[18:07:43] [Debug] Adding Vis black vertex at -5.79175  8.74267  1.38042
+[18:07:43] [Debug] Adding Vis black vertex at  -4.43242   8.60145 0.0327485
+[18:07:43] [Debug] Adding Vis black vertex at -4.58427  8.41247  2.70895
+[18:07:43] [Debug] Adding Vis black vertex at -5.79495  8.64168 0.583356
+[18:07:43] [Debug] Adding Vis black vertex at -5.7879 8.45193 2.10717
+[18:07:43] [Debug] Adding Vis black vertex at  -5.08392    8.5086 0.0232544
+[18:07:43] [Debug] Adding Vis black vertex at -3.92108  8.28804  2.10791
+[18:07:43] [Debug] Adding Vis black vertex at -5.78632  8.59871  1.09233
+[18:07:43] [Debug] Adding Vis black vertex at -5.15746  8.07666  2.71333
+[18:07:43] [Debug] Adding Vis black vertex at  -5.75714   8.24239 0.0922341
+[18:07:43] [Debug] Adding Vis black vertex at -5.7894 8.37871  1.5914
+[18:07:43] [Debug] Adding Vis black vertex at  -4.70489   8.22751 0.0434462
+[18:07:43] [Debug] Adding Vis black vertex at -5.77648  8.35097 0.807815
+[18:07:43] [Debug] Adding Vis black vertex at -5.51807   7.9577  2.17953
+[18:07:43] [Debug] Adding Vis black vertex at  -5.31961   7.98673 0.0451038
+[18:07:43] [Debug] Adding Vis black vertex at -4.0422 7.91789 1.66762
+[18:07:43] [Debug] Adding Vis black vertex at -5.77884  8.18108  1.26328
+[18:07:43] [Debug] Adding Vis black vertex at -5.76422  7.75294 0.443054
+[18:07:43] [Debug] Adding Vis facets for node_sphere_0
+[18:07:43] [Debug] Adding Vis frontiers for node_sphere_0
+[18:07:48] [Debug] Initializing node 1
+[18:07:48] [Debug] Check within bounding box passed for node 1
+[18:07:48] [Debug] Check floor passed for node 1
+[18:07:48] [Debug] Generated black and white vertices for node 1
+[18:07:48] [Debug] Centralized position for node 1
+[18:07:48] [Debug] Node 1 has white vertices.
+[18:07:48] [Debug] Node 1 has seed frontiers.
+[18:07:48] [Debug] Flow back completed for node 1
+[18:07:48] [Debug] Facets identified for node 1
+[18:07:48] [Debug] Frontiers identified for node 1
+[18:07:48] [Info] Recording node 1 at coordinates: -4.99704  11.3368  1.44704
+[18:07:48] [Debug] Adding Vis sphere node_sphere_1
+[18:07:48] [Debug] Adding Vis lines for node_sphere_1
+[18:07:48] [Debug] Adding Vis black vertices for node_sphere_1
+[18:07:48] [Debug] Adding Vis black vertex at -5.32451  12.0012  1.39729
+[18:07:48] [Debug] Adding Vis black vertex at -5.31381  12.2893 0.965284
+[18:07:48] [Debug] Adding Vis black vertex at -5.34657  11.8201  1.55904
+[18:07:48] [Debug] Adding Vis black vertex at -5.36417   11.788  1.27008
+[18:07:48] [Debug] Adding Vis black vertex at -4.16158  12.3981  1.24432
+[18:07:48] [Debug] Adding Vis black vertex at -5.31671  11.8368  1.80017
+[18:07:48] [Debug] Adding Vis black vertex at -4.18576  12.4454  2.18466
+[18:07:48] [Debug] Adding Vis black vertex at -5.52498  11.7878  1.46207
+[18:07:48] [Debug] Adding Vis black vertex at -4.18013  12.4182 0.561858
+[18:07:48] [Debug] Adding Vis black vertex at -5.12417  12.3785  2.70841
+[18:07:48] [Debug] Adding Vis black vertex at  -5.398 11.7726 1.04482
+[18:07:48] [Debug] Adding Vis black vertex at -4.15108  12.0374  1.56613
+[18:07:48] [Debug] Adding Vis black vertex at -5.5649  11.794 1.79044
+[18:07:48] [Debug] Adding Vis black vertex at -4.75588  12.2822 0.066105
+[18:07:48] [Debug] Adding Vis black vertex at -4.34708  12.2563   2.6971
+[18:07:48] [Debug] Adding Vis black vertex at -5.7283 11.7838 1.23168
+[18:07:48] [Debug] Adding Vis black vertex at -4.16207  11.9245   1.0256
+[18:07:48] [Debug] Adding Vis black vertex at -5.35819  11.7743  2.14206
+[18:07:48] [Debug] Adding Vis black vertex at  -5.3585  11.8048 0.628903
+[18:07:48] [Debug] Adding Vis black vertex at -4.14429  11.8612  1.92733
+[18:07:48] [Debug] Adding Vis black vertex at -5.93812  11.7743  1.67306
+[18:07:48] [Debug] Adding Vis black vertex at  -4.20149   12.0314 0.0990915
+[18:07:48] [Debug] Adding Vis black vertex at -4.84861  11.8719  2.70601
+[18:07:48] [Debug] Adding Vis black vertex at -5.93889  11.7781 0.766802
+[18:07:48] [Debug] Adding Vis black vertex at -3.9972 11.7411 1.35456
+[18:07:48] [Debug] Adding Vis black vertex at -5.74189  11.6927  2.17407
+[18:07:48] [Debug] Adding Vis black vertex at  -5.05877   11.7879 0.0311329
+[18:07:48] [Debug] Adding Vis black vertex at -4.13419  11.7494  2.46989
+[18:07:48] [Debug] Adding Vis black vertex at -6.00122   11.612  1.35637
+[18:07:48] [Debug] Adding Vis black vertex at -4.03045  11.6697 0.657396
+[18:07:48] [Debug] Adding Vis black vertex at -5.29259  11.6355  2.69049
+[18:07:48] [Debug] Adding Vis black vertex at -5.92814  11.6699 0.072509
+[18:07:48] [Debug] Adding Vis black vertex at -4.02314  11.5533  1.72879
+[18:07:48] [Debug] Adding Vis black vertex at -6.02682  11.5307  1.93633
+[18:07:48] [Debug] Adding Vis black vertex at  -4.54857   11.5539 0.0483222
+[18:07:48] [Debug] Adding Vis black vertex at -4.54479  11.5137  2.72257
+[18:07:48] [Debug] Adding Vis black vertex at -6.05549  11.4653 0.973981
+[18:07:48] [Debug] Adding Vis black vertex at -4.01852   11.443  1.12023
+[18:07:48] [Debug] Adding Vis black vertex at -5.49402  11.4133  2.17401
+[18:07:48] [Debug] Adding Vis black vertex at  -5.36627   11.4021 0.0432036
+[18:07:48] [Debug] Adding Vis black vertex at -4.00591  11.3745  2.19587
+[18:07:48] [Debug] Adding Vis black vertex at -6.04641  11.3576  1.56531
+[18:07:48] [Debug] Adding Vis black vertex at -4.0411 11.3077 0.23939
+[18:07:48] [Debug] Adding Vis black vertex at -5.01843  11.2957  2.73814
+[18:07:48] [Debug] Adding Vis black vertex at -6.05169  11.2594 0.442515
+[18:07:48] [Debug] Adding Vis black vertex at -3.99357  11.2676   1.4979
+[18:07:48] [Debug] Adding Vis black vertex at -5.94408  11.2367  2.16888
+[18:07:48] [Debug] Adding Vis black vertex at  -4.86862    11.169 0.0307691
+[18:07:48] [Debug] Adding Vis black vertex at -4.20696  11.1237  2.69018
+[18:07:48] [Debug] Adding Vis black vertex at -6.04821  11.1904    1.217
+[18:07:48] [Debug] Adding Vis black vertex at -4.01349  11.1251  0.84696
+[18:07:48] [Debug] Adding Vis black vertex at -5.48213  11.0652  2.72687
+[18:07:48] [Debug] Adding Vis black vertex at  -5.71275   10.9807 0.0243783
+[18:07:48] [Debug] Adding Vis black vertex at -3.99712  11.0586  1.89641
+[18:07:48] [Debug] Adding Vis black vertex at -6.06422  11.0631  1.79675
+[18:07:48] [Debug] Adding Vis black vertex at  -4.31232   10.8586 0.0265419
+[18:07:48] [Debug] Adding Vis black vertex at -4.73644  10.9223  2.71723
+[18:07:48] [Debug] Adding Vis black vertex at -6.04281  10.9472 0.808019
+[18:07:48] [Debug] Adding Vis black vertex at -3.98204  10.9449  1.26229
+[18:07:48] [Debug] Adding Vis black vertex at -5.62752  10.9968  2.16131
+[18:07:48] [Debug] Adding Vis black vertex at  -5.17415   10.7523 0.0510415
+[18:07:48] [Debug] Adding Vis black vertex at -4.05443  10.7203  2.38776
+[18:07:48] [Debug] Adding Vis black vertex at -6.06027    10.88  1.43338
+[18:07:48] [Debug] Adding Vis black vertex at -4.03235  10.6384 0.514858
+[18:07:48] [Debug] Adding Vis black vertex at -5.18969  10.6603  2.71389
+[18:07:48] [Debug] Adding Vis black vertex at -3.99177  10.6951  1.64386
+[18:07:48] [Debug] Adding Vis black vertex at -6.04432  10.6174  2.05229
+[18:07:48] [Debug] Adding Vis black vertex at  -4.67191   10.3569 0.0333757
+[18:07:48] [Debug] Adding Vis black vertex at -4.42394  10.3345  2.70871
+[18:07:48] [Debug] Adding Vis black vertex at -5.42369  10.6673  2.18911
+[18:07:48] [Debug] Adding Vis black vertex at -4.94414  10.2007  2.45849
+[18:07:48] [Debug] Adding Vis black vertex at -5.01701    10.05 0.574765
+[18:07:48] [Debug] Adding Vis black vertex at -5.18497  10.1714  1.95028
+[18:07:48] [Debug] Adding Vis black vertex at -5.30239  10.0603  1.02045
+[18:07:48] [Debug] Adding Vis black vertex at -4.68525  10.0216  1.56854
+[18:07:48] [Debug] Adding Vis black vertex at -5.3102 10.0737 1.55318
+[18:07:48] [Debug] Adding Vis black vertex at -5.06566  10.1478  1.44308
+[18:07:48] [Debug] Adding Vis facets for node_sphere_1
+[18:07:48] [Debug] Adding Vis frontiers for node_sphere_1
+[18:07:50] [Debug] Initializing node 2
+[18:07:50] [Debug] Check within bounding box passed for node 2
+[18:07:50] [Debug] Check floor passed for node 2
+[18:07:50] [Info] Recording node 2 at coordinates: -5.09839  10.1396  1.37989
+[18:07:50] [Debug] Adding Vis sphere node_sphere_2
+[18:07:50] [Debug] Adding Vis lines for node_sphere_2
+[18:07:50] [Debug] Adding Vis black vertices for node_sphere_2
+[18:07:50] [Debug] Adding Vis facets for node_sphere_2
+[18:07:50] [Debug] Adding Vis frontiers for node_sphere_2
+[18:07:51] [Debug] Initializing node 3
+[18:07:51] [Debug] Check within bounding box passed for node 3
+[18:07:51] [Debug] Check floor passed for node 3
+[18:07:51] [Debug] Generated black and white vertices for node 3
+[18:07:51] [Debug] Centralized position for node 3
+[18:07:51] [Debug] Node 3 has white vertices.
+[18:07:51] [Debug] Node 3 has seed frontiers.
+[18:07:51] [Debug] Flow back completed for node 3
+[18:07:51] [Debug] Facets identified for node 3
+[18:07:51] [Debug] Frontiers identified for node 3
+[18:07:51] [Info] Recording node 3 at coordinates: -5.23779  7.32051  1.21827
+[18:07:51] [Debug] Adding Vis sphere node_sphere_3
+[18:07:51] [Debug] Adding Vis lines for node_sphere_3
+[18:07:51] [Debug] Adding Vis black vertices for node_sphere_3
+[18:07:51] [Debug] Adding Vis black vertex at -5.32722  8.00064  1.22688
+[18:07:51] [Debug] Adding Vis black vertex at -5.4562 8.11455 1.34504
+[18:07:51] [Debug] Adding Vis black vertex at -5.31007  7.92644  1.03149
+[18:07:51] [Debug] Adding Vis black vertex at -5.14563  8.07531  1.46373
+[18:07:51] [Debug] Adding Vis black vertex at -5.67208  8.07499  1.16588
+[18:07:51] [Debug] Adding Vis black vertex at -5.07188   7.8787  1.06446
+[18:07:51] [Debug] Adding Vis black vertex at -5.43773  8.04146  1.63798
+[18:07:51] [Debug] Adding Vis black vertex at -5.49974  7.88441 0.894706
+[18:07:51] [Debug] Adding Vis black vertex at -4.88398  7.98332  1.38875
+[18:07:51] [Debug] Adding Vis black vertex at -5.79827  7.98274  1.42133
+[18:07:51] [Debug] Adding Vis black vertex at  -5.1535  7.80021 0.855668
+[18:07:51] [Debug] Adding Vis black vertex at -5.15596  7.96562  1.77286
+[18:07:51] [Debug] Adding Vis black vertex at -5.77963  7.86441 0.964702
+[18:07:51] [Debug] Adding Vis black vertex at -4.83492  7.80778  1.11865
+[18:07:51] [Debug] Adding Vis black vertex at -5.78766  8.08144  1.88182
+[18:07:51] [Debug] Adding Vis black vertex at  -5.3941  7.76339 0.710742
+[18:07:51] [Debug] Adding Vis black vertex at -4.74556  7.95683  1.71711
+[18:07:51] [Debug] Adding Vis black vertex at -5.79093  7.66154  1.24606
+[18:07:51] [Debug] Adding Vis black vertex at -4.70658  7.97986  0.60927
+[18:07:51] [Debug] Adding Vis black vertex at -5.36704  7.93202  2.08812
+[18:07:51] [Debug] Adding Vis black vertex at -5.78827   7.7916 0.674383
+[18:07:51] [Debug] Adding Vis black vertex at -4.48845  7.85352  1.33974
+[18:07:51] [Debug] Adding Vis black vertex at -5.80643  7.64762  1.56031
+[18:07:51] [Debug] Adding Vis black vertex at -5.05699  8.03791  0.02572
+[18:07:51] [Debug] Adding Vis black vertex at -4.75054  7.95468  2.23325
+[18:07:51] [Debug] Adding Vis black vertex at -5.80333  7.54222  1.07499
+[18:07:51] [Debug] Adding Vis black vertex at -5.72564  7.78419  2.17889
+[18:07:51] [Debug] Adding Vis black vertex at -5.75986  7.87395 0.024015
+[18:07:51] [Debug] Adding Vis black vertex at -5.81512   7.4738  1.35549
+[18:07:51] [Debug] Adding Vis black vertex at  -4.55548   7.83251 0.0266606
+[18:07:51] [Debug] Adding Vis black vertex at -5.07082  7.82966  2.71877
+[18:07:51] [Debug] Adding Vis black vertex at -5.78245  7.46112 0.874322
+[18:07:51] [Debug] Adding Vis black vertex at -3.9803 7.70317 1.11529
+[18:07:51] [Debug] Adding Vis black vertex at -5.80256    7.472  1.74072
+[18:07:51] [Debug] Adding Vis black vertex at  -5.32138   7.59677 0.0302245
+[18:07:51] [Debug] Adding Vis black vertex at -5.80283  7.37164   1.1828
+[18:07:51] [Debug] Adding Vis black vertex at -3.97554  7.62588 0.201013
+[18:07:51] [Debug] Adding Vis black vertex at -5.50419   7.4509  2.19968
+[18:07:51] [Debug] Adding Vis black vertex at -5.75955  7.39904 0.539858
+[18:07:51] [Debug] Adding Vis black vertex at -4.02497  7.46452  1.58377
+[18:07:51] [Debug] Adding Vis black vertex at -5.81429  7.33006  1.47684
+[18:07:51] [Debug] Adding Vis black vertex at   -4.8859   7.39949 0.0365037
+[18:07:51] [Debug] Adding Vis black vertex at -4.72672  7.40294  2.70199
+[18:07:51] [Debug] Adding Vis black vertex at -5.76988  7.29227  1.01709
+[18:07:51] [Debug] Adding Vis black vertex at -4.02207  7.32661 0.824493
+[18:07:51] [Debug] Adding Vis black vertex at -5.79685  7.28571  2.02823
+[18:07:51] [Debug] Adding Vis black vertex at  -5.58682   7.27004 0.0179388
+[18:07:51] [Debug] Adding Vis black vertex at -4.01322  7.24127  2.16028
+[18:07:51] [Debug] Adding Vis black vertex at -5.81431  7.24267  1.28759
+[18:07:51] [Debug] Adding Vis black vertex at  -4.31471   7.17855 0.0373451
+[18:07:51] [Debug] Adding Vis black vertex at -5.27211  7.15037  2.73795
+[18:07:51] [Debug] Adding Vis black vertex at -5.77121  7.19981 0.776348
+[18:07:51] [Debug] Adding Vis black vertex at -4.00572  7.10961  1.29445
+[18:07:51] [Debug] Adding Vis black vertex at -5.79427   7.1773  1.61278
+[18:07:51] [Debug] Adding Vis black vertex at   -5.1591   7.07105 0.0219005
+[18:07:51] [Debug] Adding Vis black vertex at    -4.3 6.94183 2.71872
+[18:07:51] [Debug] Adding Vis black vertex at -5.79691   7.1633  1.11881
+[18:07:51] [Debug] Adding Vis black vertex at -4.05354   6.9398 0.505272
+[18:07:51] [Debug] Adding Vis black vertex at -5.63818  7.01684  2.18545
+[18:07:51] [Debug] Adding Vis black vertex at  -5.7733  6.97701 0.248885
+[18:07:51] [Debug] Adding Vis black vertex at -4.0261  6.8569 1.77888
+[18:07:51] [Debug] Adding Vis black vertex at -5.8164 7.09855 1.40014
+[18:07:51] [Debug] Adding Vis black vertex at  -4.70557   6.82103 0.0579698
+[18:07:51] [Debug] Adding Vis black vertex at -4.93971   6.7099  2.72662
+[18:07:51] [Debug] Adding Vis black vertex at -5.79455   7.0469 0.923156
+[18:07:51] [Debug] Adding Vis black vertex at -4.01878  6.72305  1.00858
+[18:07:51] [Debug] Adding Vis black vertex at -5.78563  6.93868  1.81287
+[18:07:51] [Debug] Adding Vis black vertex at  -5.41875   6.72155 0.0524048
+[18:07:51] [Debug] Adding Vis black vertex at -4.20805  6.51903  2.27239
+[18:07:51] [Debug] Adding Vis black vertex at -5.81531  7.00846  1.22212
+[18:07:51] [Debug] Adding Vis black vertex at -4.18879  6.43209 0.204242
+[18:07:51] [Debug] Adding Vis black vertex at -5.43732  6.61193  2.35496
+[18:07:51] [Debug] Adding Vis black vertex at -5.79083  6.79364   0.6098
+[18:07:51] [Debug] Adding Vis black vertex at -4.1511 6.49917 1.44678
+[18:07:51] [Debug] Adding Vis black vertex at -5.78039  6.90089  1.50898
+[18:07:51] [Debug] Adding Vis black vertex at  -4.99977   6.40042 0.0545637
+[18:07:51] [Debug] Adding Vis black vertex at -5.78765  6.87269  1.05362
+[18:07:51] [Debug] Adding Vis black vertex at -5.69251  6.52262  1.98806
+[18:07:51] [Debug] Adding Vis black vertex at -5.55849  6.52433 0.463546
+[18:07:51] [Debug] Adding Vis black vertex at -5.80998  6.74993  1.32809
+[18:07:51] [Debug] Adding Vis black vertex at -5.78066  6.51761 0.837088
+[18:07:51] [Debug] Adding Vis black vertex at -5.69774  6.52082  1.58847
+[18:07:51] [Debug] Adding Vis black vertex at -5.72626  6.51508  1.16922
+[18:07:51] [Debug] Adding Vis black vertex at -5.39805  6.53549  1.52801
+[18:07:51] [Debug] Adding Vis black vertex at -5.45522  6.53986 0.998364
+[18:07:51] [Debug] Adding Vis black vertex at -5.46372  6.52413  1.28834
+[18:07:51] [Debug] Adding Vis facets for node_sphere_3
+[18:07:51] [Debug] Adding Vis frontiers for node_sphere_3
+[18:08:01] [Debug] Initializing node 4
+[18:08:01] [Debug] Check within bounding box passed for node 4
+[18:08:01] [Debug] Check floor passed for node 4
+[18:08:01] [Info] Recording node 4 at coordinates: -5.1931 7.99075 1.20326
+[18:08:01] [Debug] Adding Vis sphere node_sphere_4
+[18:08:01] [Debug] Adding Vis lines for node_sphere_4
+[18:08:01] [Debug] Adding Vis black vertices for node_sphere_4
+[18:08:01] [Debug] Adding Vis facets for node_sphere_4
+[18:08:01] [Debug] Adding Vis frontiers for node_sphere_4
+[18:08:03] [Debug] Initializing node 5
+[18:08:03] [Debug] Check within bounding box passed for node 5
+[18:08:03] [Debug] Check floor passed for node 5
+[18:08:03] [Debug] Generated black and white vertices for node 5
+[18:08:03] [Debug] Centralized position for node 5
+[18:08:03] [Warning] Node 5 has no white vertices.
+[18:08:03] [Warning] Failed to initialize node for frontier 2
+[18:08:03] [Warning] Failed to process frontier for node 0
+[18:08:08] [Debug] Initializing node 6
+[18:08:08] [Debug] Check within bounding box passed for node 6
+[18:08:08] [Debug] Check floor passed for node 6
+[18:08:08] [Debug] Generated black and white vertices for node 6
+[18:08:08] [Debug] Centralized position for node 6
+[18:08:08] [Debug] Node 6 has white vertices.
+[18:08:08] [Debug] Node 6 has seed frontiers.
+[18:08:08] [Debug] Flow back completed for node 6
+[18:08:08] [Debug] Facets identified for node 6
+[18:08:08] [Debug] Frontiers identified for node 6
+[18:08:08] [Info] Recording node 6 at coordinates: -3.60374  7.82492 0.406899
+[18:08:08] [Debug] Adding Vis sphere node_sphere_6
+[18:08:08] [Debug] Adding Vis lines for node_sphere_6
+[18:08:08] [Debug] Adding Vis black vertices for node_sphere_6
+[18:08:08] [Debug] Adding Vis black vertex at -3.56598  8.73718 0.354549
+[18:08:08] [Debug] Adding Vis black vertex at  -3.7138  8.74492 0.489963
+[18:08:08] [Debug] Adding Vis black vertex at  -3.54118   8.73008 0.0719938
+[18:08:08] [Debug] Adding Vis black vertex at -3.35558  8.71028 0.628975
+[18:08:08] [Debug] Adding Vis black vertex at -4.00534  8.80421 0.276832
+[18:08:08] [Debug] Adding Vis black vertex at -3.18761  8.68325  0.11386
+[18:08:08] [Debug] Adding Vis black vertex at -3.70078  8.71898 0.855996
+[18:08:08] [Debug] Adding Vis black vertex at  -3.72238   8.33108 0.0534014
+[18:08:08] [Debug] Adding Vis black vertex at -2.98419  8.71543 0.567017
+[18:08:08] [Debug] Adding Vis black vertex at -4.19758  8.73512 0.615265
+[18:08:08] [Debug] Adding Vis black vertex at  -3.42591   8.20034 0.0552251
+[18:08:08] [Debug] Adding Vis black vertex at -3.34072  8.69417  1.07273
+[18:08:08] [Debug] Adding Vis black vertex at  -4.07095   8.44014 0.0619104
+[18:08:08] [Debug] Adding Vis black vertex at -4.05984  8.64645  1.05701
+[18:08:08] [Debug] Adding Vis black vertex at  -3.60396   8.05005 0.0614255
+[18:08:08] [Debug] Adding Vis black vertex at -4.33563   8.4333 0.386376
+[18:08:08] [Debug] Adding Vis black vertex at -3.26253  8.11594 0.052573
+[18:08:08] [Debug] Adding Vis black vertex at -3.62163  8.70531  1.55807
+[18:08:08] [Debug] Adding Vis black vertex at  -3.81538   8.05167 0.0556816
+[18:08:08] [Debug] Adding Vis black vertex at -4.22663  8.30053 0.814212
+[18:08:08] [Debug] Adding Vis black vertex at  -3.49467    7.9687 0.0375864
+[18:08:08] [Debug] Adding Vis black vertex at -3.82003  7.91467 0.273499
+[18:08:08] [Debug] Adding Vis black vertex at  -2.89974   8.15866 0.0467296
+[18:08:08] [Debug] Adding Vis black vertex at -4.01057  8.35045  1.41687
+[18:08:08] [Debug] Adding Vis black vertex at  -3.68106   7.92674 0.0345873
+[18:08:08] [Debug] Adding Vis black vertex at -3.79241  7.86314 0.414236
+[18:08:08] [Debug] Adding Vis black vertex at  -3.36641   7.91146 0.0441721
+[18:08:08] [Debug] Adding Vis black vertex at -3.79431  7.86488 0.177715
+[18:08:08] [Debug] Adding Vis black vertex at -3.78025  7.85944 0.586169
+[18:08:08] [Debug] Adding Vis black vertex at  -3.56434   7.85803 0.0185388
+[18:08:08] [Debug] Adding Vis black vertex at -3.81272  7.82197 0.331681
+[18:08:08] [Debug] Adding Vis black vertex at  -3.15383   7.87509 0.0417393
+[18:08:08] [Debug] Adding Vis black vertex at -3.88683  8.11334  2.11824
+[18:08:08] [Debug] Adding Vis black vertex at  -3.75848   7.82578 0.0486465
+[18:08:08] [Debug] Adding Vis black vertex at -3.79068  7.79623 0.469863
+[18:08:08] [Debug] Adding Vis black vertex at  -3.44292   7.80235 0.0226218
+[18:08:08] [Debug] Adding Vis black vertex at -3.84273  7.78449 0.223389
+[18:08:08] [Debug] Adding Vis black vertex at  -2.58951   7.81445 0.0534935
+[18:08:08] [Debug] Adding Vis black vertex at -3.80119  7.77688 0.755892
+[18:08:08] [Debug] Adding Vis black vertex at  -3.63801   7.76624 0.0191299
+[18:08:08] [Debug] Adding Vis black vertex at -3.81868  7.75506 0.386042
+[18:08:08] [Debug] Adding Vis black vertex at  -3.30505   7.74242 0.0479924
+[18:08:08] [Debug] Adding Vis black vertex at -3.49916  7.63281  2.18678
+[18:08:08] [Debug] Adding Vis black vertex at  -3.82552   7.72902 0.0911831
+[18:08:08] [Debug] Adding Vis black vertex at -3.82984  7.71744  0.57256
+[18:08:08] [Debug] Adding Vis black vertex at  -3.51872   7.71035 0.0157796
+[18:08:08] [Debug] Adding Vis black vertex at -3.80965  7.71388 0.298481
+[18:08:08] [Debug] Adding Vis black vertex at  -3.01269   7.62474 0.0410753
+[18:08:08] [Debug] Adding Vis black vertex at -3.81758  7.56802  1.13011
+[18:08:08] [Debug] Adding Vis black vertex at  -3.71453   7.66935 0.0288648
+[18:08:08] [Debug] Adding Vis black vertex at -3.84566  7.67187 0.453607
+[18:08:08] [Debug] Adding Vis black vertex at  -3.39405   7.64205 0.0312563
+[18:08:08] [Debug] Adding Vis black vertex at -3.84726  7.63599 0.171745
+[18:08:08] [Debug] Adding Vis black vertex at -3.82565  7.58215 0.686489
+[18:08:08] [Debug] Adding Vis black vertex at  -3.59192   7.61087 0.0216903
+[18:08:08] [Debug] Adding Vis black vertex at -3.84487  7.62045 0.351828
+[18:08:08] [Debug] Adding Vis black vertex at  -3.21853   7.51084 0.0424323
+[18:08:08] [Debug] Adding Vis black vertex at -3.7399 6.74295 2.13646
+[18:08:08] [Debug] Adding Vis black vertex at  -3.78329   7.54533 0.0653079
+[18:08:08] [Debug] Adding Vis black vertex at -2.36944  6.99123  0.57826
+[18:08:08] [Debug] Adding Vis black vertex at -3.82078  7.56224 0.513162
+[18:08:08] [Debug] Adding Vis black vertex at  -3.47804   7.53258 0.0397094
+[18:08:08] [Debug] Adding Vis black vertex at -3.82968  7.54236 0.255319
+[18:08:08] [Debug] Adding Vis black vertex at  -2.79381   7.07637 0.0445919
+[18:08:08] [Debug] Adding Vis black vertex at -3.77146  7.34937 0.782718
+[18:08:08] [Debug] Adding Vis black vertex at -3.66652  7.44403 0.022709
+[18:08:08] [Debug] Adding Vis black vertex at -3.04091  7.16956  0.66572
+[18:08:08] [Debug] Adding Vis black vertex at -3.81632  7.49956 0.407029
+[18:08:08] [Debug] Adding Vis black vertex at  -3.34799   7.35467 0.0508223
+[18:08:08] [Debug] Adding Vis black vertex at -3.76939  7.43086 0.179694
+[18:08:08] [Debug] Adding Vis black vertex at -3.06771  7.10272 0.338812
+[18:08:08] [Debug] Adding Vis black vertex at -3.77446  7.34825    0.558
+[18:08:08] [Debug] Adding Vis black vertex at  -3.54898   7.29534 0.0511182
+[18:08:08] [Debug] Adding Vis black vertex at -3.29992  7.05907 0.679775
+[18:08:08] [Debug] Adding Vis black vertex at -3.78754  7.35054 0.322534
+[18:08:08] [Debug] Adding Vis black vertex at -3.63951  7.01325 0.667135
+[18:08:08] [Debug] Adding Vis black vertex at -3.69866  7.01885 0.117675
+[18:08:08] [Debug] Adding Vis black vertex at -3.70722  7.00391  0.41814
+[18:08:08] [Debug] Adding Vis black vertex at -3.56598   6.9971 0.354549
+[18:08:08] [Debug] Adding Vis facets for node_sphere_6
+[18:08:08] [Debug] Adding Vis frontiers for node_sphere_6
+[18:08:11] [Debug] Initializing node 7
+[18:08:11] [Debug] Check within bounding box passed for node 7
+[18:08:11] [Debug] Check floor passed for node 7
+[18:08:11] [Info] Recording node 7 at coordinates: -4.29767  8.31734  0.66235
+[18:08:11] [Debug] Adding Vis sphere node_sphere_7
+[18:08:11] [Debug] Adding Vis lines for node_sphere_7
+[18:08:11] [Debug] Adding Vis black vertices for node_sphere_7
+[18:08:11] [Debug] Adding Vis facets for node_sphere_7
+[18:08:11] [Debug] Adding Vis frontiers for node_sphere_7
+[18:08:13] [Debug] Initializing node 8
+[18:08:13] [Debug] Check within bounding box passed for node 8
+[18:08:13] [Debug] Check floor passed for node 8
+[18:08:13] [Debug] Generated black and white vertices for node 8
+[18:08:13] [Debug] Centralized position for node 8
+[18:08:13] [Debug] Node 8 has white vertices.
+[18:08:13] [Debug] Node 8 has seed frontiers.
+[18:08:15] [Debug] Initializing node 9
+[18:08:15] [Debug] Check within bounding box passed for node 9
+[18:08:15] [Debug] Check floor passed for node 9
+[18:08:15] [Info] Recording node 9 at coordinates: -4.57376  10.3484 0.374333
+[18:08:15] [Debug] Flow back completed for node 8
+[18:08:15] [Debug] Adding Vis sphere node_sphere_9
+[18:08:15] [Debug] Adding Vis lines for node_sphere_9
+[18:08:15] [Debug] Adding Vis black vertices for node_sphere_9
+[18:08:15] [Debug] Adding Vis facets for node_sphere_9
+[18:08:15] [Debug] Adding Vis frontiers for node_sphere_9
+[18:08:15] [Debug] Facets identified for node 8
+[18:08:15] [Debug] Frontiers identified for node 8
+[18:08:15] [Info] Recording node 8 at coordinates: -4.12216  10.1387 0.346973
+[18:08:15] [Debug] Adding Vis sphere node_sphere_8
+[18:08:15] [Debug] Adding Vis lines for node_sphere_8
+[18:08:15] [Debug] Adding Vis black vertices for node_sphere_8
+[18:08:15] [Debug] Adding Vis black vertex at -4.10384  10.9076 0.240589
+[18:08:15] [Debug] Adding Vis black vertex at -4.17878  10.6524 0.309238
+[18:08:15] [Debug] Adding Vis black vertex at  -4.08851   10.7527 0.0658525
+[18:08:15] [Debug] Adding Vis black vertex at -4.00285  10.6093 0.372319
+[18:08:15] [Debug] Adding Vis black vertex at -4.29758  10.6137 0.206319
+[18:08:15] [Debug] Adding Vis black vertex at -3.91954  10.6028 0.123351
+[18:08:15] [Debug] Adding Vis black vertex at -4.15941  10.5486 0.447284
+[18:08:15] [Debug] Adding Vis black vertex at  -4.20013   10.5043 0.0551903
+[18:08:15] [Debug] Adding Vis black vertex at -3.81879  10.6212 0.344687
+[18:08:15] [Debug] Adding Vis black vertex at   -4.329  10.5011 0.333532
+[18:08:15] [Debug] Adding Vis black vertex at  -4.02124   10.4125 0.0640685
+[18:08:15] [Debug] Adding Vis black vertex at -3.99533  10.6031 0.586549
+[18:08:15] [Debug] Adding Vis black vertex at  -4.40798   10.5624 0.0643313
+[18:08:15] [Debug] Adding Vis black vertex at  -3.30489   11.0474 0.0649405
+[18:08:15] [Debug] Adding Vis black vertex at  -4.2816  10.4725 0.493425
+[18:08:15] [Debug] Adding Vis black vertex at  -4.13026   10.3543 0.0366831
+[18:08:15] [Debug] Adding Vis black vertex at -4.43256  10.4408 0.254182
+[18:08:15] [Debug] Adding Vis black vertex at   -3.9268   10.3605 0.0644067
+[18:08:15] [Debug] Adding Vis black vertex at  -4.1251  10.5145 0.700326
+[18:08:15] [Debug] Adding Vis black vertex at  -4.26173   10.3373 0.0513914
+[18:08:15] [Debug] Adding Vis black vertex at -2.95362  10.9717 0.395349
+[18:08:15] [Debug] Adding Vis black vertex at -4.40874  10.4026 0.452728
+[18:08:15] [Debug] Adding Vis black vertex at  -4.06272   10.2732 0.0578198
+[18:08:15] [Debug] Adding Vis black vertex at -4.52054  10.4036 0.107652
+[18:08:15] [Debug] Adding Vis black vertex at  -3.69711   10.3961 0.0526693
+[18:08:15] [Debug] Adding Vis black vertex at -4.29998  10.4137 0.709262
+[18:08:15] [Debug] Adding Vis black vertex at  -4.17146   10.2508 0.0525953
+[18:08:15] [Debug] Adding Vis black vertex at -4.51447  10.3365  0.34883
+[18:08:15] [Debug] Adding Vis black vertex at  -3.99258   10.2374 0.0675476
+[18:08:15] [Debug] Adding Vis black vertex at -3.91446   10.577  1.34255
+[18:08:15] [Debug] Adding Vis black vertex at  -4.33908   10.2597 0.0584071
+[18:08:15] [Debug] Adding Vis black vertex at -4.47846  10.3235  0.64554
+[18:08:15] [Debug] Adding Vis black vertex at   -4.1028    10.215 0.0272013
+[18:08:15] [Debug] Adding Vis black vertex at -4.64997  10.2855 0.189973
+[18:08:15] [Debug] Adding Vis black vertex at  -3.85972    10.221 0.0553059
+[18:08:15] [Debug] Adding Vis black vertex at -4.27981  10.3467  1.20784
+[18:08:15] [Debug] Adding Vis black vertex at  -4.22022   10.1925 0.0556553
+[18:08:15] [Debug] Adding Vis black vertex at -4.64395  10.2349 0.517763
+[18:08:15] [Debug] Adding Vis black vertex at  -4.02722   10.1791 0.0339105
+[18:08:15] [Debug] Adding Vis black vertex at -3.32168  10.3438  2.16195
+[18:08:15] [Debug] Adding Vis black vertex at  -4.48465   10.1843 0.0601155
+[18:08:15] [Debug] Adding Vis black vertex at  -3.50476   10.1862 0.0558853
+[18:08:15] [Debug] Adding Vis black vertex at -4.56148  10.1819  1.02147
+[18:08:15] [Debug] Adding Vis black vertex at  -4.15041   10.1567 0.0237453
+[18:08:15] [Debug] Adding Vis black vertex at  -3.92535   10.1405 0.0308875
+[18:08:15] [Debug] Adding Vis black vertex at -4.03384  10.0183  2.16002
+[18:08:15] [Debug] Adding Vis black vertex at  -4.30398   10.1284 0.0374949
+[18:08:15] [Debug] Adding Vis black vertex at -4.84124  10.0278 0.849861
+[18:08:15] [Debug] Adding Vis black vertex at  -4.07355   10.1209 0.0234545
+[18:08:15] [Debug] Adding Vis black vertex at  -4.90409   9.99388 0.0564528
+[18:08:15] [Debug] Adding Vis black vertex at  -3.76521     10.07 0.0487342
+[18:08:15] [Debug] Adding Vis black vertex at -4.43748  9.89621  1.26904
+[18:08:15] [Debug] Adding Vis black vertex at   -4.1929   10.0985 0.0453312
+[18:08:15] [Debug] Adding Vis black vertex at -3.0323  9.8245 0.69519
+[18:08:15] [Debug] Adding Vis black vertex at -4.71673  9.95526  0.45766
+[18:08:15] [Debug] Adding Vis black vertex at  -4.00494    10.085 0.0546093
+[18:08:15] [Debug] Adding Vis black vertex at -3.86854  9.82192  1.15124
+[18:08:15] [Debug] Adding Vis black vertex at -4.40644  10.0181 0.043925
+[18:08:15] [Debug] Adding Vis black vertex at -3.33251  9.83937 0.111899
+[18:08:15] [Debug] Adding Vis black vertex at -4.50094  9.87824 0.748199
+[18:08:15] [Debug] Adding Vis black vertex at  -4.11953   10.0626 0.0393157
+[18:08:15] [Debug] Adding Vis black vertex at -3.63197  9.84308 0.681407
+[18:08:15] [Debug] Adding Vis black vertex at -4.67135  9.86484 0.235051
+[18:08:15] [Debug] Adding Vis black vertex at  -3.89891   10.0059 0.0564971
+[18:08:15] [Debug] Adding Vis black vertex at -4.17321  9.74773 0.951267
+[18:08:15] [Debug] Adding Vis black vertex at  -4.25375   10.0045 0.0410629
+[18:08:15] [Debug] Adding Vis black vertex at -3.63344  9.85114 0.328537
+[18:08:15] [Debug] Adding Vis black vertex at  -4.5265  9.82181 0.503694
+[18:08:15] [Debug] Adding Vis black vertex at  -4.05506   10.0268 0.0659272
+[18:08:15] [Debug] Adding Vis black vertex at -3.87787  9.78362 0.686259
+[18:08:15] [Debug] Adding Vis black vertex at  -4.57946   9.75691 0.0616156
+[18:08:15] [Debug] Adding Vis black vertex at  -3.75139   9.84116 0.0991113
+[18:08:15] [Debug] Adding Vis black vertex at -4.30806  9.74359 0.666133
+[18:08:15] [Debug] Adding Vis black vertex at  -4.16477   9.96129 0.0394809
+[18:08:15] [Debug] Adding Vis black vertex at -3.80788  9.82009 0.415982
+[18:08:15] [Debug] Adding Vis black vertex at -4.50157  9.73627 0.323968
+[18:08:15] [Debug] Adding Vis black vertex at  -3.97715   9.91727 0.0640641
+[18:08:15] [Debug] Adding Vis black vertex at -4.04907  9.61953 0.698239
+[18:08:15] [Debug] Adding Vis black vertex at  -4.30847   9.82055 0.0646855
+[18:08:15] [Debug] Adding Vis black vertex at -3.83927  9.80399 0.232233
+[18:08:15] [Debug] Adding Vis black vertex at -4.32255  9.71959 0.454026
+[18:08:15] [Debug] Adding Vis black vertex at  -4.09407   9.88572 0.0661396
+[18:08:15] [Debug] Adding Vis black vertex at -3.95768  9.76788 0.419253
+[18:08:15] [Debug] Adding Vis black vertex at   -4.397    9.609 0.198228
+[18:08:15] [Debug] Adding Vis black vertex at -3.93532  9.73588 0.125759
+[18:08:15] [Debug] Adding Vis black vertex at -4.15931  9.58904 0.476394
+[18:08:15] [Debug] Adding Vis black vertex at  -4.20608    9.5812 0.0580567
+[18:08:15] [Debug] Adding Vis black vertex at -3.98781  9.73779 0.278858
+[18:08:15] [Debug] Adding Vis black vertex at -4.21659  9.54866 0.291353
+[18:08:15] [Debug] Adding Vis black vertex at -4.10384  9.36243 0.240589
+[18:08:15] [Debug] Adding Vis facets for node_sphere_8
+[18:08:15] [Debug] Adding Vis frontiers for node_sphere_8
+[18:08:17] [Debug] Initializing node 10
+[18:08:17] [Debug] Check within bounding box passed for node 10
+[18:08:17] [Debug] Check floor passed for node 10
+[18:08:17] [Info] Recording node 10 at coordinates: -4.39557  9.72074 0.428275
+[18:08:17] [Debug] Adding Vis sphere node_sphere_10
+[18:08:17] [Debug] Adding Vis lines for node_sphere_10
+[18:08:17] [Debug] Adding Vis black vertices for node_sphere_10
+[18:08:17] [Debug] Adding Vis facets for node_sphere_10
+[18:08:17] [Debug] Adding Vis frontiers for node_sphere_10
+[18:08:20] [Debug] Initializing node 11
+[18:08:20] [Debug] Check within bounding box passed for node 11
+[18:08:20] [Debug] Check floor passed for node 11
+[18:08:20] [Debug] Generated black and white vertices for node 11
+[18:08:20] [Debug] Centralized position for node 11
+[18:08:20] [Debug] Node 11 has white vertices.
+[18:08:20] [Debug] Node 11 has seed frontiers.
+[18:08:22] [Debug] Initializing node 12
+[18:08:22] [Debug] Check within bounding box passed for node 12
+[18:08:22] [Debug] Check floor passed for node 12
+[18:08:22] [Info] Recording node 12 at coordinates: -5.66354  10.5259 0.864289
+[18:08:22] [Debug] Flow back completed for node 11
+[18:08:22] [Debug] Adding Vis sphere node_sphere_12
+[18:08:22] [Debug] Adding Vis lines for node_sphere_12
+[18:08:22] [Debug] Adding Vis black vertices for node_sphere_12
+[18:08:22] [Debug] Adding Vis facets for node_sphere_12
+[18:08:22] [Debug] Adding Vis frontiers for node_sphere_12
+[18:08:22] [Debug] Facets identified for node 11
+[18:08:22] [Debug] Frontiers identified for node 11
+[18:08:22] [Info] Recording node 11 at coordinates: -5.70759  10.2606 0.657579
+[18:08:22] [Debug] Adding Vis sphere node_sphere_11
+[18:08:22] [Debug] Adding Vis lines for node_sphere_11
+[18:08:22] [Debug] Adding Vis black vertices for node_sphere_11
+[18:08:22] [Debug] Adding Vis black vertex at -5.66772   10.606 0.666861
+[18:08:22] [Debug] Adding Vis black vertex at -5.71907  10.6152 0.713903
+[18:08:22] [Debug] Adding Vis black vertex at -5.65896  10.6156 0.567063
+[18:08:22] [Debug] Adding Vis black vertex at -5.61674  10.5035 0.733346
+[18:08:22] [Debug] Adding Vis black vertex at -5.90053  10.8258 0.625679
+[18:08:22] [Debug] Adding Vis black vertex at  -5.5537  10.5513 0.594332
+[18:08:22] [Debug] Adding Vis black vertex at -5.70846   10.563 0.818413
+[18:08:22] [Debug] Adding Vis black vertex at -5.84992   10.936 0.316035
+[18:08:22] [Debug] Adding Vis black vertex at  -5.5426  10.4788 0.712553
+[18:08:22] [Debug] Adding Vis black vertex at -6.04448   10.854 0.822385
+[18:08:22] [Debug] Adding Vis black vertex at -5.55974  10.6113 0.436114
+[18:08:22] [Debug] Adding Vis black vertex at -5.62175   10.464 0.813412
+[18:08:22] [Debug] Adding Vis black vertex at -6.04402  10.7788 0.448782
+[18:08:22] [Debug] Adding Vis black vertex at  -5.5065  10.4542 0.631419
+[18:08:22] [Debug] Adding Vis black vertex at -5.90703  10.7022  1.00727
+[18:08:22] [Debug] Adding Vis black vertex at  -5.74687   10.8726 0.0560208
+[18:08:22] [Debug] Adding Vis black vertex at -5.53016  10.4393 0.782796
+[18:08:22] [Debug] Adding Vis black vertex at -6.09305  10.6445  0.68445
+[18:08:22] [Debug] Adding Vis black vertex at -5.47851  10.4942 0.478573
+[18:08:22] [Debug] Adding Vis black vertex at -5.67945  10.4727 0.920628
+[18:08:22] [Debug] Adding Vis black vertex at -6.04181  10.7073 0.218566
+[18:08:22] [Debug] Adding Vis black vertex at  -5.4697  10.4147 0.693503
+[18:08:22] [Debug] Adding Vis black vertex at -6.12999  10.6502 0.988497
+[18:08:22] [Debug] Adding Vis black vertex at  -5.52474   10.6869 0.0313264
+[18:08:22] [Debug] Adding Vis black vertex at -5.56359  10.3999 0.848583
+[18:08:22] [Debug] Adding Vis black vertex at  -5.4119   10.426 0.548667
+[18:08:22] [Debug] Adding Vis black vertex at -6.02426  10.7453   1.5188
+[18:08:22] [Debug] Adding Vis black vertex at -5.89054  10.5914 0.047354
+[18:08:22] [Debug] Adding Vis black vertex at -5.47083  10.3752 0.770338
+[18:08:22] [Debug] Adding Vis black vertex at  -5.26923   10.5708 0.0471314
+[18:08:22] [Debug] Adding Vis black vertex at -5.61751   10.386 0.958967
+[18:08:22] [Debug] Adding Vis black vertex at  -6.46463   10.6303 0.0496883
+[18:08:22] [Debug] Adding Vis black vertex at -5.38415  10.3678 0.643368
+[18:08:22] [Debug] Adding Vis black vertex at  -5.66458   10.4564 0.0233273
+[18:08:22] [Debug] Adding Vis black vertex at -5.50885  10.3357 0.841983
+[18:08:22] [Debug] Adding Vis black vertex at -5.31444  10.3702 0.398735
+[18:08:22] [Debug] Adding Vis black vertex at -5.86926  10.4942  1.77475
+[18:08:22] [Debug] Adding Vis black vertex at  -6.0605  10.4025 0.042695
+[18:08:22] [Debug] Adding Vis black vertex at -5.38669  10.3186 0.743879
+[18:08:22] [Debug] Adding Vis black vertex at   -5.4316   10.3499 0.0299672
+[18:08:22] [Debug] Adding Vis black vertex at -5.54493  10.3037 0.968486
+[18:08:22] [Debug] Adding Vis black vertex at   -6.9481   10.3744 0.0600617
+[18:08:22] [Debug] Adding Vis black vertex at -5.27676  10.2947 0.546326
+[18:08:22] [Debug] Adding Vis black vertex at -6.78146  10.3407  2.56727
+[18:08:22] [Debug] Adding Vis black vertex at  -5.80637   10.2806 0.0211722
+[18:08:22] [Debug] Adding Vis black vertex at -5.41636  10.2709 0.845411
+[18:08:22] [Debug] Adding Vis black vertex at  -5.14837   10.2335 0.0567183
+[18:08:22] [Debug] Adding Vis black vertex at -5.61214  10.1659  2.19077
+[18:08:22] [Debug] Adding Vis black vertex at  -6.28532   10.1936 0.0401478
+[18:08:22] [Debug] Adding Vis black vertex at -5.32378  10.2355 0.684447
+[18:08:22] [Debug] Adding Vis black vertex at   -5.5778   10.1742 0.0223869
+[18:08:22] [Debug] Adding Vis black vertex at -5.47244   10.214 0.950465
+[18:08:22] [Debug] Adding Vis black vertex at -4.80096  10.0577 0.175789
+[18:08:22] [Debug] Adding Vis black vertex at -6.13823  9.90976  2.11722
+[18:08:22] [Debug] Adding Vis black vertex at  -5.95888   10.0909 0.0285126
+[18:08:22] [Debug] Adding Vis black vertex at -5.35423  10.1774 0.799859
+[18:08:22] [Debug] Adding Vis black vertex at -5.37191  10.0663 0.110641
+[18:08:22] [Debug] Adding Vis black vertex at -5.48264  10.0124  1.38312
+[18:08:22] [Debug] Adding Vis black vertex at  -6.58913   9.85865 0.0680285
+[18:08:22] [Debug] Adding Vis black vertex at -5.19225  10.0797 0.587533
+[18:08:22] [Debug] Adding Vis black vertex at -6.27944  9.84845  1.44883
+[18:08:22] [Debug] Adding Vis black vertex at -5.70625  10.0484   0.1725
+[18:08:22] [Debug] Adding Vis black vertex at -5.31322    10.04 0.998027
+[18:08:22] [Debug] Adding Vis black vertex at -6.56241  9.81738 0.658132
+[18:08:22] [Debug] Adding Vis black vertex at -5.32281  10.0239 0.357031
+[18:08:22] [Debug] Adding Vis black vertex at -5.73512  9.87873  1.35745
+[18:08:22] [Debug] Adding Vis black vertex at -6.08158  9.85984 0.115995
+[18:08:22] [Debug] Adding Vis black vertex at -5.31445  10.0462 0.732909
+[18:08:22] [Debug] Adding Vis black vertex at -6.16764  9.88051 0.978063
+[18:08:22] [Debug] Adding Vis black vertex at -5.56295  9.99974 0.291789
+[18:08:22] [Debug] Adding Vis black vertex at -5.47899  9.96424  1.03908
+[18:08:22] [Debug] Adding Vis black vertex at -6.16046   9.8621 0.481442
+[18:08:22] [Debug] Adding Vis black vertex at -5.33548  9.97863 0.533498
+[18:08:22] [Debug] Adding Vis black vertex at -5.86187  9.88336  1.07142
+[18:08:22] [Debug] Adding Vis black vertex at -5.75357  10.0018 0.383477
+[18:08:22] [Debug] Adding Vis black vertex at -5.40912  9.98181 0.820114
+[18:08:22] [Debug] Adding Vis black vertex at -6.08147  9.83892 0.753601
+[18:08:22] [Debug] Adding Vis black vertex at -5.51594  9.98983 0.455397
+[18:08:22] [Debug] Adding Vis black vertex at -5.63033  9.90884 0.979235
+[18:08:22] [Debug] Adding Vis black vertex at -5.85265   9.9722 0.507888
+[18:08:22] [Debug] Adding Vis black vertex at -5.43658  9.96779 0.659561
+[18:08:22] [Debug] Adding Vis black vertex at -5.83333  9.94466 0.828488
+[18:08:22] [Debug] Adding Vis black vertex at -5.65658  9.96788 0.468166
+[18:08:22] [Debug] Adding Vis black vertex at -5.54274  9.94343 0.819624
+[18:08:22] [Debug] Adding Vis black vertex at -5.84555  9.94309 0.641165
+[18:08:22] [Debug] Adding Vis black vertex at -5.53914   9.9546  0.57925
+[18:08:22] [Debug] Adding Vis black vertex at  -5.7015  9.92961 0.810475
+[18:08:22] [Debug] Adding Vis black vertex at -5.72653   9.9442 0.561859
+[18:08:22] [Debug] Adding Vis black vertex at -5.57338  9.93522 0.697973
+[18:08:22] [Debug] Adding Vis black vertex at  -5.7321  9.92804 0.695849
+[18:08:22] [Debug] Adding Vis black vertex at -5.66772  9.93142 0.666861
+[18:08:22] [Debug] Adding Vis facets for node_sphere_11
+[18:08:22] [Debug] Adding Vis frontiers for node_sphere_11
+[18:08:23] [Debug] Initializing node 13
+[18:08:23] [Debug] Check within bounding box passed for node 13
+[18:08:23] [Debug] Check floor passed for node 13
+[18:08:23] [Info] Recording node 13 at coordinates: -5.65215  9.93855 0.623715
+[18:08:23] [Debug] Adding Vis sphere node_sphere_13
+[18:08:23] [Debug] Adding Vis lines for node_sphere_13
+[18:08:23] [Debug] Adding Vis black vertices for node_sphere_13
+[18:08:23] [Debug] Adding Vis facets for node_sphere_13
+[18:08:23] [Debug] Adding Vis frontiers for node_sphere_13
+[18:08:23] [Debug] Initializing node 14
+[18:08:23] [Debug] Check within bounding box passed for node 14
+[18:08:23] [Debug] Check floor passed for node 14
+[18:08:23] [Debug] Generated black and white vertices for node 14
+[18:08:23] [Debug] Centralized position for node 14
+[18:08:23] [Debug] Node 14 has white vertices.
+[18:08:23] [Debug] Node 14 has seed frontiers.
+[18:08:25] [Debug] Initializing node 15
+[18:08:25] [Debug] Check within bounding box passed for node 15
+[18:08:25] [Debug] Check floor passed for node 15
+[18:08:25] [Info] Recording node 15 at coordinates: -4.20771  10.4848  1.57959
+[18:08:25] [Debug] Flow back completed for node 14
+[18:08:25] [Debug] Adding Vis sphere node_sphere_15
+[18:08:25] [Debug] Adding Vis lines for node_sphere_15
+[18:08:25] [Debug] Adding Vis black vertices for node_sphere_15
+[18:08:25] [Debug] Adding Vis facets for node_sphere_15
+[18:08:25] [Debug] Adding Vis frontiers for node_sphere_15
+[18:08:25] [Debug] Facets identified for node 14
+[18:08:25] [Debug] Frontiers identified for node 14
+[18:08:25] [Info] Recording node 14 at coordinates: -4.19601  9.91482  2.50578
+[18:08:25] [Debug] Adding Vis sphere node_sphere_14
+[18:08:25] [Debug] Adding Vis lines for node_sphere_14
+[18:08:25] [Debug] Adding Vis black vertices for node_sphere_14
+[18:08:25] [Debug] Adding Vis black vertex at -4.14981  10.6521  2.54172
+[18:08:25] [Debug] Adding Vis black vertex at -4.25048  10.5722  2.63395
+[18:08:25] [Debug] Adding Vis black vertex at -4.13225  10.5884   2.3416
+[18:08:25] [Debug] Adding Vis black vertex at -4.0279 10.4523 2.70074
+[18:08:25] [Debug] Adding Vis black vertex at -4.34513  10.3663  2.50717
+[18:08:25] [Debug] Adding Vis black vertex at -4.07952  10.0743  2.49701
+[18:08:25] [Debug] Adding Vis black vertex at -4.19255  10.2065   2.7007
+[18:08:25] [Debug] Adding Vis black vertex at -4.28696  10.4016  2.27765
+[18:08:25] [Debug] Adding Vis black vertex at -4.42467  10.3264  2.65518
+[18:08:25] [Debug] Adding Vis black vertex at -4.08476  10.1065  2.40272
+[18:08:25] [Debug] Adding Vis black vertex at -4.0934 10.1366 2.72158
+[18:08:25] [Debug] Adding Vis black vertex at -4.43826  10.2902  2.37456
+[18:08:25] [Debug] Adding Vis black vertex at -4.07161  9.99071  2.52453
+[18:08:25] [Debug] Adding Vis black vertex at -4.2746 10.1266 2.71922
+[18:08:25] [Debug] Adding Vis black vertex at -4.22077    10.44  1.99414
+[18:08:25] [Debug] Adding Vis black vertex at -3.97191  10.1172  2.69166
+[18:08:25] [Debug] Adding Vis black vertex at -4.53275  10.2369  2.55756
+[18:08:25] [Debug] Adding Vis black vertex at  -4.085 9.97874 2.47722
+[18:08:25] [Debug] Adding Vis black vertex at -4.15809  10.0435  2.72079
+[18:08:25] [Debug] Adding Vis black vertex at -4.45753  10.2597  2.17297
+[18:08:25] [Debug] Adding Vis black vertex at -3.35283  10.4696  2.64896
+[18:08:25] [Debug] Adding Vis black vertex at -4.3842 10.0941  2.7048
+[18:08:25] [Debug] Adding Vis black vertex at -4.08853  10.0803   2.2693
+[18:08:25] [Debug] Adding Vis black vertex at -4.05105  10.0227  2.71407
+[18:08:25] [Debug] Adding Vis black vertex at -4.64832  10.2014  2.38269
+[18:08:25] [Debug] Adding Vis black vertex at -4.0551 9.95958 2.49797
+[18:08:25] [Debug] Adding Vis black vertex at -4.22667  10.0049  2.72538
+[18:08:25] [Debug] Adding Vis black vertex at -4.40956  10.2734  1.81956
+[18:08:25] [Debug] Adding Vis black vertex at -3.84156  10.0617  2.70373
+[18:08:25] [Debug] Adding Vis black vertex at -4.73994  10.1649  2.69728
+[18:08:25] [Debug] Adding Vis black vertex at -4.09035   9.9476  2.44924
+[18:08:25] [Debug] Adding Vis black vertex at -4.11629  9.97811  2.73679
+[18:08:25] [Debug] Adding Vis black vertex at -4.67932  10.1401  2.13164
+[18:08:25] [Debug] Adding Vis black vertex at -4.03762  9.94042  2.53243
+[18:08:25] [Debug] Adding Vis black vertex at -4.30484  9.97324   2.7093
+[18:08:25] [Debug] Adding Vis black vertex at -4.14679  10.0789  1.92239
+[18:08:25] [Debug] Adding Vis black vertex at -3.99706  9.96264  2.71011
+[18:08:25] [Debug] Adding Vis black vertex at -4.74432  10.0459  2.48662
+[18:08:25] [Debug] Adding Vis black vertex at -4.05754  9.92845  2.47169
+[18:08:25] [Debug] Adding Vis black vertex at -4.18624   9.9431  2.74194
+[18:08:25] [Debug] Adding Vis black vertex at -4.60817  10.0533  1.81334
+[18:08:25] [Debug] Adding Vis black vertex at -3.38647  10.0246  2.75092
+[18:08:25] [Debug] Adding Vis black vertex at -4.46081  9.94961  2.70132
+[18:08:25] [Debug] Adding Vis black vertex at -4.0869 9.92354 2.37204
+[18:08:25] [Debug] Adding Vis black vertex at -4.07036  9.92254   2.7369
+[18:08:25] [Debug] Adding Vis black vertex at -4.62825  9.94083  2.31498
+[18:08:25] [Debug] Adding Vis black vertex at -4.03668  9.90929  2.50684
+[18:08:25] [Debug] Adding Vis black vertex at -4.26086  9.90996  2.73121
+[18:08:25] [Debug] Adding Vis black vertex at -4.32862  9.91191  1.70903
+[18:08:25] [Debug] Adding Vis black vertex at -3.90815  9.90031  2.71339
+[18:08:25] [Debug] Adding Vis black vertex at -4.71734  9.88596  2.61245
+[18:08:25] [Debug] Adding Vis black vertex at -4.07308  9.89732  2.45157
+[18:08:25] [Debug] Adding Vis black vertex at -4.14242  9.88893  2.74429
+[18:08:25] [Debug] Adding Vis black vertex at -4.50738   9.8568  2.17888
+[18:08:25] [Debug] Adding Vis black vertex at -4.03216  9.89013  2.54774
+[18:08:25] [Debug] Adding Vis black vertex at -4.33932  9.87074  2.69831
+[18:08:25] [Debug] Adding Vis black vertex at -4.01955   9.7588  1.60806
+[18:08:25] [Debug] Adding Vis black vertex at -4.02425  9.86471  2.72408
+[18:08:25] [Debug] Adding Vis black vertex at -4.55269  9.82246  2.44902
+[18:08:25] [Debug] Adding Vis black vertex at -4.04902  9.87816  2.48462
+[18:08:25] [Debug] Adding Vis black vertex at -4.21352  9.85399  2.73811
+[18:08:25] [Debug] Adding Vis black vertex at -4.36611  9.76728  2.06751
+[18:08:25] [Debug] Adding Vis black vertex at -3.37447  9.66455  2.87066
+[18:08:25] [Debug] Adding Vis black vertex at -4.62391  9.74921  2.70964
+[18:08:25] [Debug] Adding Vis black vertex at -4.09695  9.86618  2.44233
+[18:08:25] [Debug] Adding Vis black vertex at -4.09964   9.8324  2.73588
+[18:08:25] [Debug] Adding Vis black vertex at -4.46134  9.76288  2.33926
+[18:08:25] [Debug] Adding Vis black vertex at -4.04136    9.859  2.52363
+[18:08:25] [Debug] Adding Vis black vertex at -4.28428  9.80977  2.71361
+[18:08:25] [Debug] Adding Vis black vertex at -4.1961 9.63223 1.94776
+[18:08:25] [Debug] Adding Vis black vertex at -3.9576 9.77647 2.72128
+[18:08:25] [Debug] Adding Vis black vertex at -4.54786  9.70016  2.53784
+[18:08:25] [Debug] Adding Vis black vertex at -4.0722 9.84703   2.472
+[18:08:25] [Debug] Adding Vis black vertex at -4.16834  9.79465  2.73156
+[18:08:25] [Debug] Adding Vis black vertex at -4.35718   9.6958  2.26571
+[18:08:25] [Debug] Adding Vis black vertex at -3.36735  9.39876  2.68802
+[18:08:25] [Debug] Adding Vis black vertex at -4.40198  9.70484   2.6987
+[18:08:25] [Debug] Adding Vis black vertex at -4.09393  9.75702  2.34165
+[18:08:25] [Debug] Adding Vis black vertex at  -4.064 9.76248 2.71096
+[18:08:25] [Debug] Adding Vis black vertex at -4.44259  9.65858  2.43155
+[18:08:25] [Debug] Adding Vis black vertex at -4.06495  9.82787  2.50766
+[18:08:25] [Debug] Adding Vis black vertex at -4.22885  9.74429  2.70641
+[18:08:25] [Debug] Adding Vis black vertex at -4.24701  9.59514   2.2209
+[18:08:25] [Debug] Adding Vis black vertex at -3.86419  9.58061  2.71099
+[18:08:25] [Debug] Adding Vis black vertex at -4.51942  9.51467  2.61921
+[18:08:25] [Debug] Adding Vis black vertex at -4.07997  9.77256  2.44442
+[18:08:25] [Debug] Adding Vis black vertex at -4.13081  9.71767  2.70053
+[18:08:25] [Debug] Adding Vis black vertex at -4.33987  9.59317  2.37835
+[18:08:25] [Debug] Adding Vis black vertex at -4.04581  9.76553  2.53844
+[18:08:25] [Debug] Adding Vis black vertex at -4.32526  9.55445  2.71294
+[18:08:25] [Debug] Adding Vis black vertex at -4.13487  9.49239  2.27498
+[18:08:25] [Debug] Adding Vis black vertex at -4.01669  9.55121  2.70444
+[18:08:25] [Debug] Adding Vis black vertex at -4.38892  9.45841  2.50717
+[18:08:25] [Debug] Adding Vis black vertex at -4.08225  9.73549  2.49569
+[18:08:25] [Debug] Adding Vis black vertex at -4.18875  9.50637  2.70726
+[18:08:25] [Debug] Adding Vis black vertex at -4.23232  9.44066  2.39441
+[18:08:25] [Debug] Adding Vis black vertex at -4.26991  9.25805  2.59579
+[18:08:25] [Debug] Adding Vis black vertex at -4.14981  8.95323  2.54172
+[18:08:25] [Debug] Adding Vis facets for node_sphere_14
+[18:08:25] [Debug] Adding Vis frontiers for node_sphere_14
+[18:08:26] [Debug] Initializing node 16
+[18:08:26] [Debug] Check within bounding box passed for node 16
+[18:08:26] [Debug] Check floor passed for node 16
+[18:08:26] [Info] Recording node 16 at coordinates: -4.40943    9.676  2.37778
+[18:08:26] [Debug] Adding Vis sphere node_sphere_16
+[18:08:26] [Debug] Adding Vis lines for node_sphere_16
+[18:08:26] [Debug] Adding Vis black vertices for node_sphere_16
+[18:08:26] [Debug] Adding Vis facets for node_sphere_16
+[18:08:26] [Debug] Adding Vis frontiers for node_sphere_16
+[18:08:26] [Debug] Initializing node 17
+[18:08:26] [Debug] Check within bounding box passed for node 17
+[18:08:27] [Debug] Check floor passed for node 17
+[18:08:27] [Debug] Generated black and white vertices for node 17
+[18:08:27] [Debug] Centralized position for node 17
+[18:08:27] [Debug] Node 17 has white vertices.
+[18:08:27] [Debug] Node 17 has seed frontiers.
+[18:08:27] [Debug] Flow back completed for node 17
+[18:08:27] [Debug] Facets identified for node 17
+[18:08:27] [Debug] Frontiers identified for node 17
+[18:08:27] [Info] Recording node 17 at coordinates: -3.88539   8.6979   1.6996
+[18:08:27] [Debug] Adding Vis sphere node_sphere_17
+[18:08:27] [Debug] Adding Vis lines for node_sphere_17
+[18:08:27] [Debug] Adding Vis black vertices for node_sphere_17
+[18:08:27] [Debug] Adding Vis black vertex at -3.89947  8.80674  1.69224
+[18:08:27] [Debug] Adding Vis black vertex at -3.91008  8.80528  1.70197
+[18:08:27] [Debug] Adding Vis black vertex at -3.8977 8.80383 1.67206
+[18:08:27] [Debug] Adding Vis black vertex at -3.88445  8.80237  1.71183
+[18:08:27] [Debug] Adding Vis black vertex at -3.92739  8.80092  1.68731
+[18:08:27] [Debug] Adding Vis black vertex at -3.87286  8.79947  1.67532
+[18:08:27] [Debug] Adding Vis black vertex at -3.90839  8.79801  1.72543
+[18:08:27] [Debug] Adding Vis black vertex at -3.91648  8.79656  1.65949
+[18:08:27] [Debug] Adding Vis black vertex at -3.8626  8.7951 1.70571
+[18:08:27] [Debug] Adding Vis black vertex at -3.93773  8.79365  1.70804
+[18:08:27] [Debug] Adding Vis black vertex at -3.88107  8.79219  1.65294
+[18:08:27] [Debug] Adding Vis black vertex at -3.88592  8.79074  1.73542
+[18:08:27] [Debug] Adding Vis black vertex at -3.94013  8.78928  1.66868
+[18:08:27] [Debug] Adding Vis black vertex at -3.85197  8.78783   1.6818
+[18:08:27] [Debug] Adding Vis black vertex at -3.92832  8.78637  1.73329
+[18:08:27] [Debug] Adding Vis black vertex at -3.9061 8.78492 1.64104
+[18:08:27] [Debug] Adding Vis black vertex at -3.85894  8.78347   1.7264
+[18:08:27] [Debug] Adding Vis black vertex at -3.95373  8.78201  1.69449
+[18:08:27] [Debug] Adding Vis black vertex at -3.8601 8.78056 1.65307
+[18:08:27] [Debug] Adding Vis black vertex at -3.90209   8.7791  1.74889
+[18:08:27] [Debug] Adding Vis black vertex at -3.93651  8.77765  1.64785
+[18:08:27] [Debug] Adding Vis black vertex at -3.84112  8.77619  1.70009
+[18:08:27] [Debug] Adding Vis black vertex at -3.94861  8.77474  1.72644
+[18:08:27] [Debug] Adding Vis black vertex at -3.88612  8.77328  1.63291
+[18:08:27] [Debug] Adding Vis black vertex at -3.86879  8.77183  1.74579
+[18:08:27] [Debug] Adding Vis black vertex at -3.95907  8.77037  1.67323
+[18:08:27] [Debug] Adding Vis black vertex at -3.84194  8.76892  1.66567
+[18:08:27] [Debug] Adding Vis black vertex at -3.92423  8.76747   1.7514
+[18:08:27] [Debug] Adding Vis black vertex at -3.92142  8.76601  1.63122
+[18:08:27] [Debug] Adding Vis black vertex at -3.84146  8.76456  1.72273
+[18:08:27] [Debug] Adding Vis black vertex at -3.96346   8.7631  1.70911
+[18:08:27] [Debug] Adding Vis black vertex at -3.86335  8.76165  1.63607
+[18:08:27] [Debug] Adding Vis black vertex at -3.88806  8.76019  1.75862
+[18:08:27] [Debug] Adding Vis black vertex at -3.95314  8.75874  1.65068
+[18:08:27] [Debug] Adding Vis black vertex at -3.83132  8.75728   1.6866
+[18:08:27] [Debug] Adding Vis black vertex at -3.94621  8.75583  1.74278
+[18:08:27] [Debug] Adding Vis black vertex at -3.89887  8.76913  1.57092
+[18:08:27] [Debug] Adding Vis black vertex at -3.85266  8.75292  1.74384
+[18:08:27] [Debug] Adding Vis black vertex at -3.9692 8.75147 1.68578
+[18:08:27] [Debug] Adding Vis black vertex at -3.84342  8.75001  1.64971
+[18:08:27] [Debug] Adding Vis black vertex at -3.92196  8.75932  1.81591
+[18:08:27] [Debug] Adding Vis black vertex at -3.96409  8.75589  1.58956
+[18:08:27] [Debug] Adding Vis black vertex at -3.83083  8.74565  1.71105
+[18:08:27] [Debug] Adding Vis black vertex at -3.96297  8.74419  1.72483
+[18:08:27] [Debug] Adding Vis black vertex at -3.85454  8.74919  1.57106
+[18:08:27] [Debug] Adding Vis black vertex at -3.85239  8.74614  1.80788
+[18:08:27] [Debug] Adding Vis black vertex at -3.96437  8.73983  1.66149
+[18:08:27] [Debug] Adding Vis black vertex at -3.83075  8.73838  1.67106
+[18:08:27] [Debug] Adding Vis black vertex at -3.93585  8.73692  1.75433
+[18:08:27] [Debug] Adding Vis black vertex at -3.94068  8.73672   1.5003
+[18:08:27] [Debug] Adding Vis black vertex at -3.84077  8.73401  1.73394
+[18:08:27] [Debug] Adding Vis black vertex at -3.97088  8.73256  1.70114
+[18:08:27] [Debug] Adding Vis black vertex at -3.85286   8.7311  1.63749
+[18:08:27] [Debug] Adding Vis black vertex at -3.88371  8.70409  2.12429
+[18:08:27] [Debug] Adding Vis black vertex at -3.94979  8.72819  1.64117
+[18:08:27] [Debug] Adding Vis black vertex at -3.82801  8.72674   1.6959
+[18:08:27] [Debug] Adding Vis black vertex at -3.95449  8.72528  1.73771
+[18:08:27] [Debug] Adding Vis black vertex at -3.8491 8.67886 1.33122
+[18:08:27] [Debug] Adding Vis black vertex at -3.85924  8.72238  1.75066
+[18:08:27] [Debug] Adding Vis black vertex at -3.96833  8.72092   1.6764
+[18:08:27] [Debug] Adding Vis black vertex at -3.83825  8.71947  1.65756
+[18:08:27] [Debug] Adding Vis black vertex at -3.94001  8.70335  1.81722
+[18:08:27] [Debug] Adding Vis black vertex at -3.94971  8.70314  1.58208
+[18:08:27] [Debug] Adding Vis black vertex at -3.8357  8.7151  1.7193
+[18:08:27] [Debug] Adding Vis black vertex at -3.96436  8.71365  1.71523
+[18:08:27] [Debug] Adding Vis black vertex at -3.77724  8.64891  1.46241
+[18:08:27] [Debug] Adding Vis black vertex at -3.78337  8.57066  2.14157
+[18:08:27] [Debug] Adding Vis black vertex at -3.95594  8.70928  1.65554
+[18:08:27] [Debug] Adding Vis black vertex at -3.8336 8.70783 1.68125
+[18:08:27] [Debug] Adding Vis black vertex at -3.94024  8.70638  1.74437
+[18:08:27] [Debug] Adding Vis black vertex at -3.92776  8.56907  1.32922
+[18:08:27] [Debug] Adding Vis black vertex at -3.41183  8.41296  2.14778
+[18:08:27] [Debug] Adding Vis black vertex at -3.96359  8.70201  1.69162
+[18:08:27] [Debug] Adding Vis black vertex at -3.72123  8.60551  1.53214
+[18:08:27] [Debug] Adding Vis black vertex at -3.92155  8.60527  1.91845
+[18:08:27] [Debug] Adding Vis black vertex at -3.93653  8.69765  1.64291
+[18:08:27] [Debug] Adding Vis black vertex at -3.95029  8.69474  1.72388
+[18:08:27] [Debug] Adding Vis black vertex at -3.84153  8.58308  1.48482
+[18:08:27] [Debug] Adding Vis black vertex at -3.65878  8.33974  2.16694
+[18:08:27] [Debug] Adding Vis black vertex at -3.95254  8.69038  1.67227
+[18:08:27] [Debug] Adding Vis black vertex at -3.72335  8.57818  1.62155
+[18:08:27] [Debug] Adding Vis black vertex at -3.94053  8.65213  1.77781
+[18:08:27] [Debug] Adding Vis black vertex at -3.92815  8.64381  1.59758
+[18:08:27] [Debug] Adding Vis black vertex at -3.94857   8.6831  1.70254
+[18:08:27] [Debug] Adding Vis black vertex at -3.79197  8.53349  1.54247
+[18:08:27] [Debug] Adding Vis black vertex at -3.85238  8.27489  2.08566
+[18:08:27] [Debug] Adding Vis black vertex at -3.93378  8.67874  1.66274
+[18:08:27] [Debug] Adding Vis black vertex at -3.73645  8.51879   1.6871
+[18:08:27] [Debug] Adding Vis black vertex at   -3.95 8.63426 1.74156
+[18:08:27] [Debug] Adding Vis black vertex at -3.89028  8.48212  1.52826
+[18:08:27] [Debug] Adding Vis black vertex at -3.78141  8.42249  1.83655
+[18:08:27] [Debug] Adding Vis black vertex at -3.93347  8.67147  1.68733
+[18:08:27] [Debug] Adding Vis black vertex at -3.7992 8.48569 1.62392
+[18:08:27] [Debug] Adding Vis black vertex at -3.91724  8.55358  1.76779
+[18:08:27] [Debug] Adding Vis black vertex at -3.92265  8.60474  1.65085
+[18:08:27] [Debug] Adding Vis black vertex at -3.81206  8.42088  1.72107
+[18:08:27] [Debug] Adding Vis black vertex at -3.92345   8.6059  1.70304
+[18:08:27] [Debug] Adding Vis black vertex at -3.89947  8.34592  1.69224
+[18:08:27] [Debug] Adding Vis facets for node_sphere_17
+[18:08:27] [Debug] Adding Vis frontiers for node_sphere_17
+[18:08:27] [Debug] Initializing node 18
+[18:08:27] [Debug] Check within bounding box passed for node 18
+[18:08:27] [Debug] Check floor passed for node 18
+[18:08:27] [Info] Recording node 18 at coordinates: -3.98045  8.72134  1.68514
+[18:08:27] [Debug] Adding Vis sphere node_sphere_18
+[18:08:27] [Debug] Adding Vis lines for node_sphere_18
+[18:08:27] [Debug] Adding Vis black vertices for node_sphere_18
+[18:08:27] [Debug] Adding Vis facets for node_sphere_18
+[18:08:27] [Debug] Adding Vis frontiers for node_sphere_18
+[18:08:28] [Debug] Initializing node 19
+[18:08:28] [Debug] Check within bounding box passed for node 19
+[18:08:28] [Debug] Check floor passed for node 19
+[18:08:28] [Debug] Generated black and white vertices for node 19
+[18:08:28] [Debug] Centralized position for node 19
+[18:08:28] [Warning] Node 19 has no white vertices.
+[18:08:28] [Warning] Failed to initialize node for frontier 8
+[18:08:28] [Warning] Failed to process frontier for node 0
+[18:08:28] [Debug] Initializing node 20
+[18:08:28] [Debug] Check within bounding box passed for node 20
+[18:08:28] [Debug] Check floor passed for node 20
+[18:08:28] [Debug] Generated black and white vertices for node 20
+[18:08:28] [Debug] Centralized position for node 20
+[18:08:28] [Debug] Node 20 has white vertices.
+[18:08:28] [Debug] Node 20 has seed frontiers.
+[18:08:28] [Debug] Flow back completed for node 20
+[18:08:29] [Debug] Facets identified for node 20
+[18:08:29] [Debug] Frontiers identified for node 20
+[18:08:29] [Info] Recording node 20 at coordinates: -4.89991  13.2088  1.80918
+[18:08:29] [Debug] Adding Vis sphere node_sphere_20
+[18:08:29] [Debug] Adding Vis lines for node_sphere_20
+[18:08:29] [Debug] Adding Vis black vertices for node_sphere_20
+[18:08:29] [Debug] Adding Vis black vertex at -5.27147  14.4848  1.27034
+[18:08:29] [Debug] Adding Vis black vertex at -5.73031   14.577  2.14546
+[18:08:29] [Debug] Adding Vis black vertex at -4.70811  14.5359  2.69613
+[18:08:29] [Debug] Adding Vis black vertex at -5.38217   13.961   1.6009
+[18:08:29] [Debug] Adding Vis black vertex at -5.42912   14.226  2.47637
+[18:08:29] [Debug] Adding Vis black vertex at -5.01938  14.1163   2.7252
+[18:08:29] [Debug] Adding Vis black vertex at -5.32317  13.8187  1.42163
+[18:08:29] [Debug] Adding Vis black vertex at -5.45724  13.8091   2.1683
+[18:08:29] [Debug] Adding Vis black vertex at -4.47166  14.0315    2.719
+[18:08:29] [Debug] Adding Vis black vertex at -5.5687 13.7722 1.64662
+[18:08:29] [Debug] Adding Vis black vertex at -4.00127  13.9997  1.38363
+[18:08:29] [Debug] Adding Vis black vertex at -5.3432 13.9016 2.70712
+[18:08:29] [Debug] Adding Vis black vertex at -5.28517  13.8565 0.981595
+[18:08:29] [Debug] Adding Vis black vertex at -4.03433  13.9043  2.33108
+[18:08:29] [Debug] Adding Vis black vertex at -4.82627  13.7582  2.71909
+[18:08:29] [Debug] Adding Vis black vertex at -5.42575  13.6193   1.4884
+[18:08:29] [Debug] Adding Vis black vertex at -3.92831  13.7665  1.74802
+[18:08:29] [Debug] Adding Vis black vertex at -5.42509  13.6208  2.31807
+[18:08:29] [Debug] Adding Vis black vertex at  -4.96937   13.9328 0.0231379
+[18:08:29] [Debug] Adding Vis black vertex at -4.18643  13.7267  2.70783
+[18:08:29] [Debug] Adding Vis black vertex at -5.78372  13.6124  1.76035
+[18:08:29] [Debug] Adding Vis black vertex at -3.96431  13.6955  1.06549
+[18:08:29] [Debug] Adding Vis black vertex at -5.14154  13.5976  2.73278
+[18:08:29] [Debug] Adding Vis black vertex at -5.32115  13.5314  1.29004
+[18:08:29] [Debug] Adding Vis black vertex at -3.99541  13.5754  2.10435
+[18:08:29] [Debug] Adding Vis black vertex at -5.58139   13.509  2.14454
+[18:08:29] [Debug] Adding Vis black vertex at  -4.31043   13.6339 0.0337811
+[18:08:29] [Debug] Adding Vis black vertex at -4.61721  13.5066   2.7218
+[18:08:29] [Debug] Adding Vis black vertex at -5.79155   13.483  1.44955
+[18:08:29] [Debug] Adding Vis black vertex at -3.99974  13.4709  1.53333
+[18:08:29] [Debug] Adding Vis black vertex at -5.49805  13.4503  2.72202
+[18:08:29] [Debug] Adding Vis black vertex at -5.29381  13.4343 0.365305
+[18:08:29] [Debug] Adding Vis black vertex at -4.03614  13.4075  2.50421
+[18:08:29] [Debug] Adding Vis black vertex at -4.01987  13.3444 0.709102
+[18:08:29] [Debug] Adding Vis black vertex at -4.94499  13.3545  2.74604
+[18:08:29] [Debug] Adding Vis black vertex at -3.97854  13.3073  1.88612
+[18:08:29] [Debug] Adding Vis black vertex at -5.43705  13.3403  2.21412
+[18:08:29] [Debug] Adding Vis black vertex at  -4.72625   13.1397 0.0290389
+[18:08:29] [Debug] Adding Vis black vertex at -4.36089  13.2294  2.73155
+[18:08:29] [Debug] Adding Vis black vertex at -5.78419  13.2574  1.64955
+[18:08:29] [Debug] Adding Vis black vertex at -3.99384  13.1736   1.2773
+[18:08:29] [Debug] Adding Vis black vertex at -5.27057  13.1929  2.73621
+[18:08:29] [Debug] Adding Vis black vertex at -5.2998 13.2169 1.12996
+[18:08:29] [Debug] Adding Vis black vertex at -4.04681  13.1324  2.23015
+[18:08:29] [Debug] Adding Vis black vertex at -5.82307  13.1446  2.13424
+[18:08:29] [Debug] Adding Vis black vertex at -4.16664  12.8493 0.308955
+[18:08:29] [Debug] Adding Vis black vertex at -4.75053  13.0974  2.71619
+[18:08:29] [Debug] Adding Vis black vertex at -5.66138  13.1112  1.39101
+[18:08:29] [Debug] Adding Vis black vertex at -4.01473  13.0256  1.67425
+[18:08:29] [Debug] Adding Vis black vertex at -5.42433  13.1088  2.40528
+[18:08:29] [Debug] Adding Vis black vertex at  -5.11803   12.6005 0.0410575
+[18:08:29] [Debug] Adding Vis black vertex at -4.05419  12.8094  2.69821
+[18:08:29] [Debug] Adding Vis black vertex at -5.88756  12.9551  1.82613
+[18:08:29] [Debug] Adding Vis black vertex at -4.16121  12.8268   1.1011
+[18:08:29] [Debug] Adding Vis black vertex at -5.06613  12.9036  2.73576
+[18:08:29] [Debug] Adding Vis black vertex at -5.34766  13.0495  1.34326
+[18:08:29] [Debug] Adding Vis black vertex at -4.10626  12.8569  1.99803
+[18:08:29] [Debug] Adding Vis black vertex at -5.47971  13.0245  2.14718
+[18:08:29] [Debug] Adding Vis black vertex at -4.58171  12.3813 0.415439
+[18:08:29] [Debug] Adding Vis black vertex at -4.53582  12.6932  2.70751
+[18:08:29] [Debug] Adding Vis black vertex at -5.63406   12.871  1.58821
+[18:08:29] [Debug] Adding Vis black vertex at -4.15657  12.6888  1.50519
+[18:08:29] [Debug] Adding Vis black vertex at -5.27011  12.8319  2.44324
+[18:08:29] [Debug] Adding Vis black vertex at -5.30641  12.3787 0.751751
+[18:08:29] [Debug] Adding Vis black vertex at -4.19311  12.5322  2.30028
+[18:08:29] [Debug] Adding Vis black vertex at -5.49268  12.8782  1.94286
+[18:08:29] [Debug] Adding Vis black vertex at -4.43691  12.4058   1.0808
+[18:08:29] [Debug] Adding Vis black vertex at -4.8732 12.3935 2.71244
+[18:08:29] [Debug] Adding Vis black vertex at -5.3427 12.8244 1.52168
+[18:08:29] [Debug] Adding Vis black vertex at -4.24143  12.4431  1.81173
+[18:08:29] [Debug] Adding Vis black vertex at -5.32324  12.7331  2.17171
+[18:08:29] [Debug] Adding Vis black vertex at -4.93743  12.2978  1.10707
+[18:08:29] [Debug] Adding Vis black vertex at -4.58142  12.3697  2.32003
+[18:08:29] [Debug] Adding Vis black vertex at -5.32193  12.7796  1.78534
+[18:08:29] [Debug] Adding Vis black vertex at -4.52286  12.2881  1.52473
+[18:08:29] [Debug] Adding Vis black vertex at -5.09703  12.2081  2.34007
+[18:08:29] [Debug] Adding Vis black vertex at -5.21993  12.0639  1.40347
+[18:08:29] [Debug] Adding Vis black vertex at -4.65046  12.2422   1.9431
+[18:08:29] [Debug] Adding Vis black vertex at -5.25054   11.956  1.95762
+[18:08:29] [Debug] Adding Vis black vertex at -4.97821  12.0673    1.835
+[18:08:29] [Debug] Adding Vis facets for node_sphere_20
+[18:08:29] [Debug] Adding Vis frontiers for node_sphere_20
+[18:08:31] [Debug] Initializing node 21
+[18:08:31] [Debug] Check within bounding box passed for node 21
+[18:08:31] [Debug] Check floor passed for node 21
+[18:08:31] [Info] Recording node 21 at coordinates: -4.68725  12.2336  1.56595
+[18:08:31] [Debug] Adding Vis sphere node_sphere_21
+[18:08:31] [Debug] Adding Vis lines for node_sphere_21
+[18:08:31] [Debug] Adding Vis black vertices for node_sphere_21
+[18:08:31] [Debug] Adding Vis facets for node_sphere_21
+[18:08:31] [Debug] Adding Vis frontiers for node_sphere_21
+[18:10:54] [Debug] Initializing node 22
+[18:10:54] [Debug] Check within bounding box passed for node 22
+[18:10:54] [Debug] Check floor passed for node 22
+[18:10:54] [Debug] Generated black and white vertices for node 22
+[18:10:54] [Debug] Centralized position for node 22
+[18:10:54] [Debug] Node 22 has white vertices.
+[18:10:54] [Debug] Node 22 has seed frontiers.
+[18:10:54] [Debug] Flow back completed for node 22
+[18:10:54] [Debug] Facets identified for node 22
+[18:10:54] [Debug] Frontiers identified for node 22
+[18:10:54] [Info] Recording node 22 at coordinates: -4.12011    10.41  1.62167
+[18:10:54] [Debug] Adding Vis sphere node_sphere_22
+[18:10:54] [Debug] Adding Vis lines for node_sphere_22
+[18:10:54] [Debug] Adding Vis black vertices for node_sphere_22
+[18:10:54] [Debug] Adding Vis black vertex at -4.12722  10.5278  1.58157
+[18:10:54] [Debug] Adding Vis black vertex at -4.14276  10.5256  1.59581
+[18:10:54] [Debug] Adding Vis black vertex at -4.12463  10.5235  1.55204
+[18:10:54] [Debug] Adding Vis black vertex at -4.10525  10.5214  1.61024
+[18:10:54] [Debug] Adding Vis black vertex at -4.16808  10.5192  1.57435
+[18:10:54] [Debug] Adding Vis black vertex at -4.06341  10.5776  1.54099
+[18:10:54] [Debug] Adding Vis black vertex at -4.14027   10.515  1.63013
+[18:10:54] [Debug] Adding Vis black vertex at -4.15212  10.5129  1.53364
+[18:10:54] [Debug] Adding Vis black vertex at -4.00282  10.6261  1.62701
+[18:10:54] [Debug] Adding Vis black vertex at -4.18321  10.5086  1.60469
+[18:10:54] [Debug] Adding Vis black vertex at -4.08416  10.5569  1.48955
+[18:10:54] [Debug] Adding Vis black vertex at -4.09618  10.5508  1.68055
+[18:10:54] [Debug] Adding Vis black vertex at -4.18672  10.5022  1.54709
+[18:10:54] [Debug] Adding Vis black vertex at -3.95914  10.6103  1.54462
+[18:10:54] [Debug] Adding Vis black vertex at -4.16945   10.498  1.64164
+[18:10:54] [Debug] Adding Vis black vertex at -4.13693  10.4958  1.50665
+[18:10:54] [Debug] Adding Vis black vertex at -3.97179  10.6093  1.71257
+[18:10:54] [Debug] Adding Vis black vertex at -4.20662  10.4916  1.58486
+[18:10:54] [Debug] Adding Vis black vertex at -3.97281  10.6021  1.42791
+[18:10:54] [Debug] Adding Vis black vertex at -4.13311  10.5222  1.70899
+[18:10:54] [Debug] Adding Vis black vertex at -4.18143  10.4852  1.51662
+[18:10:54] [Debug] Adding Vis black vertex at -3.90369  10.5812  1.61165
+[18:10:54] [Debug] Adding Vis black vertex at -4.19913  10.4809   1.6316
+[18:10:54] [Debug] Adding Vis black vertex at -4.08367  10.5482  1.38799
+[18:10:54] [Debug] Adding Vis black vertex at -3.97686  10.6042  1.84398
+[18:10:54] [Debug] Adding Vis black vertex at -4.21443  10.4746  1.55375
+[18:10:54] [Debug] Adding Vis black vertex at -3.88314  10.5674   1.4688
+[18:10:54] [Debug] Adding Vis black vertex at -4.16345  10.4703  1.66814
+[18:10:54] [Debug] Adding Vis black vertex at -4.17525  10.4908  1.44805
+[18:10:54] [Debug] Adding Vis black vertex at -4.22086  10.4639  1.60626
+[18:10:54] [Debug] Adding Vis black vertex at -4.00886  10.5106  1.39749
+[18:10:54] [Debug] Adding Vis black vertex at -4.03406  10.6303  2.12365
+[18:10:54] [Debug] Adding Vis black vertex at -4.20575  10.4575  1.52076
+[18:10:54] [Debug] Adding Vis black vertex at -3.95829  10.4783  1.56758
+[18:10:54] [Debug] Adding Vis black vertex at -4.19563  10.4533  1.65552
+[18:10:54] [Debug] Adding Vis black vertex at -4.12579  10.5056  1.28807
+[18:10:54] [Debug] Adding Vis black vertex at -3.61211  10.6225  2.14941
+[18:10:54] [Debug] Adding Vis black vertex at -4.22925  10.4469  1.57212
+[18:10:54] [Debug] Adding Vis black vertex at -4.00009  10.4571  1.48509
+[18:10:54] [Debug] Adding Vis black vertex at -4.17074    10.47  1.82079
+[18:10:54] [Debug] Adding Vis black vertex at -4.1825 10.4405 1.49373
+[18:10:54] [Debug] Adding Vis black vertex at -3.84906  10.4666  1.65781
+[18:10:54] [Debug] Adding Vis black vertex at -4.22014  10.4362  1.62926
+[18:10:54] [Debug] Adding Vis black vertex at -4.07029  10.4407  1.42802
+[18:10:54] [Debug] Adding Vis black vertex at -3.92437  10.4715  2.07988
+[18:10:54] [Debug] Adding Vis black vertex at -4.22219  10.4299  1.53657
+[18:10:54] [Debug] Adding Vis black vertex at -4.02668  10.4277  1.55058
+[18:10:54] [Debug] Adding Vis black vertex at -4.21491  10.4277  1.73121
+[18:10:54] [Debug] Adding Vis black vertex at -4.18113   10.425  1.33054
+[18:10:54] [Debug] Adding Vis black vertex at -3.54521  10.4152  1.99501
+[18:10:54] [Debug] Adding Vis black vertex at -4.23172  10.4192   1.5946
+[18:10:54] [Debug] Adding Vis black vertex at -4.05903  10.4171  1.50145
+[18:10:54] [Debug] Adding Vis black vertex at -4.10097  10.3713  2.30161
+[18:10:54] [Debug] Adding Vis black vertex at -4.24484  10.4071  1.46223
+[18:10:54] [Debug] Adding Vis black vertex at -4.02266  10.4107  1.58692
+[18:10:54] [Debug] Adding Vis black vertex at -4.25448  10.4005  1.68672
+[18:10:54] [Debug] Adding Vis black vertex at -4.10532  10.3981  1.42461
+[18:10:54] [Debug] Adding Vis black vertex at -3.77268  10.3134  2.09648
+[18:10:54] [Debug] Adding Vis black vertex at -4.22798  10.4022  1.55839
+[18:10:54] [Debug] Adding Vis black vertex at -4.03765  10.4001  1.53082
+[18:10:54] [Debug] Adding Vis black vertex at -4.24362  10.3323  1.94037
+[18:10:54] [Debug] Adding Vis black vertex at -4.22723  10.3595  1.36233
+[18:10:54] [Debug] Adding Vis black vertex at -3.98563  10.3788  1.64164
+[18:10:54] [Debug] Adding Vis black vertex at -4.27461  10.3745  1.63378
+[18:10:54] [Debug] Adding Vis black vertex at -4.08024  10.3894  1.49324
+[18:10:54] [Debug] Adding Vis black vertex at -3.98461  10.2209  2.13352
+[18:10:54] [Debug] Adding Vis black vertex at -4.2681 10.3589 1.49002
+[18:10:54] [Debug] Adding Vis black vertex at -4.03084   10.383  1.56549
+[18:10:54] [Debug] Adding Vis black vertex at -4.33465  10.2781  1.84673
+[18:10:54] [Debug] Adding Vis black vertex at -4.13845  10.3567  1.43754
+[18:10:54] [Debug] Adding Vis black vertex at -4.01277  10.3469  1.68849
+[18:10:54] [Debug] Adding Vis black vertex at -4.33036  10.3187  1.57959
+[18:10:54] [Debug] Adding Vis black vertex at -4.05825  10.3724  1.51961
+[18:10:54] [Debug] Adding Vis black vertex at -4.17288  10.1547  2.04932
+[18:10:54] [Debug] Adding Vis black vertex at -4.25062  10.2989  1.41733
+[18:10:54] [Debug] Adding Vis black vertex at -4.03976   10.366  1.59793
+[18:10:54] [Debug] Adding Vis black vertex at -4.42745  10.1861  1.76846
+[18:10:54] [Debug] Adding Vis black vertex at -4.10405  10.3618  1.49861
+[18:10:54] [Debug] Adding Vis black vertex at -4.0426 10.2835 1.74848
+[18:10:54] [Debug] Adding Vis black vertex at -4.6546  9.9816 1.38313
+[18:10:54] [Debug] Adding Vis black vertex at -4.05181  10.3554   1.5513
+[18:10:54] [Debug] Adding Vis black vertex at -4.25866   10.158  1.85545
+[18:10:54] [Debug] Adding Vis black vertex at -4.14971  10.3511  1.50735
+[18:10:54] [Debug] Adding Vis black vertex at -4.06223   10.349  1.62009
+[18:10:54] [Debug] Adding Vis black vertex at   -4.57 9.95685  1.6744
+[18:10:54] [Debug] Adding Vis black vertex at -4.08573  10.3447  1.52376
+[18:10:54] [Debug] Adding Vis black vertex at -4.10878  10.2423  1.73569
+[18:10:54] [Debug] Adding Vis black vertex at -4.21028  10.2869  1.51017
+[18:10:54] [Debug] Adding Vis black vertex at -4.06376  10.3383  1.57957
+[18:10:54] [Debug] Adding Vis black vertex at -4.31453    10.05  1.76437
+[18:10:54] [Debug] Adding Vis black vertex at -4.12401  10.3341  1.52424
+[18:10:54] [Debug] Adding Vis black vertex at -4.09302   10.332  1.62338
+[18:10:54] [Debug] Adding Vis black vertex at -4.21421  10.2606  1.56901
+[18:10:54] [Debug] Adding Vis black vertex at -4.08909  10.3277  1.55559
+[18:10:54] [Debug] Adding Vis black vertex at -4.14317  10.2599  1.64936
+[18:10:54] [Debug] Adding Vis black vertex at -4.14487  10.3234  1.55006
+[18:10:54] [Debug] Adding Vis black vertex at -4.09907  10.3213  1.59086
+[18:10:54] [Debug] Adding Vis black vertex at -4.15619  10.2668  1.59462
+[18:10:54] [Debug] Adding Vis black vertex at -4.12722  10.3171  1.58157
+[18:10:54] [Debug] Adding Vis facets for node_sphere_22
+[18:10:54] [Debug] Adding Vis frontiers for node_sphere_22
+[18:10:55] [Debug] Initializing node 23
+[18:10:55] [Debug] Check within bounding box passed for node 23
+[18:10:55] [Debug] Check floor passed for node 23
+[18:10:55] [Info] Recording node 23 at coordinates: -4.20771  10.4848  1.57959
+[18:10:55] [Debug] Adding Vis sphere node_sphere_23
+[18:10:55] [Debug] Adding Vis lines for node_sphere_23
+[18:10:55] [Debug] Adding Vis black vertices for node_sphere_23
+[18:10:55] [Debug] Adding Vis facets for node_sphere_23
+[18:10:55] [Debug] Adding Vis frontiers for node_sphere_23
+[18:10:56] [Debug] Initializing node 24
+[18:10:56] [Debug] Check within bounding box passed for node 24
+[18:10:56] [Debug] Check floor passed for node 24
+[18:10:56] [Debug] Generated black and white vertices for node 24
+[18:10:56] [Debug] Centralized position for node 24
+[18:10:56] [Warning] Node 24 has no white vertices.
+[18:10:56] [Warning] Failed to initialize node for frontier 13
+[18:10:56] [Warning] Failed to process frontier for node 1
+[18:10:56] [Debug] Initializing node 25
+[18:10:56] [Debug] Check within bounding box passed for node 25
+[18:10:56] [Debug] Check floor passed for node 25
+[18:10:56] [Debug] Generated black and white vertices for node 25
+[18:10:56] [Debug] Centralized position for node 25
+[18:10:56] [Warning] Node 25 has no white vertices.
+[18:10:56] [Warning] Failed to initialize node for frontier 14
+[18:10:56] [Warning] Failed to process frontier for node 1
+[18:10:56] [Warning] Gate for node 1 is not on the floor or outside bounding box.
+[18:10:56] [Warning] Failed to process frontier for node 1
+[18:10:57] [Debug] Initializing node 26
+[18:10:57] [Debug] Check within bounding box passed for node 26
+[18:10:57] [Debug] Check floor passed for node 26
+[18:10:57] [Debug] Generated black and white vertices for node 26
+[18:10:57] [Debug] Centralized position for node 26
+[18:10:57] [Warning] Node 26 has no white vertices.
+[18:10:57] [Warning] Failed to initialize node for frontier 16
+[18:10:57] [Warning] Failed to process frontier for node 1
+[18:10:58] [Debug] Initializing node 27
+[18:10:58] [Debug] Check within bounding box passed for node 27
+[18:10:58] [Debug] Check floor passed for node 27
+[18:10:58] [Debug] Generated black and white vertices for node 27
+[18:10:58] [Debug] Centralized position for node 27
+[18:10:58] [Warning] Node 27 has no white vertices.
+[18:10:58] [Warning] Failed to initialize node for frontier 17
+[18:10:58] [Warning] Failed to process frontier for node 1
+[18:10:59] [Debug] Initializing node 28
+[18:10:59] [Debug] Check within bounding box passed for node 28
+[18:10:59] [Debug] Check floor passed for node 28
+[18:10:59] [Debug] Generated black and white vertices for node 28
+[18:10:59] [Debug] Centralized position for node 28
+[18:10:59] [Debug] Node 28 has white vertices.
+[18:10:59] [Debug] Node 28 has seed frontiers.
+[18:10:59] [Debug] Flow back completed for node 28
+[18:10:59] [Debug] Facets identified for node 28
+[18:10:59] [Debug] Frontiers identified for node 28
+[18:10:59] [Info] Recording node 28 at coordinates: -4.7902 5.54814 2.19016
+[18:10:59] [Debug] Adding Vis sphere node_sphere_28
+[18:10:59] [Debug] Adding Vis lines for node_sphere_28
+[18:10:59] [Debug] Adding Vis black vertices for node_sphere_28
+[18:10:59] [Debug] Adding Vis black vertex at -4.80948  6.60095  2.29464
+[18:10:59] [Debug] Adding Vis black vertex at -4.9805 6.62137 2.45131
+[18:10:59] [Debug] Adding Vis black vertex at -4.78236  6.54262  1.98573
+[18:10:59] [Debug] Adding Vis black vertex at -4.53046  6.74158  2.65857
+[18:10:59] [Debug] Adding Vis black vertex at -5.27041  6.57763  2.21311
+[18:10:59] [Debug] Adding Vis black vertex at -4.39277  6.49881  2.02957
+[18:10:59] [Debug] Adding Vis black vertex at -4.91881  6.26062  2.70136
+[18:10:59] [Debug] Adding Vis black vertex at -5.09033  6.50558  1.75387
+[18:10:59] [Debug] Adding Vis black vertex at -4.26336  6.37931  2.49409
+[18:10:59] [Debug] Adding Vis black vertex at -5.31606  6.26495  2.50376
+[18:10:59] [Debug] Adding Vis black vertex at -4.49529  6.46653  1.62326
+[18:10:59] [Debug] Adding Vis black vertex at -4.67908  6.02422  2.71037
+[18:10:59] [Debug] Adding Vis black vertex at -5.37054  6.23768   1.9695
+[18:10:59] [Debug] Adding Vis black vertex at -4.19062  6.17676  2.15859
+[18:10:59] [Debug] Adding Vis black vertex at -5.09697  5.99949  2.70357
+[18:10:59] [Debug] Adding Vis black vertex at -4.9417 6.48507 1.27429
+[18:10:59] [Debug] Adding Vis black vertex at -4.3225 6.07052 2.70507
+[18:10:59] [Debug] Adding Vis black vertex at  -5.339 5.94639 2.31654
+[18:10:59] [Debug] Adding Vis black vertex at -4.19909  6.19546  1.68722
+[18:10:59] [Debug] Adding Vis black vertex at -4.82908  5.81703  2.71853
+[18:10:59] [Debug] Adding Vis black vertex at -5.35348   6.1152  1.64275
+[18:10:59] [Debug] Adding Vis black vertex at -4.25516  5.87892  2.36923
+[18:10:59] [Debug] Adding Vis black vertex at -5.39956  5.96537  2.70521
+[18:10:59] [Debug] Adding Vis black vertex at -4.47729  6.44436 0.818064
+[18:10:59] [Debug] Adding Vis black vertex at -4.57177  5.77243  2.70947
+[18:10:59] [Debug] Adding Vis black vertex at -5.38603  5.82979  2.11071
+[18:10:59] [Debug] Adding Vis black vertex at -4.17489  5.86214  2.00145
+[18:10:59] [Debug] Adding Vis black vertex at -4.98949  5.72301  2.72477
+[18:10:59] [Debug] Adding Vis black vertex at -5.33429  6.23279 0.835519
+[18:10:59] [Debug] Adding Vis black vertex at -4.03522  5.88304  2.70157
+[18:10:59] [Debug] Adding Vis black vertex at -5.33341   5.7173  2.43275
+[18:10:59] [Debug] Adding Vis black vertex at -4.18209  5.95248  1.31892
+[18:10:59] [Debug] Adding Vis black vertex at -4.73938  5.64147   2.7025
+[18:10:59] [Debug] Adding Vis black vertex at -5.38127  5.74076  1.85182
+[18:10:59] [Debug] Adding Vis black vertex at -4.20456   5.6852  2.24453
+[18:10:59] [Debug] Adding Vis black vertex at -5.18309  5.65362   2.6985
+[18:10:59] [Debug] Adding Vis black vertex at -4.79842  6.12757 0.028142
+[18:10:59] [Debug] Adding Vis black vertex at -4.43908  5.62894  2.70296
+[18:10:59] [Debug] Adding Vis black vertex at -5.37402  5.62049  2.24232
+[18:10:59] [Debug] Adding Vis black vertex at -4.14057  5.66734  1.78697
+[18:10:59] [Debug] Adding Vis black vertex at -4.88719  5.56997  2.72182
+[18:10:59] [Debug] Adding Vis black vertex at -5.37972  5.67169  1.38846
+[18:10:59] [Debug] Adding Vis black vertex at -4.09715  5.59828  2.48986
+[18:10:59] [Debug] Adding Vis black vertex at -5.61294  5.60469  2.70697
+[18:10:59] [Debug] Adding Vis black vertex at -4.18142  5.68707 0.600571
+[18:10:59] [Debug] Adding Vis black vertex at -4.64336  5.52529   2.7027
+[18:10:59] [Debug] Adding Vis black vertex at -5.99708  5.57823  1.73181
+[18:10:59] [Debug] Adding Vis black vertex at -3.92737  5.53175  2.02268
+[18:10:59] [Debug] Adding Vis black vertex at -5.06441  5.50035  2.72964
+[18:10:59] [Debug] Adding Vis black vertex at  -5.29655    5.5085 0.0264207
+[18:10:59] [Debug] Adding Vis black vertex at -4.23048  5.47789  2.70593
+[18:10:59] [Debug] Adding Vis black vertex at -5.46443  5.46506  2.37627
+[18:10:59] [Debug] Adding Vis black vertex at -4.79339  5.45379  2.73565
+[18:10:59] [Debug] Adding Vis black vertex at -4.07366  5.40269  2.33227
+[18:10:59] [Debug] Adding Vis black vertex at -5.31922  5.39748  2.71582
+[18:10:59] [Debug] Adding Vis black vertex at  -4.49445    5.1356 0.0366876
+[18:10:59] [Debug] Adding Vis black vertex at -4.51508  5.39458   2.7222
+[18:10:59] [Debug] Adding Vis black vertex at -4.94226  5.38229  2.70395
+[18:10:59] [Debug] Adding Vis black vertex at -5.45452  5.27542  2.52311
+[18:10:59] [Debug] Adding Vis black vertex at -4.70513   5.3376  2.69849
+[18:10:59] [Debug] Adding Vis black vertex at -4.04194  5.17152  2.16659
+[18:10:59] [Debug] Adding Vis black vertex at -5.12867  5.26303  2.70267
+[18:10:59] [Debug] Adding Vis black vertex at -4.36019  5.18859  2.71436
+[18:10:59] [Debug] Adding Vis black vertex at -5.45242  5.15695  2.28837
+[18:10:59] [Debug] Adding Vis black vertex at -3.79433  4.74899  1.38274
+[18:10:59] [Debug] Adding Vis black vertex at -4.85172  5.23737  2.72743
+[18:10:59] [Debug] Adding Vis black vertex at -4.07039  5.00849  2.43283
+[18:10:59] [Debug] Adding Vis black vertex at -5.44866  4.98201  2.69254
+[18:10:59] [Debug] Adding Vis black vertex at -4.60342  5.14691  2.70103
+[18:10:59] [Debug] Adding Vis black vertex at -3.96244   4.7321  1.95463
+[18:10:59] [Debug] Adding Vis black vertex at -4.99939  5.10298  2.69037
+[18:10:59] [Debug] Adding Vis black vertex at -5.14665  4.41611  1.18177
+[18:10:59] [Debug] Adding Vis black vertex at -4.13733  4.72569  2.69298
+[18:10:59] [Debug] Adding Vis black vertex at -5.43925  4.82289  2.42667
+[18:10:59] [Debug] Adding Vis black vertex at -4.20156  4.34696  1.44763
+[18:10:59] [Debug] Adding Vis black vertex at -4.75907  4.99271  2.71587
+[18:10:59] [Debug] Adding Vis black vertex at -5.47546  4.39832  1.72215
+[18:10:59] [Debug] Adding Vis black vertex at  -4.088 4.52932 2.27186
+[18:10:59] [Debug] Adding Vis black vertex at -5.22581  4.65724  2.70095
+[18:10:59] [Debug] Adding Vis black vertex at -4.51278  4.70032  2.65733
+[18:10:59] [Debug] Adding Vis black vertex at -5.38549  4.41332  2.21141
+[18:10:59] [Debug] Adding Vis black vertex at -4.88281  4.73753   2.6064
+[18:10:59] [Debug] Adding Vis black vertex at -5.00781  4.37304  1.94056
+[18:10:59] [Debug] Adding Vis black vertex at -4.5117 4.41575 2.39285
+[18:10:59] [Debug] Adding Vis black vertex at -5.00949  4.41041   2.3847
+[18:10:59] [Debug] Adding Vis black vertex at -4.80948  4.40884  2.29464
+[18:10:59] [Debug] Adding Vis facets for node_sphere_28
+[18:10:59] [Debug] Adding Vis frontiers for node_sphere_28
+[18:10:59] [Debug] Initializing node 29
+[18:10:59] [Debug] Check within bounding box passed for node 29
+[18:10:59] [Debug] Check floor passed for node 29
+[18:10:59] [Info] Recording node 29 at coordinates: -4.81918  6.56586  2.08374
+[18:10:59] [Debug] Adding Vis sphere node_sphere_29
+[18:10:59] [Debug] Adding Vis lines for node_sphere_29
+[18:10:59] [Debug] Adding Vis black vertices for node_sphere_29
+[18:10:59] [Debug] Adding Vis facets for node_sphere_29
+[18:10:59] [Debug] Adding Vis frontiers for node_sphere_29
+[18:11:00] [Debug] Initializing node 30
+[18:11:00] [Debug] Check within bounding box passed for node 30
+[18:11:00] [Debug] Check floor passed for node 30
+[18:11:00] [Debug] Generated black and white vertices for node 30
+[18:11:00] [Debug] Centralized position for node 30
+[18:11:00] [Warning] Node 30 has no white vertices.
+[18:11:00] [Warning] Failed to initialize node for frontier 21
+[18:11:00] [Warning] Failed to process frontier for node 3
+[18:11:01] [Debug] Initializing node 31
+[18:11:01] [Debug] Check within bounding box passed for node 31
+[18:11:01] [Debug] Check floor passed for node 31
+[18:11:01] [Debug] Generated black and white vertices for node 31
+[18:11:01] [Debug] Centralized position for node 31
+[18:11:01] [Warning] Node 31 has no white vertices.
+[18:11:01] [Warning] Failed to initialize node for frontier 22
+[18:11:01] [Warning] Failed to process frontier for node 3
+[18:11:01] [Debug] Initializing node 32
+[18:11:01] [Debug] Check within bounding box passed for node 32
+[18:11:01] [Warning] Node 32 is not on the floor.
+[18:11:01] [Warning] Failed to initialize node for frontier 23
+[18:11:01] [Warning] Failed to process frontier for node 3
+[18:11:02] [Debug] Initializing node 33
+[18:11:02] [Debug] Check within bounding box passed for node 33
+[18:11:02] [Debug] Check floor passed for node 33
+[18:11:02] [Debug] Generated black and white vertices for node 33
+[18:11:02] [Debug] Centralized position for node 33
+[18:11:02] [Warning] Node 33 has no white vertices.
+[18:11:02] [Warning] Failed to initialize node for frontier 24
+[18:11:02] [Warning] Failed to process frontier for node 3
+[18:11:02] [Debug] Initializing node 34
+[18:11:02] [Debug] Check within bounding box passed for node 34
+[18:11:02] [Debug] Check floor passed for node 34
+[18:11:02] [Debug] Generated black and white vertices for node 34
+[18:11:02] [Debug] Centralized position for node 34
+[18:11:02] [Warning] Node 34 has no white vertices.
+[18:11:02] [Warning] Failed to initialize node for frontier 26
+[18:11:02] [Warning] Failed to process frontier for node 3
+[18:11:03] [Debug] Initializing node 35
+[18:11:03] [Debug] Check within bounding box passed for node 35
+[18:11:03] [Debug] Check floor passed for node 35
+[18:11:03] [Debug] Generated black and white vertices for node 35
+[18:11:03] [Debug] Centralized position for node 35
+[18:11:03] [Warning] Node 35 has no white vertices.
+[18:11:03] [Warning] Failed to initialize node for frontier 28
+[18:11:03] [Warning] Failed to process frontier for node 6
+[18:11:03] [Debug] Initializing node 36
+[18:11:03] [Debug] Check within bounding box passed for node 36
+[18:11:03] [Debug] Check floor passed for node 36
+[18:11:03] [Debug] Generated black and white vertices for node 36
+[18:11:03] [Debug] Centralized position for node 36
+[18:11:03] [Debug] Node 36 has white vertices.
+[18:11:03] [Debug] Node 36 has seed frontiers.
+[18:11:03] [Debug] Flow back completed for node 36
+[18:11:03] [Debug] Facets identified for node 36
+[18:11:03] [Debug] Frontiers identified for node 36
+[18:11:03] [Info] Recording node 36 at coordinates: -2.34076  8.31814  1.94091
+[18:11:03] [Debug] Adding Vis sphere node_sphere_36
+[18:11:03] [Debug] Adding Vis lines for node_sphere_36
+[18:11:03] [Debug] Adding Vis black vertices for node_sphere_36
+[18:11:03] [Debug] Adding Vis black vertex at -2.09941  9.15506  1.99313
+[18:11:03] [Debug] Adding Vis black vertex at -2.26405  9.15103  2.14396
+[18:11:03] [Debug] Adding Vis black vertex at -2.07145  9.14788  1.67451
+[18:11:03] [Debug] Adding Vis black vertex at -1.89488  8.97816   2.2599
+[18:11:03] [Debug] Adding Vis black vertex at -2.55367  9.13385  1.91278
+[18:11:03] [Debug] Adding Vis black vertex at -1.65746  9.13225    1.712
+[18:11:03] [Debug] Adding Vis black vertex at -2.23038  8.98618  2.48036
+[18:11:03] [Debug] Adding Vis black vertex at -2.39068  9.11547   1.4323
+[18:11:03] [Debug] Adding Vis black vertex at -1.45836  9.10678  2.22724
+[18:11:03] [Debug] Adding Vis black vertex at -2.70167  8.98427  2.24174
+[18:11:03] [Debug] Adding Vis black vertex at -1.75319  9.13864  1.25329
+[18:11:03] [Debug] Adding Vis black vertex at -1.8404   9.128 2.81889
+[18:11:03] [Debug] Adding Vis black vertex at -2.84965  9.06347  1.55835
+[18:11:03] [Debug] Adding Vis black vertex at -1.14022  9.12917  1.78226
+[18:11:03] [Debug] Adding Vis black vertex at -2.70911  9.14806  2.86037
+[18:11:03] [Debug] Adding Vis black vertex at -2.23893  9.11229 0.916463
+[18:11:03] [Debug] Adding Vis black vertex at -1.18499  9.15643  2.76381
+[18:11:03] [Debug] Adding Vis black vertex at -2.89884  8.75357  2.02619
+[18:11:03] [Debug] Adding Vis black vertex at -1.18265  9.12405  1.08084
+[18:11:03] [Debug] Adding Vis black vertex at -2.15122  8.93465  3.11369
+[18:11:03] [Debug] Adding Vis black vertex at  -2.867 8.94622  1.0733
+[18:11:03] [Debug] Adding Vis black vertex at -1.81471  8.87926 0.727636
+[18:11:03] [Debug] Adding Vis black vertex at -1.46553   8.8234  3.09934
+[18:11:03] [Debug] Adding Vis black vertex at -3.14685  8.68336  1.65897
+[18:11:03] [Debug] Adding Vis black vertex at -2.57176  8.68147   3.1218
+[18:11:03] [Debug] Adding Vis black vertex at -2.71309  8.93143 0.286934
+[18:11:03] [Debug] Adding Vis black vertex at -3.33893   8.6065  2.31987
+[18:11:03] [Debug] Adding Vis black vertex at -1.90684  8.48679  3.11362
+[18:11:03] [Debug] Adding Vis black vertex at -3.28704  8.58819  1.07336
+[18:11:03] [Debug] Adding Vis black vertex at -3.11462  8.51511  3.09054
+[18:11:03] [Debug] Adding Vis black vertex at  -2.08976   8.61778 0.0152561
+[18:11:03] [Debug] Adding Vis black vertex at -1.10242  8.44436  3.09217
+[18:11:03] [Debug] Adding Vis black vertex at -2.3051 8.28183 3.12377
+[18:11:03] [Debug] Adding Vis black vertex at -2.91834  8.32511 0.691764
+[18:11:03] [Debug] Adding Vis black vertex at -3.30362  8.23638  2.61111
+[18:11:03] [Debug] Adding Vis black vertex at  -1.37414   8.29036 0.0368541
+[18:11:03] [Debug] Adding Vis black vertex at -1.64356  8.16746  3.11291
+[18:11:03] [Debug] Adding Vis black vertex at -3.27598  8.14939  1.43553
+[18:11:03] [Debug] Adding Vis black vertex at -2.74271  8.09567  3.09081
+[18:11:03] [Debug] Adding Vis black vertex at  -2.52476   8.07756 0.0123538
+[18:11:03] [Debug] Adding Vis black vertex at -3.35777  8.01865  2.14996
+[18:11:03] [Debug] Adding Vis black vertex at -2.05774  7.97606  3.13564
+[18:11:03] [Debug] Adding Vis black vertex at -3.00252  7.93964  1.07671
+[18:11:03] [Debug] Adding Vis black vertex at -3.31957  7.84744  3.00129
+[18:11:03] [Debug] Adding Vis black vertex at  -1.82334   7.75085 0.0143791
+[18:11:03] [Debug] Adding Vis black vertex at -1.32551  7.81924  3.11706
+[18:11:03] [Debug] Adding Vis black vertex at -3.30683  7.81481  1.71531
+[18:11:03] [Debug] Adding Vis black vertex at -2.46413  7.77478  3.11739
+[18:11:03] [Debug] Adding Vis black vertex at  -2.6935  7.68347 0.690631
+[18:11:03] [Debug] Adding Vis black vertex at -3.31212  7.66294  2.42265
+[18:11:03] [Debug] Adding Vis black vertex at  -1.2626  7.46949 0.419634
+[18:11:03] [Debug] Adding Vis black vertex at -1.82056  7.66301  3.07232
+[18:11:03] [Debug] Adding Vis black vertex at -3.05604   7.6259  1.37141
+[18:11:03] [Debug] Adding Vis black vertex at -2.95989  7.45854  3.09308
+[18:11:03] [Debug] Adding Vis black vertex at   -2.2536    7.1542 0.0147174
+[18:11:03] [Debug] Adding Vis black vertex at -3.4332 7.37642 1.98012
+[18:11:03] [Debug] Adding Vis black vertex at -2.21156  7.39946  3.14221
+[18:11:03] [Debug] Adding Vis black vertex at -2.74529  7.41082  1.13346
+[18:11:03] [Debug] Adding Vis black vertex at -1.68881  6.98229 0.523086
+[18:11:03] [Debug] Adding Vis black vertex at -1.54187  7.14211  3.09274
+[18:11:03] [Debug] Adding Vis black vertex at -2.61877   7.0122  3.07535
+[18:11:03] [Debug] Adding Vis black vertex at -2.46752  6.89004 0.778138
+[18:11:03] [Debug] Adding Vis black vertex at -1.96695  6.76343  3.09989
+[18:11:03] [Debug] Adding Vis facets for node_sphere_36
+[18:11:03] [Debug] Adding Vis frontiers for node_sphere_36
+[18:11:03] [Debug] Initializing node 37
+[18:11:03] [Debug] Check within bounding box passed for node 37
+[18:11:03] [Debug] Check floor passed for node 37
+[18:11:03] [Info] Recording node 37 at coordinates: -3.09134  7.84705  1.26207
+[18:11:03] [Debug] Adding Vis sphere node_sphere_37
+[18:11:03] [Debug] Adding Vis lines for node_sphere_37
+[18:11:03] [Debug] Adding Vis black vertices for node_sphere_37
+[18:11:03] [Debug] Adding Vis facets for node_sphere_37
+[18:11:03] [Debug] Adding Vis frontiers for node_sphere_37
+[18:11:04] [Debug] Initializing node 38
+[18:11:04] [Debug] Check within bounding box passed for node 38
+[18:11:04] [Debug] Check floor passed for node 38
+[18:11:04] [Debug] Generated black and white vertices for node 38
+[18:11:04] [Debug] Centralized position for node 38
+[18:11:04] [Warning] Node 38 has no white vertices.
+[18:11:04] [Warning] Failed to initialize node for frontier 30
+[18:11:04] [Warning] Failed to process frontier for node 6
+[18:11:04] [Debug] Initializing node 39
+[18:11:04] [Debug] Check within bounding box passed for node 39
+[18:11:04] [Warning] Node 39 is not on the floor.
+[18:11:04] [Warning] Failed to initialize node for frontier 31
+[18:11:04] [Warning] Failed to process frontier for node 6
+[18:11:05] [Debug] Initializing node 40
+[18:11:05] [Debug] Check within bounding box passed for node 40
+[18:11:05] [Debug] Check floor passed for node 40
+[18:11:05] [Debug] Generated black and white vertices for node 40
+[18:11:05] [Debug] Centralized position for node 40
+[18:11:05] [Debug] Node 40 has white vertices.
+[18:11:05] [Debug] Node 40 has seed frontiers.
+[18:11:05] [Debug] Initializing node 41
+[18:11:05] [Debug] Check within bounding box passed for node 41
+[18:11:05] [Debug] Check floor passed for node 41
+[18:11:05] [Info] Recording node 41 at coordinates: -2.55729  6.95702  1.88825
+[18:11:05] [Debug] Flow back completed for node 40
+[18:11:05] [Debug] Adding Vis sphere node_sphere_41
+[18:11:05] [Debug] Adding Vis lines for node_sphere_41
+[18:11:05] [Debug] Adding Vis black vertices for node_sphere_41
+[18:11:05] [Debug] Adding Vis facets for node_sphere_41
+[18:11:05] [Debug] Adding Vis frontiers for node_sphere_41
+[18:11:05] [Debug] Facets identified for node 40
+[18:11:05] [Debug] Frontiers identified for node 40
+[18:11:05] [Info] Recording node 40 at coordinates: -3.1309 6.65998 1.57322
+[18:11:05] [Debug] Adding Vis sphere node_sphere_40
+[18:11:05] [Debug] Adding Vis lines for node_sphere_40
+[18:11:05] [Debug] Adding Vis black vertices for node_sphere_40
+[18:11:05] [Debug] Adding Vis black vertex at -3.15977  7.35112  1.52594
+[18:11:05] [Debug] Adding Vis black vertex at -3.27482  7.38064  1.63133
+[18:11:05] [Debug] Adding Vis black vertex at -3.14115  7.34261  1.31376
+[18:11:05] [Debug] Adding Vis black vertex at -3.03774  7.16578   1.6851
+[18:11:05] [Debug] Adding Vis black vertex at -3.34855  7.06371  1.49254
+[18:11:05] [Debug] Adding Vis black vertex at -2.94897  7.12907  1.39184
+[18:11:05] [Debug] Adding Vis black vertex at -3.25075  7.26158  1.86437
+[18:11:05] [Debug] Adding Vis black vertex at -3.28813  7.08263  1.27879
+[18:11:05] [Debug] Adding Vis black vertex at -2.86766  7.09455  1.63262
+[18:11:05] [Debug] Adding Vis black vertex at -3.41693  7.01213  1.63209
+[18:11:05] [Debug] Adding Vis black vertex at -2.97496  7.19357  1.13101
+[18:11:05] [Debug] Adding Vis black vertex at -3.02666   7.1666  1.95031
+[18:11:05] [Debug] Adding Vis black vertex at -3.40576  6.94621  1.38338
+[18:11:05] [Debug] Adding Vis black vertex at -2.77883  7.04201  1.44219
+[18:11:05] [Debug] Adding Vis black vertex at -3.48284  7.19432  1.98547
+[18:11:05] [Debug] Adding Vis black vertex at -3.21623  7.04323  1.09026
+[18:11:05] [Debug] Adding Vis black vertex at -2.81165  7.03476  1.81933
+[18:11:05] [Debug] Adding Vis black vertex at -3.48588  6.90035  1.53942
+[18:11:05] [Debug] Adding Vis black vertex at -2.81604  7.01629  1.18388
+[18:11:05] [Debug] Adding Vis black vertex at -3.19602  7.23009  2.30976
+[18:11:05] [Debug] Adding Vis black vertex at -3.42061  6.91837  1.21337
+[18:11:05] [Debug] Adding Vis black vertex at -2.66497  6.96781  1.59251
+[18:11:05] [Debug] Adding Vis black vertex at -3.49812  6.89165  1.76136
+[18:11:05] [Debug] Adding Vis black vertex at -2.98372  7.12466 0.743352
+[18:11:05] [Debug] Adding Vis black vertex at -2.81228  7.03631  2.13235
+[18:11:05] [Debug] Adding Vis black vertex at -3.56093  6.85609  1.39796
+[18:11:05] [Debug] Adding Vis black vertex at -2.59635  6.95102  1.26562
+[18:11:05] [Debug] Adding Vis black vertex at -3.42394  6.96543  2.15716
+[18:11:05] [Debug] Adding Vis black vertex at -3.41979   6.9867 0.803011
+[18:11:05] [Debug] Adding Vis black vertex at -2.55177  6.92876  1.84549
+[18:11:05] [Debug] Adding Vis black vertex at -3.59854  6.81072  1.64159
+[18:11:05] [Debug] Adding Vis black vertex at -2.66348  6.98598 0.754099
+[18:11:05] [Debug] Adding Vis black vertex at -2.88652  7.22597  3.11592
+[18:11:05] [Debug] Adding Vis black vertex at -3.79927  6.90221  1.03067
+[18:11:05] [Debug] Adding Vis black vertex at -2.42749  6.85851  1.46527
+[18:11:05] [Debug] Adding Vis black vertex at -3.58195   6.8067   1.9823
+[18:11:05] [Debug] Adding Vis black vertex at -3.15602  6.83424 0.756919
+[18:11:05] [Debug] Adding Vis black vertex at -2.44579  6.89357  2.31299
+[18:11:05] [Debug] Adding Vis black vertex at -3.80845  6.77185  1.46582
+[18:11:05] [Debug] Adding Vis black vertex at  -2.2642  6.86028 0.846234
+[18:11:05] [Debug] Adding Vis black vertex at -3.30291  6.77263  2.31278
+[18:11:05] [Debug] Adding Vis black vertex at -3.64899  6.77635 0.748516
+[18:11:05] [Debug] Adding Vis black vertex at -1.85695   6.8233  1.88299
+[18:11:05] [Debug] Adding Vis black vertex at -3.77559  6.70792  1.84197
+[18:11:05] [Debug] Adding Vis black vertex at -2.87927  6.70646  0.76933
+[18:11:05] [Debug] Adding Vis black vertex at -2.52024  6.77108  3.09694
+[18:11:05] [Debug] Adding Vis black vertex at -3.81821  6.66789  1.21389
+[18:11:05] [Debug] Adding Vis black vertex at -3.5357 6.63878 2.16739
+[18:11:05] [Debug] Adding Vis black vertex at  -3.3285  6.62436 0.740198
+[18:11:05] [Debug] Adding Vis black vertex at -3.78729  6.59707  1.60414
+[18:11:05] [Debug] Adding Vis black vertex at  -2.5039  6.56507 0.755391
+[18:11:05] [Debug] Adding Vis black vertex at -3.10181  6.50351  3.11525
+[18:11:05] [Debug] Adding Vis black vertex at -3.51797  6.56965  1.16246
+[18:11:05] [Debug] Adding Vis black vertex at -3.78774  6.50834   2.0448
+[18:11:05] [Debug] Adding Vis black vertex at -3.04963  6.49406 0.736533
+[18:11:05] [Debug] Adding Vis black vertex at -2.09328  6.28845  3.07482
+[18:11:05] [Debug] Adding Vis black vertex at -3.8184 6.48407 1.37439
+[18:11:05] [Debug] Adding Vis black vertex at -1.90313  6.30273 0.813974
+[18:11:05] [Debug] Adding Vis black vertex at -3.35967   6.4615  2.14213
+[18:11:05] [Debug] Adding Vis black vertex at -3.34084  6.50236  1.12895
+[18:11:05] [Debug] Adding Vis black vertex at -2.08983  6.28677  1.97986
+[18:11:05] [Debug] Adding Vis black vertex at -3.81544  6.40313  1.75816
+[18:11:05] [Debug] Adding Vis black vertex at -2.90329  6.43613  1.04365
+[18:11:05] [Debug] Adding Vis black vertex at -2.9102 6.26353 2.49183
+[18:11:05] [Debug] Adding Vis black vertex at -3.81852  6.31931  1.09781
+[18:11:05] [Debug] Adding Vis black vertex at -2.3577 6.28859 1.39212
+[18:11:05] [Debug] Adding Vis black vertex at -3.63479  6.28581  2.13315
+[18:11:05] [Debug] Adding Vis black vertex at -3.19211  6.42689  1.11104
+[18:11:05] [Debug] Adding Vis black vertex at -2.65006  6.27989  2.00211
+[18:11:05] [Debug] Adding Vis black vertex at -3.81652  6.28108  1.51953
+[18:11:05] [Debug] Adding Vis black vertex at -2.85234  6.39332  1.24977
+[18:11:05] [Debug] Adding Vis black vertex at  -3.221  6.2572 2.15328
+[18:11:05] [Debug] Adding Vis black vertex at -3.35143  6.42446  1.27083
+[18:11:05] [Debug] Adding Vis black vertex at -2.64574  6.28479  1.62204
+[18:11:05] [Debug] Adding Vis black vertex at -3.59786  6.27144  1.79865
+[18:11:05] [Debug] Adding Vis black vertex at -3.07789   6.4019  1.23278
+[18:11:05] [Debug] Adding Vis black vertex at -2.94397  6.26209  1.95155
+[18:11:05] [Debug] Adding Vis black vertex at -3.5772 6.26732 1.36886
+[18:11:05] [Debug] Adding Vis black vertex at -2.80283  6.29894  1.38266
+[18:11:05] [Debug] Adding Vis black vertex at -3.32495  6.28392  1.87012
+[18:11:05] [Debug] Adding Vis black vertex at -3.23924  6.36429  1.26364
+[18:11:05] [Debug] Adding Vis black vertex at -2.85939  6.27688  1.70395
+[18:11:05] [Debug] Adding Vis black vertex at -3.48686  6.27231  1.59451
+[18:11:05] [Debug] Adding Vis black vertex at -2.9804 6.28043 1.27602
+[18:11:05] [Debug] Adding Vis black vertex at -3.12343  6.26125  1.82964
+[18:11:05] [Debug] Adding Vis black vertex at -3.37488  6.26523  1.34103
+[18:11:05] [Debug] Adding Vis black vertex at -2.8926 6.26232  1.5175
+[18:11:05] [Debug] Adding Vis black vertex at -3.34215  6.25361  1.70392
+[18:11:05] [Debug] Adding Vis black vertex at -3.14673  6.25774  1.29322
+[18:11:05] [Debug] Adding Vis black vertex at -3.02074  6.24851  1.69589
+[18:11:05] [Debug] Adding Vis black vertex at -3.3356 6.28908 1.50053
+[18:11:05] [Debug] Adding Vis black vertex at -3.02503  6.28156  1.43413
+[18:11:05] [Debug] Adding Vis black vertex at -3.19334  6.27404  1.66865
+[18:11:05] [Debug] Adding Vis black vertex at -3.22214  6.26652  1.41458
+[18:11:05] [Debug] Adding Vis black vertex at -3.06029    6.259  1.55875
+[18:11:05] [Debug] Adding Vis black vertex at -3.22766  6.25148   1.5565
+[18:11:05] [Debug] Adding Vis black vertex at -3.15977  6.24396  1.52594
+[18:11:05] [Debug] Adding Vis facets for node_sphere_40
+[18:11:05] [Debug] Adding Vis frontiers for node_sphere_40
+[18:11:06] [Debug] Initializing node 42
+[18:11:06] [Debug] Check within bounding box passed for node 42
+[18:11:06] [Debug] Check floor passed for node 42
+[18:11:06] [Info] Recording node 42 at coordinates: -3.40682  6.96153   1.4471
+[18:11:06] [Debug] Adding Vis sphere node_sphere_42
+[18:11:06] [Debug] Adding Vis lines for node_sphere_42
+[18:11:06] [Debug] Adding Vis black vertices for node_sphere_42
+[18:11:06] [Debug] Adding Vis facets for node_sphere_42
+[18:11:06] [Debug] Adding Vis frontiers for node_sphere_42
+[18:11:06] [Debug] Initializing node 43
+[18:11:06] [Debug] Check within bounding box passed for node 43
+[18:11:06] [Warning] Node 43 is not on the floor.
+[18:11:06] [Warning] Failed to initialize node for frontier 33
+[18:11:06] [Warning] Failed to process frontier for node 6
+[18:11:06] [Debug] Initializing node 44
+[18:11:06] [Debug] Check within bounding box passed for node 44
+[18:11:06] [Debug] Check floor passed for node 44
+[18:11:06] [Debug] Generated black and white vertices for node 44
+[18:11:06] [Debug] Centralized position for node 44
+[18:11:06] [Warning] Node 44 has no white vertices.
+[18:11:06] [Warning] Failed to initialize node for frontier 34
+[18:11:06] [Warning] Failed to process frontier for node 6
+[18:11:07] [Debug] Initializing node 45
+[18:11:07] [Debug] Check within bounding box passed for node 45
+[18:11:07] [Debug] Check floor passed for node 45
+[18:11:07] [Debug] Generated black and white vertices for node 45
+[18:11:07] [Debug] Centralized position for node 45
+[18:11:07] [Debug] Node 45 has white vertices.
+[18:11:07] [Debug] Node 45 has seed frontiers.
+[18:11:07] [Debug] Flow back completed for node 45
+[18:11:07] [Debug] Facets identified for node 45
+[18:11:07] [Debug] Frontiers identified for node 45
+[18:11:07] [Info] Recording node 45 at coordinates: -3.36493  7.07077  0.13486
+[18:11:07] [Debug] Adding Vis sphere node_sphere_45
+[18:11:07] [Debug] Adding Vis lines for node_sphere_45
+[18:11:07] [Debug] Adding Vis black vertices for node_sphere_45
+[18:11:07] [Debug] Adding Vis black vertex at  -3.39679   7.24405 0.0954992
+[18:11:07] [Debug] Adding Vis black vertex at -3.41024  7.24221 0.107817
+[18:11:07] [Debug] Adding Vis black vertex at  -3.39304   7.29924 0.0527456
+[18:11:07] [Debug] Adding Vis black vertex at -3.37777  7.23853 0.120308
+[18:11:07] [Debug] Adding Vis black vertex at  -3.43215   7.23669 0.0892447
+[18:11:07] [Debug] Adding Vis black vertex at  -3.33816    7.2955 0.0582047
+[18:11:07] [Debug] Adding Vis black vertex at -3.40809    7.233  0.13752
+[18:11:07] [Debug] Adding Vis black vertex at  -3.41833   7.23116 0.0540148
+[18:11:07] [Debug] Adding Vis black vertex at  -3.3501  7.22932 0.112549
+[18:11:07] [Debug] Adding Vis black vertex at -3.44525  7.22748 0.115502
+[18:11:07] [Debug] Adding Vis black vertex at   -3.3735   7.22563 0.0457261
+[18:11:07] [Debug] Adding Vis black vertex at -3.37964  7.22379 0.150183
+[18:11:07] [Debug] Adding Vis black vertex at  -3.48154   7.26656 0.0463816
+[18:11:07] [Debug] Adding Vis black vertex at  -3.28784   7.27465 0.0715461
+[18:11:07] [Debug] Adding Vis black vertex at -3.43334  7.21827 0.147482
+[18:11:07] [Debug] Adding Vis black vertex at  -3.40519   7.21642 0.0306555
+[18:11:07] [Debug] Adding Vis black vertex at -3.34546  7.21458 0.138759
+[18:11:07] [Debug] Adding Vis black vertex at  -3.46551   7.21274 0.0983408
+[18:11:07] [Debug] Adding Vis black vertex at  -3.34693    7.2109 0.0458856
+[18:11:07] [Debug] Adding Vis black vertex at -3.40011  7.20906 0.167238
+[18:11:07] [Debug] Adding Vis black vertex at   -3.4437   7.20721 0.0392824
+[18:11:07] [Debug] Adding Vis black vertex at -3.26485  7.24662 0.113252
+[18:11:07] [Debug] Adding Vis black vertex at -3.45902  7.20353   0.1388
+[18:11:07] [Debug] Adding Vis black vertex at  -3.37989   7.20169 0.0203631
+[18:11:07] [Debug] Adding Vis black vertex at -3.35793  7.19985 0.163307
+[18:11:07] [Debug] Adding Vis black vertex at   -3.5265   7.23043 0.0541177
+[18:11:07] [Debug] Adding Vis black vertex at  -3.27838   7.22323 0.0407899
+[18:11:07] [Debug] Adding Vis black vertex at -3.42814  7.19432  0.17042
+[18:11:07] [Debug] Adding Vis black vertex at  -3.42459   7.19248 0.0182153
+[18:11:07] [Debug] Adding Vis black vertex at -3.27853  7.21366 0.157655
+[18:11:07] [Debug] Adding Vis black vertex at -3.52631  7.21028 0.129641
+[18:11:07] [Debug] Adding Vis black vertex at  -3.35105   7.18695 0.0243622
+[18:11:07] [Debug] Adding Vis black vertex at -3.38234  7.18511 0.179559
+[18:11:07] [Debug] Adding Vis black vertex at  -3.46476   7.18327 0.0428618
+[18:11:07] [Debug] Adding Vis black vertex at  -3.16718   7.22884 0.0764768
+[18:11:07] [Debug] Adding Vis black vertex at -3.45599  7.17958 0.159496
+[18:11:07] [Debug] Adding Vis black vertex at   -3.39636    7.17774 0.00777587
+[18:11:07] [Debug] Adding Vis black vertex at -3.33751   7.1759 0.160844
+[18:11:07] [Debug] Adding Vis black vertex at  -3.55878   7.19173 0.0804858
+[18:11:07] [Debug] Adding Vis black vertex at  -3.32581   7.17221 0.0416293
+[18:11:07] [Debug] Adding Vis black vertex at -3.41281  7.17037  0.18354
+[18:11:07] [Debug] Adding Vis black vertex at  -3.44463   7.16853 0.0194733
+[18:11:07] [Debug] Adding Vis black vertex at -3.16289  7.19005 0.159602
+[18:11:07] [Debug] Adding Vis black vertex at -3.52406  7.17182 0.160813
+[18:11:07] [Debug] Adding Vis black vertex at -3.36529    7.163 0.010534
+[18:11:07] [Debug] Adding Vis black vertex at -3.36255  7.16116 0.179601
+[18:11:07] [Debug] Adding Vis black vertex at  -3.52572   7.16299 0.0343952
+[18:11:07] [Debug] Adding Vis black vertex at  -3.24732   7.16078 0.0494158
+[18:11:07] [Debug] Adding Vis black vertex at -3.44287  7.15564  0.17413
+[18:11:07] [Debug] Adding Vis black vertex at   -3.41593    7.15379 0.00635511
+[18:11:07] [Debug] Adding Vis black vertex at -3.21879  7.15067 0.221943
+[18:11:07] [Debug] Adding Vis black vertex at -3.56389  7.14777 0.116324
+[18:11:07] [Debug] Adding Vis black vertex at  -3.33776   7.14827 0.0261539
+[18:11:07] [Debug] Adding Vis black vertex at -3.39347  7.14643 0.186392
+[18:11:07] [Debug] Adding Vis black vertex at  -3.46053   7.14458 0.0308234
+[18:11:07] [Debug] Adding Vis black vertex at  -3.0317    7.112 0.114167
+[18:11:07] [Debug] Adding Vis black vertex at -3.51171  7.13313 0.190448
+[18:11:07] [Debug] Adding Vis black vertex at   -3.38434    7.13906 0.00623556
+[18:11:07] [Debug] Adding Vis black vertex at -3.30925  7.12597 0.222633
+[18:11:07] [Debug] Adding Vis black vertex at  -3.55255   7.12162 0.0596588
+[18:11:07] [Debug] Adding Vis black vertex at  -3.31926   7.13353 0.0515751
+[18:11:07] [Debug] Adding Vis black vertex at -3.44007  7.11937 0.228898
+[18:11:07] [Debug] Adding Vis black vertex at   -3.4334   7.12985 0.0152291
+[18:11:07] [Debug] Adding Vis black vertex at -2.72578  6.94625 0.380176
+[18:11:07] [Debug] Adding Vis black vertex at -3.55846  7.10033 0.152758
+[18:11:07] [Debug] Adding Vis black vertex at  -3.35613   7.12432 0.0190433
+[18:11:07] [Debug] Adding Vis black vertex at -3.35919  7.09973 0.241034
+[18:11:07] [Debug] Adding Vis black vertex at  -3.46831   7.12064 0.0490203
+[18:11:07] [Debug] Adding Vis black vertex at  -3.12953    7.0437 0.0509093
+[18:11:07] [Debug] Adding Vis black vertex at -3.48878  7.08889 0.213087
+[18:11:07] [Debug] Adding Vis black vertex at  -3.40324   7.11511 0.0127561
+[18:11:07] [Debug] Adding Vis black vertex at -2.76206  6.73403 0.688457
+[18:11:07] [Debug] Adding Vis black vertex at -3.55977   7.0697 0.093909
+[18:11:07] [Debug] Adding Vis black vertex at  -3.33709   7.10959 0.0418708
+[18:11:07] [Debug] Adding Vis black vertex at -3.41542  7.04363 0.286378
+[18:11:07] [Debug] Adding Vis black vertex at  -3.44373    7.1059 0.0330175
+[18:11:07] [Debug] Adding Vis black vertex at -3.06829  6.94105 0.156917
+[18:11:07] [Debug] Adding Vis black vertex at -3.53094  7.04729 0.179009
+[18:11:07] [Debug] Adding Vis black vertex at  -3.37673   7.10037 0.0236961
+[18:11:07] [Debug] Adding Vis black vertex at -3.24242  6.89953  0.39996
+[18:11:07] [Debug] Adding Vis black vertex at  -3.55096   7.02401 0.0374868
+[18:11:07] [Debug] Adding Vis black vertex at  -3.28329   7.05198 0.0499375
+[18:11:07] [Debug] Adding Vis black vertex at -3.53228  6.88028 0.377823
+[18:11:07] [Debug] Adding Vis black vertex at -3.41625  7.09116 0.031256
+[18:11:07] [Debug] Adding Vis black vertex at -2.55871  6.20602 0.592171
+[18:11:07] [Debug] Adding Vis black vertex at -3.52778  7.01514  0.12296
+[18:11:07] [Debug] Adding Vis black vertex at  -3.36088   7.08564 0.0454616
+[18:11:07] [Debug] Adding Vis black vertex at -3.32525  6.45411 0.693304
+[18:11:07] [Debug] Adding Vis black vertex at  -3.46754   7.03742 0.0346788
+[18:11:07] [Debug] Adding Vis black vertex at  -3.24293   6.94906 0.0906399
+[18:11:07] [Debug] Adding Vis black vertex at -3.52218  6.90356 0.217866
+[18:11:07] [Debug] Adding Vis black vertex at  -3.39401   7.07643 0.0458761
+[18:11:07] [Debug] Adding Vis black vertex at -2.92177  5.89647 0.676161
+[18:11:07] [Debug] Adding Vis black vertex at  -3.52091   6.92192 0.0775639
+[18:11:07] [Debug] Adding Vis black vertex at  -3.31949   6.96087 0.0428267
+[18:11:07] [Debug] Adding Vis black vertex at -3.53545  5.73952 0.684933
+[18:11:07] [Debug] Adding Vis black vertex at  -3.42339   7.00374 0.0480131
+[18:11:07] [Debug] Adding Vis black vertex at -3.04527  5.89057 0.211434
+[18:11:07] [Debug] Adding Vis black vertex at  -3.39679   5.96304 0.0954992
+[18:11:07] [Debug] Adding Vis facets for node_sphere_45
+[18:11:07] [Debug] Adding Vis frontiers for node_sphere_45
+[18:11:07] [Debug] Initializing node 46
+[18:11:07] [Debug] Check within bounding box passed for node 46
+[18:11:07] [Debug] Check floor passed for node 46
+[18:11:07] [Info] Recording node 46 at coordinates: -3.48765   7.2157 0.152163
+[18:11:07] [Debug] Adding Vis sphere node_sphere_46
+[18:11:07] [Debug] Adding Vis lines for node_sphere_46
+[18:11:07] [Debug] Adding Vis black vertices for node_sphere_46
+[18:11:07] [Debug] Adding Vis facets for node_sphere_46
+[18:11:07] [Debug] Adding Vis frontiers for node_sphere_46
+[18:11:08] [Debug] Initializing node 47
+[18:11:08] [Debug] Check within bounding box passed for node 47
+[18:11:08] [Debug] Check floor passed for node 47
+[18:11:08] [Debug] Generated black and white vertices for node 47
+[18:11:08] [Debug] Centralized position for node 47
+[18:11:08] [Debug] Node 47 has white vertices.
+[18:11:08] [Debug] Node 47 has seed frontiers.
+[18:11:08] [Debug] Flow back completed for node 47
+[18:11:08] [Debug] Facets identified for node 47
+[18:11:08] [Debug] Frontiers identified for node 47
+[18:11:08] [Info] Recording node 47 at coordinates: -2.27402  11.3861 0.965637
+[18:11:08] [Debug] Adding Vis sphere node_sphere_47
+[18:11:08] [Debug] Adding Vis lines for node_sphere_47
+[18:11:08] [Debug] Adding Vis black vertices for node_sphere_47
+[18:11:08] [Debug] Adding Vis black vertex at -2.21281  11.9843 0.843753
+[18:11:08] [Debug] Adding Vis black vertex at -2.31974  11.9667 0.941705
+[18:11:08] [Debug] Adding Vis black vertex at -2.20615  11.5161 0.767851
+[18:11:08] [Debug] Adding Vis black vertex at -2.05331  11.9746  1.05179
+[18:11:08] [Debug] Adding Vis black vertex at  -2.4434  11.8029 0.802964
+[18:11:08] [Debug] Adding Vis black vertex at -2.11275  11.4997   0.7801
+[18:11:08] [Debug] Adding Vis black vertex at -2.31303  11.9672  1.21655
+[18:11:08] [Debug] Adding Vis black vertex at  -2.2768  11.4888 0.720556
+[18:11:08] [Debug] Adding Vis black vertex at -1.50552  12.4144  1.10205
+[18:11:08] [Debug] Adding Vis black vertex at -2.49588  11.6921   0.9606
+[18:11:08] [Debug] Adding Vis black vertex at -2.14364  11.4724 0.695941
+[18:11:08] [Debug] Adding Vis black vertex at -1.97282  12.2486  1.60889
+[18:11:08] [Debug] Adding Vis black vertex at -2.36574  11.4614 0.755128
+[18:11:08] [Debug] Adding Vis black vertex at   -1.944  11.5567 0.784654
+[18:11:08] [Debug] Adding Vis black vertex at -2.76962  12.2526  1.63575
+[18:11:08] [Debug] Adding Vis black vertex at -2.25086   11.544  0.55015
+[18:11:08] [Debug] Adding Vis black vertex at -1.38862  12.2471  1.53838
+[18:11:08] [Debug] Adding Vis black vertex at -2.66314  11.6486 0.862375
+[18:11:08] [Debug] Adding Vis black vertex at -2.02897  11.4702 0.660807
+[18:11:08] [Debug] Adding Vis black vertex at -2.27116  12.2446  2.10568
+[18:11:08] [Debug] Adding Vis black vertex at -1.26994  11.9262 0.970614
+[18:11:08] [Debug] Adding Vis black vertex at -2.14649  11.4478 0.548949
+[18:11:08] [Debug] Adding Vis black vertex at -1.42032  12.2143  2.22676
+[18:11:08] [Debug] Adding Vis black vertex at -2.53445  11.4486 0.741141
+[18:11:08] [Debug] Adding Vis black vertex at -1.85682  11.4678 0.679275
+[18:11:08] [Debug] Adding Vis black vertex at -2.83174  12.0744  2.32266
+[18:11:08] [Debug] Adding Vis black vertex at -2.32152  11.4112 0.541516
+[18:11:08] [Debug] Adding Vis black vertex at -3.2734 11.7264 1.12332
+[18:11:08] [Debug] Adding Vis black vertex at -1.93079  11.4664 0.405148
+[18:11:08] [Debug] Adding Vis black vertex at -1.82516  12.1213  3.09937
+[18:11:08] [Debug] Adding Vis black vertex at -2.91585  11.5707 0.299279
+[18:11:08] [Debug] Adding Vis black vertex at -1.44112  11.5116 0.779819
+[18:11:08] [Debug] Adding Vis black vertex at -3.43147  11.8061  2.16108
+[18:11:08] [Debug] Adding Vis black vertex at -2.21128  11.3453 0.529865
+[18:11:08] [Debug] Adding Vis black vertex at  -3.0567  11.4587 0.765541
+[18:11:08] [Debug] Adding Vis black vertex at  -1.12902   11.5516 0.0211922
+[18:11:08] [Debug] Adding Vis black vertex at -2.62529   11.707  3.11111
+[18:11:08] [Debug] Adding Vis black vertex at -2.41432  11.3222 0.523541
+[18:11:08] [Debug] Adding Vis black vertex at  -1.90443   11.3555 0.0119463
+[18:11:08] [Debug] Adding Vis black vertex at -1.2952 11.4785 3.09783
+[18:11:08] [Debug] Adding Vis black vertex at -2.67842  11.2928  0.62309
+[18:11:08] [Debug] Adding Vis black vertex at -0.924506   11.3245  0.446554
+[18:11:08] [Debug] Adding Vis black vertex at -3.32397  11.3229  2.73975
+[18:11:08] [Debug] Adding Vis black vertex at -2.28722  11.2599 0.497242
+[18:11:08] [Debug] Adding Vis black vertex at -1.51071  11.2015 0.018894
+[18:11:08] [Debug] Adding Vis black vertex at -2.12952  11.0943  3.12789
+[18:11:08] [Debug] Adding Vis black vertex at -2.83257  11.1757 0.214858
+[18:11:08] [Debug] Adding Vis black vertex at  -2.09579   11.1265 0.0050283
+[18:11:08] [Debug] Adding Vis black vertex at -2.6369 11.1712 0.74617
+[18:11:08] [Debug] Adding Vis black vertex at -2.94604  10.6887  3.10395
+[18:11:08] [Debug] Adding Vis black vertex at  -2.58312   11.0234 0.0318932
+[18:11:08] [Debug] Adding Vis black vertex at  -1.78583   10.9565 0.0408739
+[18:11:08] [Debug] Adding Vis black vertex at -2.71376  11.0305  0.51818
+[18:11:08] [Debug] Adding Vis black vertex at -3.28975  10.5072   2.2204
+[18:11:08] [Debug] Adding Vis black vertex at  -2.27669   10.8822 0.0241642
+[18:11:08] [Debug] Adding Vis black vertex at -2.69592  11.0097 0.839039
+[18:11:08] [Debug] Adding Vis black vertex at  -1.32227   10.6106 0.0437817
+[18:11:08] [Debug] Adding Vis black vertex at  -2.82606   10.6427 0.0275028
+[18:11:08] [Debug] Adding Vis black vertex at -3.11137  10.5491   1.4031
+[18:11:08] [Debug] Adding Vis black vertex at  -1.98718   10.6657 0.0359338
+[18:11:08] [Debug] Adding Vis black vertex at -2.94432  10.6448  0.56849
+[18:11:08] [Debug] Adding Vis black vertex at  -2.46275   10.4639 0.0188092
+[18:11:08] [Debug] Adding Vis black vertex at -3.06315  10.3622  1.02202
+[18:11:08] [Debug] Adding Vis black vertex at  -1.64184   10.1873 0.0482155
+[18:11:08] [Debug] Adding Vis black vertex at  -2.16862   10.0411 0.0549287
+[18:11:08] [Debug] Adding Vis facets for node_sphere_47
+[18:11:08] [Debug] Adding Vis frontiers for node_sphere_47
+[18:11:08] [Debug] Initializing node 48
+[18:11:08] [Debug] Check within bounding box passed for node 48
+[18:11:08] [Debug] Check floor passed for node 48
+[18:11:08] [Info] Recording node 48 at coordinates: -3.05387  10.6099 0.861885
+[18:11:08] [Debug] Adding Vis sphere node_sphere_48
+[18:11:08] [Debug] Adding Vis lines for node_sphere_48
+[18:11:08] [Debug] Adding Vis black vertices for node_sphere_48
+[18:11:08] [Debug] Adding Vis facets for node_sphere_48
+[18:11:08] [Debug] Adding Vis frontiers for node_sphere_48
