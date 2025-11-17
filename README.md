@@ -10,7 +10,7 @@ to work as a modular C++ pipeline for offline skeletonization and evaluation on 
 ## Origin / Reference
 
 This work is based on and extends the original implementation by Chen et al.:  
-👉 https://github.com/xchencq/3D_Sparse_Skeleton
+https://github.com/xchencq/3D_Sparse_Skeleton
 
 ## Repository Structure
 
